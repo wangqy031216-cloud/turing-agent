@@ -539,3 +539,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .activity-key i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; background: var(--node-stroke); }
 .activity-key i.bad { background: var(--warm); }
 .activity-key i.ok { background: var(--green); }
+.legend b.ln { display: inline-block; width: 22px; height: 0; border-top: 1.6px solid var(--edge); }
+.legend b.ln.hl { border-top: 2px solid var(--warm); }
+.legend b.ln.dash { border-top: 1.6px dashed var(--muted); }
+.legend-note { font-family: var(--font-sans); font-size: 0.74rem; line-height: 1.55; color: var(--muted); margin: 8px 0 0; max-width: 60rem; }

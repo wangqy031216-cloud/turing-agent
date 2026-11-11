@@ -161,6 +161,12 @@
               '<span><i class="un"></i>proved, not used by the final proof</span><span><i class="dr"></i>planned, then dropped</span>' +
               '<span><i class="s"></i>flagged for semantic review</span>' +
             "</div>" +
+            '<div class="legend">' +
+              '<span><b class="ln"></b>the upper node’s proof uses the lower node</span>' +
+              '<span><b class="ln hl"></b>links of the selected node</span>' +
+              '<span><b class="ln dash"></b>link to a dropped plan step</span>' +
+            "</div>" +
+            '<p class="legend-note">A node is <em>dropped</em> when the agent put it into a proof plan and a later plan no longer contained it. It was replaced by a different claim or a different route, and the final proof does not depend on it.</p>' +
           "</div>" +
           '<aside class="card inspector" id="inspector" aria-live="polite"></aside>' +
         "</div>" +
