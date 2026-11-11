@@ -22,7 +22,6 @@ TA.site = {
     { label: "Home",            href: "index.html" },
     { label: "Harness",         href: "harness.html" },
     { label: "OpenAI Problems", href: "openai.html" },
-    { label: "Proof Traces",    href: "traces.html" },
     { label: "Demos",           href: "demos.html" },
     { label: "Workshops",       href: "workshops.html" }
   ],

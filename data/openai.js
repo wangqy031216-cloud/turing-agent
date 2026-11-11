@@ -58,7 +58,7 @@ and with $f(T_1,\ldots,T_n)e_0=\pi_d(h_f)$ this yields nonzero evaluation. Turin
       ],
       figure: { src: "assets/img/dag-116.webp", caption: "Simplified proof DAG for this problem." },
       links: [
-        { label: "Replay the proof trace →", href: "traces.html#openai-math-116" }
+        { label: "Replay the proof trace →", href: "demos.html#openai-math-116" }
       ]
     },
 
@@ -96,7 +96,7 @@ No monotonicity assumption is needed; $I_p(f)$ carries no factor $p(1-p)$.`,
       video: { src: "assets/video/186dag.mp4", poster: "assets/img/186dag-poster.webp", caption: "<b>A proof in motion.</b> The proof DAG for this problem being connected and verified." },
       figure: { src: "assets/img/dag-186.webp", caption: "Simplified proof DAG. Green leaves are used in the final proof, gray leaves are verified but unused; bold borders mark lemmas introduced by Turing Agent (not in the original paper); purple <b>S</b> marks nodes selected for semantic review." },
       links: [
-        { label: "Replay the proof trace →", href: "traces.html#openai-math-186-ds" }
+        { label: "Replay the proof trace →", href: "demos.html#openai-math-186-ds" }
       ]
     },
 

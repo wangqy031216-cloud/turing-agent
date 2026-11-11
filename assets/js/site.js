@@ -206,7 +206,7 @@
         summary: esc(r.summary || ""),
         metrics: [["DAG nodes", s.nodes], ["Lean probes", s.probes.toLocaleString("en-US")], ["Active", fmtDur(r.active)]]
           .concat(s.dropped ? [["Dropped plans", s.dropped]] : []),
-        links: [{ label: "Replay the trace →", href: "traces.html#" + r.id }]
+        links: [{ label: "Replay the trace →", href: "demos.html#" + r.id }]
       };
     });
   }
@@ -456,8 +456,11 @@
     var grid = $("#demo-grid");
     var D = TA.demos;
     if (!grid || !D) return;
-    // demos.js items + every run in data/traces/index.js
-    var items = (D.items || []).concat(traceDemos());
+    // non-trace demos only: proof traces live in the viewer at the top of demos.html
+    var items = D.items || [];
+    var sec = $("#more-demos");
+    if (sec) sec.hidden = !items.length;
+    if (!items.length) return;
     var cats = [];
     items.forEach(function (d) { if (d.category && cats.indexOf(d.category) < 0) cats.push(d.category); });
     var filterEl = $("#demo-filters");

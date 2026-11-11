@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Demos — Turing Agent</title>
-  <meta name="description" content="Turing Agent demos: benchmark runs, full proof traces and interactive replays.">
+  <meta name="description" content="Replay how Turing Agent built and verified real proofs: the proof DAG, Lean probes, failed attempts, context compactions and saved lessons.">
   <link rel="icon" href="assets/img/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="assets/css/site.css">
 </head>
 <body>
@@ -17,14 +18,23 @@
   <main>
     <section class="page-head wrap-main">
       <div class="eyebrow">Demos</div>
-      <h1>Beyond the OpenAI collection</h1>
+      <h1>Watch a proof get built</h1>
       <p class="lede">
-        Benchmark runs, full proof traces and tools. Each trace can be replayed step by step:
-        how the DAG grew, which Lean probes failed, when context was compacted and how each node was accepted.
+        Every Turing Agent run is recorded. Pick a run, then press play: nodes appear as the agent plans them,
+        turn green as Lean accepts them, and fall away when a plan is abandoned. Click any node to read its claim,
+        its Lean statement and proof, and the lessons the agent saved along the way.
       </p>
     </section>
 
-    <section class="section wrap-xl" style="padding-top:28px">
+    <!-- Proof-trace viewer: runs come from data/traces/ (tools/extract_traces.py). demos.html#<run-id> opens a run. -->
+    <section class="section wrap-xl wrap-trace" style="padding-top:28px">
+      <div id="trace-app"></div>
+      <noscript><p class="empty">The trace viewer needs JavaScript.</p></noscript>
+    </section>
+
+    <!-- Other demos (not proof traces) from data/demos.js; the section hides itself while the list is empty. -->
+    <section class="section wrap-xl" id="more-demos" hidden>
+      <h2 style="margin-bottom:1rem">More demos</h2>
       <div class="pills" id="demo-filters" aria-label="Filter demos" style="margin-bottom:16px"></div>
       <div class="gallery" id="demo-grid"></div>
     </section>
@@ -32,9 +42,12 @@
 
   <footer class="footer" id="footer"></footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
   <script src="data/site.js"></script>
   <script src="data/demos.js"></script>
   <script src="data/traces/index.js"></script>
   <script src="assets/js/site.js"></script>
+  <script src="assets/js/traces.js"></script>
 </body>
 </html>

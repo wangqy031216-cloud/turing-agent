@@ -9,8 +9,8 @@ Turing Agent 的长期维护主页：Harness 介绍、OpenAI 722 题中我们完
 index.html          首页（三个标签按钮，点击后内容在下方横向滑入）
 harness.html        Harness 介绍 + benchmark 结果
 openai.html         OpenAI 题目（左侧列表 + 右侧详情，支持搜索 / 按领域筛选）
-traces.html         证明轨迹回放（DAG 生长、Lean 探测、失败、压缩、经验，逐步播放）
-demos.html          其他 demo（卡片 + 分类筛选）
+demos.html          Demos：上方是证明轨迹回放（DAG 生长、Lean 探测、失败、压缩、经验，逐步播放），下方是其他 demo
+traces.html         旧地址，自动跳转到 demos.html（保留是为了让以前分享出去的链接不失效）
 workshops.html      内部研讨会（按日期自动分成 Upcoming / Archive）
 page-template.html  新页面模板
 
@@ -35,7 +35,7 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 |---|---|
 | 加一道 OpenAI 题 | `data/openai.js`，复制一个对象改字段；只有 `slug / title / status / summary` 必填，其余字段没有就不显示 |
 | 更新顶部漏斗数字（722 / 121 / 99 / 22 / 4） | `data/openai.js` 里的 `funnel` |
-| 加一个 demo | `data/demos.js`，复制一个对象；`category` 填新值会自动多一个筛选按钮 |
+| 加一个非轨迹的 demo | `data/demos.js`，文件顶部有模板；会出现在 Demos 页下方的 More demos（列表为空时该区块自动隐藏）|
 | 加一期 workshop | `data/workshops.js`，文件顶部有带注释的模板；slides 等文件可以放 `files/workshops/` |
 | 首页加一条 News | `data/site.js` 的 `news`，加在最前面 |
 | 挂上报告 PDF / 代码链接 | `data/site.js` 的 `links.report` / `links.code`，填了 URL 按钮就会出现 |
@@ -60,7 +60,7 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 
 ## 证明轨迹
 
-`traces.html` 读取 `data/traces/`。这些文件由脚本从 proof-pipeline-observer 的原始导出（`data/runs/<id>.json.gz`，单个可达上百 MB）提炼而来：
+`demos.html` 顶部的轨迹回放读取 `data/traces/`。这些文件由脚本从 proof-pipeline-observer 的原始导出（`data/runs/<id>.json.gz`，单个可达上百 MB）提炼而来：
 只保留 DAG 节点（声明、Lean 语句、证明体、依赖）、时间线（探测 / 失败 / 证明 / 压缩 / 经验 / 计划被放弃）和统计数字，单条轨迹约 10–130 KB。
 
 加一条新轨迹：
@@ -72,9 +72,9 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 python3 tools/extract_traces.py /path/to/proof-pipeline-observer/data/runs
 ```
 
-3. 提交 `data/traces/` 的改动。首页第三个标签、Demos 页和轨迹页都会自动出现这条轨迹。
+3. 提交 `data/traces/` 的改动。首页第三个标签和 Demos 页的回放器都会自动出现这条轨迹。
 
-单独链接到某条轨迹：`traces.html#<id>`，例如 `traces.html#openai-math-186-ds`。
+单独链接到某条轨迹：`demos.html#<id>`，例如 `demos.html#openai-math-186-ds`。
 
 ## 本地预览
 

@@ -5,7 +5,7 @@ Distil proof-pipeline-observer run exports into small files for the portal.
     python3 tools/extract_traces.py /path/to/proof-pipeline-observer/data/runs
 
 Reads   <runs>/<id>.json.gz   (raw observer exports, up to ~125 MB each)
-Writes  data/traces/<id>.js   (one compact run, loaded on demand by traces.html)
+Writes  data/traces/<id>.js   (one compact run, loaded on demand by demos.html)
         data/traces/index.js  (list of runs + headline stats, loaded by every page that lists traces)
 
 To add a run: export it with the observer, add an entry to RUNS below, re-run this script.
