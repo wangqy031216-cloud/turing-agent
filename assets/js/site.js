@@ -139,22 +139,30 @@
         best[c.key] = Math.max.apply(null, R.methods.map(function (me) { return (m.rows[me.key] || {})[c.key] || 0; }));
       });
       var groups = [];
-      R.columns.forEach(function (c) {
+      R.columns.forEach(function (c, i) {
         var last = groups[groups.length - 1];
-        if (last && last.name === c.group) last.span++; else groups.push({ name: c.group, span: 1 });
+        if (last && last.name === c.group) last.span++; else groups.push({ name: c.group, span: 1, start: i });
       });
-      var html = '<table class="ac-table"><thead>' +
-        "<tr><th rowspan=\"2\">Method · " + esc(m.name) + "</th>" +
-        groups.map(function (g) { return '<th colspan="' + g.span + '" style="text-align:center">' + esc(g.name) + "</th>"; }).join("") +
+      var starts = {};
+      groups.forEach(function (g) { starts[g.start] = 1; });
+      function gcls(i, base) { return base + (starts[i] && i > 0 ? " gstart" : ""); }
+      // group label "Formal TCS Bench · theorem formalization" → bold benchmark name + small task line
+      function glabel(name) {
+        var parts = String(name).split(" · ");
+        return esc(parts[0]) + (parts[1] ? '<span class="gsub">' + esc(parts.slice(1).join(" · ")) + "</span>" : "");
+      }
+      var html = '<table class="ac-table results"><thead>' +
+        '<tr><th rowspan="2" class="mcol">Method · ' + esc(m.name) + "</th>" +
+        groups.map(function (g) { return '<th colspan="' + g.span + '" class="' + gcls(g.start, "grp") + '">' + glabel(g.name) + "</th>"; }).join("") +
         "</tr><tr>" +
-        R.columns.map(function (c) { return '<th class="num">' + esc(c.label) + "</th>"; }).join("") +
+        R.columns.map(function (c, i) { return '<th class="' + gcls(i, "num") + '">' + esc(c.label) + "</th>"; }).join("") +
         "</tr></thead><tbody>" +
         R.methods.map(function (me) {
           var row = m.rows[me.key] || {};
           return "<tr" + (me.ours ? ' class="ours"' : "") + "><td>" + esc(me.label) + "</td>" +
-            R.columns.map(function (c) {
+            R.columns.map(function (c, i) {
               var v = row[c.key];
-              var cls = "num" + (v === best[c.key] ? " best" : "");
+              var cls = gcls(i, "num") + (v === best[c.key] ? " best" : "");
               return '<td class="' + cls + '">' + (v == null ? "—" : v.toFixed(2)) + "</td>";
             }).join("") + "</tr>";
         }).join("") +
@@ -307,6 +315,11 @@
     return st.label ? '<span class="tag ' + st.cls + '">' + esc(st.label) + "</span>" : "";
   }
 
+  function traceFor(p) {
+    if (!p || !p.trace) return null;
+    return (TA.traces || []).filter(function (r) { return r.id === p.trace; })[0] || null;
+  }
+
   function renderExplorer() {
     var root = $("#explorer");
     var D = TA.openai;
@@ -352,7 +365,8 @@
       if (!shown.length) { listEl.innerHTML = '<div class="empty">No problem matches this filter.</div>'; return; }
       listEl.innerHTML = shown.map(function (p) {
         return '<button type="button" class="pitem" role="option" data-slug="' + esc(p.slug) + '" aria-selected="' + (p.slug === state.slug) + '">' +
-          '<span class="meta">' + (p.num ? '<span class="id">#' + esc(p.num) + "</span>" : "") + "<span>" + esc(p.area || "") + "</span></span>" +
+          '<span class="meta">' + (p.num ? '<span class="id">#' + esc(p.num) + "</span>" : "") + "<span>" + esc(p.area || "") + "</span>" +
+            (traceFor(p) ? '<span class="demo-badge">▶ Demo</span>' : "") + "</span>" +
           '<span class="t">' + esc(p.title) + "</span>" +
           "</button>";
       }).join("");
@@ -375,6 +389,13 @@
           "</div>" +
           "<h2>" + esc(p.title) + "</h2>" +
           (p.summary ? '<p class="ui muted" style="font-size:.92rem;margin:0">' + p.summary + "</p>" : "") +
+          (function () {
+            var t = traceFor(p);
+            if (!t) return "";
+            return '<div class="replay-cta"><a class="btn primary" href="demos.html#' + esc(t.id) + '">▶ Replay this proof in Demos</a>' +
+              '<span class="mono">' + t.stats.nodes + " DAG nodes · " + t.stats.probes.toLocaleString("en-US") + " Lean probes" +
+              (t.stats.dropped ? " · " + t.stats.dropped + " dropped plans" : "") + " · " + fmtDur(t.active) + " active</span></div>";
+          })() +
         "</header>";
       if (p.stats && p.stats.length) {
         html += '<dl class="kv">' + p.stats.map(function (s) { return "<div><dt>" + esc(s.k) + "</dt><dd>" + esc(s.v) + "</dd></div>"; }).join("") + "</dl>";

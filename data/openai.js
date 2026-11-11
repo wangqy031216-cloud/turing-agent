@@ -11,6 +11,8 @@
    - status: "verified" | "in-progress" | "open"
    - The page URL openai.html#<slug> opens that problem directly.
    - Optional `video: { src, poster, caption }` shows an animation above the figure.
+   - Optional `trace: "<run-id>"` (an id from data/traces/index.js) adds a
+     "Replay in Demos" button and a Demo badge in the list.
    ===================================================================== */
 window.TA = window.TA || {};
 
@@ -57,9 +59,8 @@ and with $f(T_1,\ldots,T_n)e_0=\pi_d(h_f)$ this yields nonzero evaluation. Turin
         String.raw`<strong>Dependent types.</strong> Transferring back failed under <code>simp</code>/<code>rw</code> because matrix index types <code>Fin d</code> depend on the dimension. Turing Agent used <code>convert</code> to expose the equalities, <code>congrArg Fin</code> to align index types, and equality elimination; evaluation preservation and entry consistency finished the proof, which passed independent Lean kernel verification and the final fidelity review.`
       ],
       figure: { src: "assets/img/dag-116.webp", caption: "Simplified proof DAG for this problem." },
-      links: [
-        { label: "Replay the proof trace →", href: "demos.html#openai-math-116" }
-      ]
+      trace: "openai-math-116",
+      links: []
     },
 
     /* ------------------------------------------------------------------ */
@@ -95,9 +96,8 @@ No monotonicity assumption is needed; $I_p(f)$ carries no factor $p(1-p)$.`,
       ],
       video: { src: "assets/video/186dag.mp4", poster: "assets/img/186dag-poster.webp", caption: "<b>A proof in motion.</b> The proof DAG for this problem being connected and verified." },
       figure: { src: "assets/img/dag-186.webp", caption: "Simplified proof DAG. Green leaves are used in the final proof, gray leaves are verified but unused; bold borders mark lemmas introduced by Turing Agent (not in the original paper); purple <b>S</b> marks nodes selected for semantic review." },
-      links: [
-        { label: "Replay the proof trace →", href: "demos.html#openai-math-186-ds" }
-      ]
+      trace: "openai-math-186-ds",
+      links: []
     },
 
     /* ------------------------------------------------------------------ */

@@ -43,6 +43,7 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 | 更新 benchmark 数字 | `data/results.js` |
 | 换首页展示视频 | mp4 放 `assets/video/`，封面图放 `assets/img/`，改 `index.html` 里 `SHOWCASE VIDEO` 段的 `src` / `poster` / 说明文字 |
 | 给某道 OpenAI 题加视频 | 该题对象里加 `video: { src, poster, caption }` |
+| 让某道 OpenAI 题链接到它的 demo 回放 | 该题对象里加 `trace: "<轨迹 id>"`（id 见 `data/traces/index.js`），详情页会出现「Replay this proof in Demos」按钮，列表里出现 Demo 标记 |
 | 改首页三个标签里的内容 | `index.html` 里 `EXPLORE` 段，每个 `<section role="tabpanel">` 就是一个面板；第 2、3 个面板的卡片分别来自 `data/openai.js` 和 `data/traces/index.js` |
 | 加一条证明轨迹 | 见下面「证明轨迹」 |
 

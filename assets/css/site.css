@@ -258,7 +258,8 @@ a.tile .go { margin-top: auto; padding-top: 6px; font-size: 0.8rem; color: var(-
 /* ---------- academic table ---------- */
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .ac-table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: 0.84rem; font-variant-numeric: tabular-nums; }
-.ac-table thead tr { border-top: 2px solid var(--rule); border-bottom: 1.5px solid var(--rule); }
+.ac-table thead tr:first-child { border-top: 2px solid var(--rule); }
+.ac-table thead tr:last-child { border-bottom: 1.5px solid var(--rule); }
 .ac-table tbody tr:nth-child(odd) { background: var(--bg-row); }
 .ac-table tbody tr:last-child { border-bottom: 2px solid var(--rule); }
 .ac-table th, .ac-table td { padding: 9px 14px; text-align: left; white-space: nowrap; }
@@ -543,3 +544,20 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .legend b.ln.hl { border-top: 2px solid var(--warm); }
 .legend b.ln.dash { border-top: 1.6px dashed var(--muted); }
 .legend-note { font-family: var(--font-sans); font-size: 0.74rem; line-height: 1.55; color: var(--muted); margin: 8px 0 0; max-width: 60rem; }
+
+/* grouped results table: one underline per benchmark (like \cmidrule), divider between benchmarks, centred numbers */
+.ac-table.results th.mcol { vertical-align: bottom; }
+.ac-table.results th.grp { text-align: center; position: relative; padding-bottom: 8px; vertical-align: bottom; }
+.ac-table.results th.grp::after { content: ""; position: absolute; left: 10px; right: 10px; bottom: 0; border-bottom: 1px solid var(--rule); }
+.ac-table.results th.grp .gsub { display: block; font-size: 0.74rem; font-weight: 400; color: var(--muted); margin-top: 1px; }
+.ac-table.results td.num, .ac-table.results th.num { text-align: center; }
+.ac-table.results .gstart { border-left: 1px solid var(--border); }
+
+/* problem explorer → demo */
+.pitem .meta .demo-badge { margin-left: auto; font-family: var(--font-sans); font-size: 0.64rem; font-weight: 600; letter-spacing: 0.04em; color: var(--green); background: var(--green-soft); padding: 1px 7px; border-radius: 999px; }
+.replay-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 4px; }
+.replay-cta .mono { font-size: 0.74rem; color: var(--muted); }
+.pitem .meta { min-width: 0; }
+.pitem .meta > span { white-space: nowrap; }
+.pitem .meta > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+.pitem .meta .demo-badge { flex: none; }
