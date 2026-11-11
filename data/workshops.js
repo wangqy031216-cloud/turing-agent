@@ -32,7 +32,6 @@ TA.workshops = {
       no: 1,
       date: "2026-10-30",
       time: "Fri 10:00–17:00",
-      place: "Room L1-505 · also online",
       series: "Pujiang Science Community · Xinghe Workshop",
       title: "AI4TCS Workshop — After AI Can Solve Problems: Toward TCS 2.0",
       title_zh: "当 AI 会解题之后：走向 TCS 2.0",
