@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Stamp a fresh version onto every local CSS/JS reference so browsers fetch the
+Stamp a fresh version onto every local CSS/JS/image/video reference so browsers fetch the
 new files right after a deploy instead of showing a cached copy.
 
     python3 tools/bump_version.py
@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 stamp = datetime.now(timezone.utc).strftime("%Y%m%d%H%M")
-ref = re.compile(r'((?:href|src)=")((?:assets|data)/[^"?]+\.(?:css|js))(?:\?v=[^"]*)?(")')
+ref = re.compile(r'((?:href|src)=")((?:assets|data)/[^"?]+\.(?:css|js|webp|png|jpg|svg|mp4))(?:\?v=[^"]*)?(")')
 
 changed = 0
 for path in sorted(glob.glob(os.path.join(ROOT, "*.html"))):
