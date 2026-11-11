@@ -17,6 +17,11 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
     });
   }
+  // local images/videos named in data files get the site version, so a replaced file is not served from cache
+  function ver(src) {
+    if (!src || /^(https?:)?\/\//.test(src) || !site.version) return src;
+    return src + (src.indexOf("?") < 0 ? "?" : "&") + "v=" + encodeURIComponent(site.version);
+  }
   function isExternal(href) { return /^https?:\/\//.test(href || ""); }
   function linkAttrs(href) {
     return 'href="' + esc(href) + '"' + (isExternal(href) ? ' target="_blank" rel="noopener noreferrer"' : "");
@@ -417,13 +422,13 @@
         html += (c.title ? "<h3>" + esc(c.title) + "</h3>" : "") + '<pre class="code"><code>' + esc(c.lean || c.text || "") + "</code></pre>";
       });
       if (p.video && p.video.src) {
-        html += '<figure class="figure" style="margin-top:1.4rem"><div class="mat video-mat"><video class="showcase" src="' + esc(p.video.src) + '"' +
-          (p.video.poster ? ' poster="' + esc(p.video.poster) + '"' : "") +
+        html += '<figure class="figure" style="margin-top:1.4rem"><div class="mat video-mat"><video class="showcase" src="' + esc(ver(p.video.src)) + '"' +
+          (p.video.poster ? ' poster="' + esc(ver(p.video.poster)) + '"' : "") +
           ' muted loop playsinline controls preload="metadata"></video></div>' +
           (p.video.caption ? "<figcaption>" + p.video.caption + "</figcaption>" : "") + "</figure>";
       }
       if (p.figure && p.figure.src) {
-        html += '<figure class="figure" style="margin-top:1.4rem"><div class="mat"><img class="zoomable" loading="lazy" src="' + esc(p.figure.src) + '" alt="' + esc(p.title) + ' proof DAG"></div>' +
+        html += '<figure class="figure" style="margin-top:1.4rem"><div class="mat"><img class="zoomable" loading="lazy" src="' + esc(ver(p.figure.src)) + '" alt="' + esc(p.title) + ' proof DAG"></div>' +
           (p.figure.caption ? "<figcaption>" + p.figure.caption + "</figcaption>" : "") + "</figure>";
       }
       if (p.links && p.links.length) {
@@ -559,13 +564,13 @@
               (s.subtitle ? '<p class="ws-sub">' + esc(s.subtitle) + "</p>" : "") +
               (s.intro ? '<p class="ws-intro">' + s.intro + "</p>" : "") +
             "</div>" +
-            (s.poster ? '<figure class="ws-poster"><img class="zoomable" loading="lazy" src="' + esc(s.poster) + '" alt="Workshop poster: ' + esc(s.title) + '"><figcaption>Poster · click to enlarge</figcaption></figure>' : "") +
+            (s.poster ? '<figure class="ws-poster"><img class="zoomable" loading="lazy" src="' + esc(ver(s.poster)) + '" alt="Workshop poster: ' + esc(s.title) + '"><figcaption>Poster · click to enlarge</figcaption></figure>' : "") +
           "</div>" +
           (s.program || []).map(function (sec) {
             return '<section class="prog-sec"><div class="prog-head"><span>' + esc(sec.name) + "</span>" + (sec.time ? "<span>" + esc(sec.time) + "</span>" : "") + "</div>" +
               (sec.items || []).map(item).join("") + "</section>";
           }).join("") +
-          (s.photo && s.photo.src ? '<figure class="ws-photo"><img class="zoomable" loading="lazy" src="' + esc(s.photo.src) + '" alt="' + esc(s.photo.caption || "Workshop photo") + '">' +
+          (s.photo && s.photo.src ? '<figure class="ws-photo"><img class="zoomable" loading="lazy" src="' + esc(ver(s.photo.src)) + '" alt="' + esc(s.photo.caption || "Workshop photo") + '">' +
             (s.photo.caption ? "<figcaption>" + esc(s.photo.caption) + "</figcaption>" : "") + "</figure>" : "") +
         "</div></details>";
       return html;
