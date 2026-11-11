@@ -6,7 +6,7 @@
 window.TA = window.TA || {};
 
 TA.site = {
-  version: "202611110655",   // set by tools/bump_version.py
+  version: "202611110711",   // set by tools/bump_version.py
   name: "Turing Agent",
   tagline: "Formal Verification Portal",
   affiliation: "Shanghai Artificial Intelligence Laboratory",
@@ -40,6 +40,10 @@ TA.site = {
     {
       date: "2026-11",
       html: '61.53% faithful theorem-formalization success on Formal TCS Bench and 82.87% pass@1 on the RLMEval TCS subset. <a href="harness.html#results">See results</a>.'
+    },
+    {
+      date: "2026-10-30",
+      html: 'Held the <a href="workshops.html">AI4TCS Workshop — After AI Can Solve Problems: Toward TCS 2.0</a>, with invited talks on mathematical agents, AI-assisted combinatorial optimization and certificates between AI and formal verification.'
     }
   ]
 };

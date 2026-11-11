@@ -526,15 +526,64 @@
     var upcoming = all.filter(function (s) { return (s.date || "") >= today; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
     var done = all.filter(function (s) { return (s.date || "") < today; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
 
+    // the most recent session that has a full program opens by default
+    var withProgram = all.filter(function (s) { return s.program || s.intro || s.photo; })
+      .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var openId = withProgram.length ? withProgram[0] : null;
+
+    function speakerLine(list) {
+      return (list || []).map(function (p) {
+        return '<span class="spk"><b>' + esc(p.name) + "</b>" + (p.affil ? " · " + esc(p.affil) : "") + "</span>";
+      }).join("");
+    }
+    function item(it) {
+      var hasMore = it.abstract || (it.bios && it.bios.length);
+      return '<div class="prog-item' + (it.kind === "break" ? " brk" : "") + '">' +
+        '<div class="prog-time">' + esc(it.time || "") + "</div>" +
+        "<div>" +
+          '<div class="prog-title">' + esc(it.title) + "</div>" +
+          (it.title_zh ? '<div class="prog-zh">' + esc(it.title_zh) + "</div>" : "") +
+          (it.speakers ? '<div class="prog-spk">' + speakerLine(it.speakers) + "</div>" : "") +
+          (hasMore ? '<details class="prog-more"><summary>Abstract &amp; speaker' + ((it.bios || []).length > 1 ? "s" : "") + "</summary>" +
+            (it.abstract ? '<p class="prog-abs">' + esc(it.abstract) + "</p>" : "") +
+            (it.bios || []).map(function (b) { return '<p class="prog-bio">' + b + "</p>"; }).join("") +
+          "</details>" : "") +
+        "</div></div>";
+    }
+    function detail(s) {
+      if (!(s.program || s.intro || s.photo)) return "";
+      var html = '<details class="ws-detail"' + (s === openId ? " open" : "") + "><summary>Program, abstracts &amp; photos</summary>" +
+        '<div class="ws-body">' +
+          '<div class="ws-top">' +
+            "<div>" +
+              (s.subtitle ? '<p class="ws-sub">' + esc(s.subtitle) + "</p>" : "") +
+              (s.intro ? '<p class="ws-intro">' + s.intro + "</p>" : "") +
+            "</div>" +
+            (s.poster ? '<figure class="ws-poster"><img class="zoomable" loading="lazy" src="' + esc(s.poster) + '" alt="Workshop poster: ' + esc(s.title) + '"><figcaption>Poster · click to enlarge</figcaption></figure>' : "") +
+          "</div>" +
+          (s.program || []).map(function (sec) {
+            return '<section class="prog-sec"><div class="prog-head"><span>' + esc(sec.name) + "</span>" + (sec.time ? "<span>" + esc(sec.time) + "</span>" : "") + "</div>" +
+              (sec.items || []).map(item).join("") + "</section>";
+          }).join("") +
+          (s.photo && s.photo.src ? '<figure class="ws-photo"><img class="zoomable" loading="lazy" src="' + esc(s.photo.src) + '" alt="' + esc(s.photo.caption || "Workshop photo") + '">' +
+            (s.photo.caption ? "<figcaption>" + esc(s.photo.caption) + "</figcaption>" : "") + "</figure>" : "") +
+        "</div></details>";
+      return html;
+    }
     function row(s) {
       return '<div class="row">' +
         '<div class="when">' + (s.no != null ? "<b>Workshop #" + esc(s.no) + "</b>" : "") + esc(s.date || "") +
           (s.time ? "<br>" + esc(s.time) : "") + (s.place ? "<br>" + esc(s.place) : "") + "</div>" +
-        "<div><h3>" + esc(s.title) + "</h3>" +
+        "<div>" +
+          (s.series ? '<div class="ws-series">' + esc(s.series) + "</div>" : "") +
+          "<h3>" + esc(s.title) + "</h3>" +
+          (s.title_zh ? '<div class="prog-zh" style="margin-top:2px">' + esc(s.title_zh) + "</div>" : "") +
           (s.summary ? "<p>" + s.summary + "</p>" : "") +
           (s.speakers ? '<div class="who">' + esc(s.speakers) + "</div>" : "") +
           (s.links && s.links.length ? '<div class="links">' + s.links.map(function (l) { return "<a " + linkAttrs(l.href) + ">" + esc(l.label) + "</a>"; }).join("") + "</div>" : "") +
-        "</div></div>";
+        "</div>" +
+        detail(s) +
+        "</div>";
     }
     if (up) up.innerHTML = upcoming.length ? upcoming.map(row).join("") : '<div class="empty" style="border:0">No session scheduled yet. New sessions will be announced here.</div>';
     if (past) past.innerHTML = done.length ? done.map(row).join("") : '<div class="empty" style="border:0">The archive fills up as sessions take place: slides, recordings and code.</div>';
