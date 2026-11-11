@@ -24,99 +24,133 @@
         A unified agent harness that turns AI-generated mathematical arguments into machine-checked Lean developments.
         It goes beyond isolated theorem proving to orchestrate research-level verification end to end — from faithful statements to complete, kernel-checked proofs.
       </p>
-      <div class="btn-row">
-        <a class="btn primary" href="harness.html">How the harness works</a>
-        <a class="btn" href="openai.html">OpenAI research problems</a>
-        <a class="btn" data-site-link="traces" hidden>Interactive proof traces</a>
-        <a class="btn" data-site-link="report" hidden>Technical report</a>
-        <a class="btn" data-site-link="code" hidden>Code</a>
+      <!-- external resources: each link appears only when its URL is set in data/site.js -->
+      <div class="res-links">
+        <a data-site-link="report" hidden>Technical report</a>
+        <a data-site-link="code" hidden>Code</a>
       </div>
     </section>
 
-    <!-- ============ SHOWCASE VIDEO ============
-         To swap the video: put the new .mp4 in assets/video/, a poster frame in
-         assets/img/, and change src / poster / caption below. -->
-    <section class="wrap-xl" style="margin-top:40px">
-      <div class="box-linear pad-lg">
-        <figure class="figure">
-          <div class="mat video-mat">
-            <video class="showcase" src="assets/video/186dag.mp4" poster="assets/img/186dag-poster.webp"
-                   width="1920" height="1080" autoplay muted loop playsinline controls preload="auto"
-                   aria-label="Animation: Turing Agent builds and verifies the proof DAG for the uniform influence bound for hypergraph properties."></video>
+    <!-- ============ EXPLORE: tabs + sliding panels ============
+         Each tab shows its panel right below; panels slide horizontally.
+         index.html#problems / #traces opens a panel directly.
+         To add a tab: add a <button role="tab"> and a matching <section role="tabpanel">. -->
+    <div class="slider" data-slider>
+      <div class="wrap-large">
+        <div class="tabs" role="tablist" aria-label="Explore Turing Agent">
+          <button type="button" class="tab" role="tab" id="tab-harness" aria-controls="harness" aria-selected="true">How the harness works</button>
+          <button type="button" class="tab" role="tab" id="tab-problems" aria-controls="problems" aria-selected="false">OpenAI research problems</button>
+          <button type="button" class="tab" role="tab" id="tab-traces" aria-controls="traces" aria-selected="false">Interactive proof traces</button>
+        </div>
+      </div>
+
+      <div class="wrap-xl">
+        <div class="slider-viewport">
+          <div class="slider-track">
+
+            <!-- ---------- panel 1: harness ---------- -->
+            <section class="slide" role="tabpanel" id="harness" aria-labelledby="tab-harness">
+              <div class="box-linear pad-lg">
+                <!-- To swap the video: new .mp4 in assets/video/, poster in assets/img/, edit src/poster/caption. -->
+                <figure class="figure">
+                  <div class="mat video-mat">
+                    <video class="showcase" src="assets/video/186dag.mp4" poster="assets/img/186dag-poster.webp"
+                           width="1920" height="1080" autoplay muted loop playsinline controls preload="auto"
+                           aria-label="Animation: Turing Agent builds and verifies the proof DAG for the uniform influence bound for hypergraph properties."></video>
+                  </div>
+                  <figcaption><b>A proof in motion.</b> Turing Agent connecting the claims of the uniform influence bound for hypergraph properties (OpenAI problem 186-01) into a proof DAG, then verifying them one by one.</figcaption>
+                </figure>
+                <div class="grid-3 steps">
+                  <div class="card tile">
+                    <span class="step-no">01</span>
+                    <h3>Fix a faithful statement</h3>
+                    <p>A theorem-formalization agent writes the Lean statement from Mathlib and CSLib definitions, then reviews domains, quantifiers and assumptions against the source. Once both checks pass, the statement is locked.</p>
+                  </div>
+                  <div class="card tile">
+                    <span class="step-no">02</span>
+                    <h3>Grow a proof DAG in parallel</h3>
+                    <p>Proof agents split goals into claims only after Lean confirms the children imply the parent, prove independent branches concurrently, and keep an experience pool of what worked and what failed.</p>
+                  </div>
+                  <div class="card tile">
+                    <span class="step-no">03</span>
+                    <h3>Verify independently</h3>
+                    <p>An independent Lean kernel rechecks the assembled proof with an axiom audit, and a review agent checks that the proof still follows the original argument.</p>
+                  </div>
+                </div>
+                <div class="panel-foot"><a class="btn" href="harness.html">Full architecture &amp; benchmark results →</a></div>
+              </div>
+            </section>
+
+            <!-- ---------- panel 2: OpenAI problems (cards come from data/openai.js) ---------- -->
+            <section class="slide" role="tabpanel" id="problems" aria-labelledby="tab-problems">
+              <div class="box pad-lg">
+                <p class="panel-lede">OpenAI released 722 research manuscripts written by an internal frontier model. We took the TCS problems whose formal verification had been left <strong>incomplete</strong> and finished them with Turing Agent.</p>
+                <div class="funnel" id="home-funnel"></div>
+                <div class="grid-2" id="home-problems" style="margin-top:16px"></div>
+                <div class="panel-foot"><a class="btn" href="openai.html">Open the problem explorer →</a></div>
+              </div>
+            </section>
+
+            <!-- ---------- panel 3: proof traces (cards come from data/traces/index.js) ---------- -->
+            <section class="slide" role="tabpanel" id="traces" aria-labelledby="tab-traces">
+              <div class="box pad-lg">
+                <p class="panel-lede">Every run is recorded. The observer replays a run step by step — how the DAG grew, which Lean probes failed, when context was compacted and how each node was accepted. Drag the timeline, or share a link to any moment.</p>
+                <div class="gallery" id="home-traces"></div>
+                <div class="panel-foot">
+                  <a class="btn primary" href="traces.html">Open the trace viewer →</a>
+                  <a class="btn" href="demos.html">All demos →</a>
+                </div>
+              </div>
+            </section>
+
           </div>
-          <figcaption><b>A proof in motion.</b> Turing Agent connecting the claims of the uniform influence bound for hypergraph properties (OpenAI problem 186-01) into a proof DAG, then verifying them one by one. <a href="openai.html#186-01">Read the full write-up →</a></figcaption>
-        </figure>
+        </div>
       </div>
-    </section>
+    </div>
 
-    <!-- ============ AT A GLANCE ============ -->
+    <!-- ============ BENCHMARKS AT A GLANCE ============ -->
     <section class="section wrap-xl">
-      <div class="eyebrow">At a glance</div>
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Benchmarks</div>
+          <h2>Results at a glance</h2>
+        </div>
+        <a class="more" href="harness.html#results">Full results table →</a>
+      </div>
       <div class="stats">
-        <div class="card stat"><div class="num">61.53<em>%</em></div><div class="label">Faithful theorem-formalization success on Formal TCS Bench</div><div class="sub">DeepSeek-V4-Pro · +32.16 pp over Claude Code</div></div>
-        <div class="card stat"><div class="num">82.87<em>%</em></div><div class="label">Overall pass@1 on the RLMEval TCS subset (248 theorems)</div><div class="sub">GLM-5.3 · best among evaluated harnesses</div></div>
-        <div class="card stat"><div class="num">4</div><div class="label">Previously unresolved OpenAI TCS problems formally verified</div><div class="sub">root theorems certified by Lean's kernel</div></div>
-        <div class="card stat"><div class="num">108</div><div class="label">Verified auxiliary nodes in the largest development</div><div class="sub">random 3-SAT hitting time</div></div>
+        <div class="card stat"><div class="num">61.53<em>%</em></div><div class="label">Faithful theorem-formalization success on Formal TCS Bench (143 problems)</div><div class="sub">DeepSeek-V4-Pro</div></div>
+        <div class="card stat"><div class="num">+32.16<em>pp</em></div><div class="label">Over Claude Code, the strongest baseline, on the same benchmark and model</div><div class="sub">58.99% vs 40.56% with GLM-5.3 (+18.43 pp)</div></div>
+        <div class="card stat"><div class="num">99.30<em>%</em></div><div class="label">Of generated Lean statements compile on Formal TCS Bench</div><div class="sub">DeepSeek-V4-Pro · 97.20% with GLM-5.3</div></div>
+        <div class="card stat"><div class="num">82.87<em>%</em></div><div class="label">Overall pass@1 on the RLMEval TCS subset (248 theorems)</div><div class="sub">GLM-5.3 · best of all methods</div></div>
       </div>
     </section>
 
-    <!-- ============ OPENAI TEASER ============ -->
-    <section class="wrap-xl">
-      <div class="box pad-lg">
-        <figure class="figure">
-          <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/openai4.webp" alt="Of OpenAI's 722 math problems, 121 are TCS-related; 22 were not yet fully formally verified; Turing Agent verified 4 highlighted problems." width="2489" height="1270"></div>
-          <figcaption><b>Beyond benchmarks.</b> Of the 121 TCS problems in OpenAI's collection of AI-generated mathematical research manuscripts, 22 had not been fully verified in Lean. Turing Agent with DeepSeek-V4-Pro formally verified the four highlighted here. Click any figure to enlarge.</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ============ INTRO ============ -->
-    <section class="section wrap-main prose">
-      <h2>Why a dedicated harness?</h2>
-      <p style="margin-top:1rem">
-        LLMs and agents are moving from competition problems toward research-level mathematics. The open question is how to turn AI-generated reasoning into <strong>trustworthy, machine-verified knowledge</strong>. A Lean statement can compile while quietly changing the domain, quantifiers or assumptions of the original claim, so syntactic validity alone does not guarantee faithfulness — and long proofs need decomposition, dependency management and reuse to be completed at all.
-      </p>
-      <p>
-        Turing Agent treats verification as an <em>agent-harness</em> problem. Its two-scale architecture pairs a theorem-formalization agent with proof-formalization agents, coordinated through a proof DAG, parallel construction, an experience pool and selective semantic review. Against direct generation, Codex CLI and Claude Code on the same models, it delivers the strongest faithful formalization and completes formal proofs that earlier AI efforts left unfinished.
-      </p>
-    </section>
-
-    <!-- ============ EXPLORE ============ -->
+    <!-- ============ NEWS + MORE ============ -->
     <section class="section wrap-xl">
-      <div class="eyebrow">Explore</div>
-      <div class="grid-4">
-        <a class="card tile" href="harness.html">
-          <span class="tag">Harness</span>
-          <h3>Architecture &amp; results</h3>
-          <p>Faithfulness, validity, completeness; TF/PF agents, proof DAG, experience pool; benchmark results.</p>
-          <span class="go">Read →</span>
-        </a>
-        <a class="card tile" href="openai.html">
-          <span class="tag warm">OpenAI problems</span>
-          <h3><span data-count="openai">4</span> research problems</h3>
-          <p>Problem, target theorem, OpenAI's existing formalization, and how Turing Agent finished the proof.</p>
-          <span class="go">Browse →</span>
-        </a>
-        <a class="card tile" href="demos.html">
-          <span class="tag green">Demos</span>
-          <h3><span data-count="demos">6</span> demos &amp; traces</h3>
-          <p>Benchmark runs and interactive replays of full proof traces beyond the OpenAI collection.</p>
-          <span class="go">Open →</span>
-        </a>
-        <a class="card tile" href="workshops.html">
-          <span class="tag amber">Workshops</span>
-          <h3>Internal seminars</h3>
-          <p>Schedule, slides, recordings and code from our internal workshop series.</p>
-          <span class="go">See schedule →</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============ NEWS ============ -->
-    <section class="section wrap-main">
-      <h2>News</h2>
-      <div class="box pad" style="margin-top:1rem">
-        <ul class="news" id="news"></ul>
+      <div class="home-split">
+        <div>
+          <h2>News</h2>
+          <div class="box pad" style="margin-top:1rem">
+            <ul class="news" id="news"></ul>
+          </div>
+        </div>
+        <div>
+          <h2>More</h2>
+          <div class="more-tiles">
+            <a class="card tile" href="demos.html">
+              <span class="tag green">Demos</span>
+              <h3><span data-count="demos">8</span> demos &amp; traces</h3>
+              <p>Benchmark runs and replayable proof traces beyond the OpenAI collection.</p>
+              <span class="go">Open →</span>
+            </a>
+            <a class="card tile" href="workshops.html">
+              <span class="tag amber">Workshops</span>
+              <h3>Internal seminars</h3>
+              <p>Schedule, slides, recordings and code from our workshop series.</p>
+              <span class="go">See schedule →</span>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -142,6 +176,7 @@
   <script src="data/site.js"></script>
   <script src="data/openai.js"></script>
   <script src="data/demos.js"></script>
+  <script src="data/traces/index.js"></script>
   <script src="data/workshops.js"></script>
   <script src="assets/js/site.js"></script>
 </body>

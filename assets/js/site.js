@@ -104,7 +104,7 @@
   function fillCounts() {
     var counts = {
       openai: ((TA.openai || {}).problems || []).length,
-      demos: ((TA.demos || {}).items || []).length,
+      demos: ((TA.demos || {}).items || []).length + (TA.traces || []).length,
       workshops: ((TA.workshops || {}).sessions || []).length
     };
     $all("[data-count]").forEach(function (el) {
@@ -177,16 +177,123 @@
 
   /* ---------- OpenAI: funnel ---------- */
   function renderFunnel() {
-    var el = $("#funnel");
     var D = TA.openai;
-    if (!el || !D) return;
-    el.innerHTML = (D.funnel || []).map(function (f) {
-      return '<div class="card stat' + (f.highlight ? " hl" : "") + '">' +
-        '<div class="num">' + esc(f.num) + "</div>" +
-        '<div class="label">' + esc(f.label) + "</div>" +
-        (f.sub ? '<div class="sub">' + esc(f.sub) + "</div>" : "") +
-        "</div>";
-    }).join("");
+    if (!D) return;
+    $all("#funnel, #home-funnel").forEach(function (el) {
+      el.innerHTML = (D.funnel || []).map(function (f) {
+        return '<div class="card stat' + (f.highlight ? " hl" : "") + '">' +
+          '<div class="num">' + esc(f.num) + "</div>" +
+          '<div class="label">' + esc(f.label) + "</div>" +
+          (f.sub ? '<div class="sub">' + esc(f.sub) + "</div>" : "") +
+          "</div>";
+      }).join("");
+    });
+  }
+
+  /* ---------- traces → demo-card shape (shared by home panel and demos page) ---------- */
+  function fmtDur(sec) {
+    sec = Math.max(0, Math.round(sec || 0));
+    var d = Math.floor(sec / 86400), h = Math.floor(sec % 86400 / 3600), m = Math.floor(sec % 3600 / 60);
+    return d ? d + "d " + h + "h" : h ? h + "h " + String(m).padStart(2, "0") + "m" : m + "m";
+  }
+  function traceDemos() {
+    return (TA.traces || []).map(function (r) {
+      var s = r.stats;
+      return {
+        title: r.short || r.title,
+        category: "Proof trace",
+        tags: [r.kind.split(" · ")[0]].concat(r.model ? [r.model] : []),
+        summary: esc(r.summary || ""),
+        metrics: [["DAG nodes", s.nodes], ["Lean probes", s.probes.toLocaleString("en-US")], ["Active", fmtDur(r.active)]]
+          .concat(s.dropped ? [["Dropped plans", s.dropped]] : []),
+        links: [{ label: "Replay the trace →", href: "traces.html#" + r.id }]
+      };
+    });
+  }
+  function demoCard(d) {
+    return '<article class="card demo">' +
+      '<div class="tags">' + (d.category ? '<span class="tag warm">' + esc(d.category) + "</span>" : "") +
+        (d.tags || []).map(function (t) { return '<span class="tag plain">' + esc(t) + "</span>"; }).join("") + "</div>" +
+      "<h3>" + esc(d.title) + "</h3>" +
+      (d.summary ? "<p>" + d.summary + "</p>" : "") +
+      (d.metrics && d.metrics.length ? '<div class="metrics">' + d.metrics.map(function (m) { return "<span>" + esc(m[0]) + " <b>" + esc(m[1]) + "</b></span>"; }).join("") + "</div>" : "") +
+      (d.links && d.links.length ? '<div class="links">' + d.links.map(function (l) { return "<a " + linkAttrs(l.href) + ">" + esc(l.label) + "</a>"; }).join(" ") + "</div>" : "") +
+      "</article>";
+  }
+
+  /* ---------- home: panel contents ---------- */
+  function renderHomePanels() {
+    var pe = $("#home-problems");
+    if (pe && TA.openai) {
+      pe.innerHTML = (TA.openai.problems || []).map(function (p) {
+        return '<a class="card tile" href="openai.html#' + esc(p.slug) + '">' +
+          '<span class="tags" style="display:flex;gap:6px;flex-wrap:wrap">' +
+            (p.num ? '<span class="tag warm">#' + esc(p.num) + "</span>" : "") +
+            (p.area ? '<span class="tag">' + esc(p.area) + "</span>" : "") + "</span>" +
+          "<h3>" + esc(p.title) + "</h3>" +
+          (p.summary ? "<p>" + p.summary + "</p>" : "") +
+          '<span class="go">Read the write-up →</span></a>';
+      }).join("");
+    }
+    var te = $("#home-traces");
+    if (te) te.innerHTML = traceDemos().map(demoCard).join("") || '<div class="empty">No traces yet.</div>';
+  }
+
+  /* ---------- tabs with sliding panels ([data-slider]) ---------- */
+  function wireSliders() {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    $all("[data-slider]").forEach(function (root) {
+      var tabs = $all('[role="tab"]', root), panels = $all('[role="tabpanel"]', root);
+      var track = $(".slider-track", root), vp = $(".slider-viewport", root);
+      if (!tabs.length || !track || !vp) return;
+      var cur = 0;
+      function fit() { vp.style.height = panels[cur].offsetHeight + "px"; }
+      function go(i, opts) {
+        cur = (i + tabs.length) % tabs.length;
+        track.style.transform = "translateX(" + (-100 * cur) + "%)";
+        tabs.forEach(function (t, j) { t.setAttribute("aria-selected", j === cur ? "true" : "false"); t.tabIndex = j === cur ? 0 : -1; });
+        panels.forEach(function (p, j) {
+          if (j === cur) { p.removeAttribute("inert"); p.removeAttribute("aria-hidden"); }
+          else { p.setAttribute("inert", ""); p.setAttribute("aria-hidden", "true"); }
+          $all("video", p).forEach(function (v) {
+            if (j !== cur) v.pause();
+            else if (v.hasAttribute("autoplay") && !reduce) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+          });
+        });
+        fit();
+        if (opts && opts.focus) tabs[cur].focus();
+        if (opts && opts.hash && history.replaceState) history.replaceState(null, "", cur ? "#" + panels[cur].id : location.pathname);
+      }
+      tabs.forEach(function (t, j) { t.addEventListener("click", function () { go(j, { hash: true }); }); });
+      root.querySelector('[role="tablist"]').addEventListener("keydown", function (e) {
+        var k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (k) { e.preventDefault(); go(cur + k, { focus: true, hash: true }); }
+        else if (e.key === "Home") { e.preventDefault(); go(0, { focus: true, hash: true }); }
+        else if (e.key === "End") { e.preventDefault(); go(tabs.length - 1, { focus: true, hash: true }); }
+      });
+      // swipe on touch screens
+      var sx = null, sy = null;
+      vp.addEventListener("touchstart", function (e) { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+      vp.addEventListener("touchend", function (e) {
+        if (sx == null) return;
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > 1.5 * Math.abs(dy)) go(cur + (dx < 0 ? 1 : -1), { hash: true });
+        sx = sy = null;
+      });
+      // keep the viewport height in sync as images / fonts load or the window resizes
+      if (window.ResizeObserver) {
+        var ro = new ResizeObserver(function () { fit(); });
+        panels.forEach(function (p) { ro.observe(p); });
+      } else {
+        window.addEventListener("resize", fit);
+        window.addEventListener("load", fit);
+      }
+      var start = 0, h = location.hash.replace(/^#/, "");
+      panels.forEach(function (p, j) { if (p.id === h) start = j; });
+      root.classList.add("no-anim");
+      go(start);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove("no-anim"); }); });
+    });
   }
 
   /* ---------- OpenAI: problem explorer ---------- */
@@ -349,7 +456,8 @@
     var grid = $("#demo-grid");
     var D = TA.demos;
     if (!grid || !D) return;
-    var items = D.items || [];
+    // demos.js items + every run in data/traces/index.js
+    var items = (D.items || []).concat(traceDemos());
     var cats = [];
     items.forEach(function (d) { if (d.category && cats.indexOf(d.category) < 0) cats.push(d.category); });
     var filterEl = $("#demo-filters");
@@ -358,16 +466,7 @@
     function draw() {
       var shown = items.filter(function (d) { return active === "all" || d.category === active; });
       if (!shown.length) { grid.innerHTML = '<div class="empty" style="grid-column:1/-1">Nothing here yet.</div>'; return; }
-      grid.innerHTML = shown.map(function (d) {
-        return '<article class="card demo">' +
-          '<div class="tags">' + (d.category ? '<span class="tag warm">' + esc(d.category) + "</span>" : "") +
-            (d.tags || []).map(function (t) { return '<span class="tag plain">' + esc(t) + "</span>"; }).join("") + "</div>" +
-          "<h3>" + esc(d.title) + "</h3>" +
-          (d.summary ? "<p>" + d.summary + "</p>" : "") +
-          (d.metrics && d.metrics.length ? '<div class="metrics">' + d.metrics.map(function (m) { return "<span>" + esc(m[0]) + " <b>" + esc(m[1]) + "</b></span>"; }).join("") + "</div>" : "") +
-          (d.links && d.links.length ? '<div class="links">' + d.links.map(function (l) { return "<a " + linkAttrs(l.href) + ">" + esc(l.label) + "</a>"; }).join(" ") + "</div>" : "") +
-          "</article>";
-      }).join("");
+      grid.innerHTML = shown.map(demoCard).join("");
     }
 
     if (filterEl) {
@@ -457,6 +556,8 @@
   renderNews();
   renderResults();
   renderFunnel();
+  renderHomePanels();
+  wireSliders();
   renderExplorer();
   renderDemos();
   renderWorkshops();

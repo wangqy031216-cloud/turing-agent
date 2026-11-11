@@ -6,9 +6,10 @@ Turing Agent 的长期维护主页：Harness 介绍、OpenAI 722 题中我们完
 ## 目录
 
 ```
-index.html          首页
+index.html          首页（三个标签按钮，点击后内容在下方横向滑入）
 harness.html        Harness 介绍 + benchmark 结果
 openai.html         OpenAI 题目（左侧列表 + 右侧详情，支持搜索 / 按领域筛选）
+traces.html         证明轨迹回放（DAG 生长、Lean 探测、失败、压缩、经验，逐步播放）
 demos.html          其他 demo（卡片 + 分类筛选）
 workshops.html      内部研讨会（按日期自动分成 Upcoming / Archive）
 page-template.html  新页面模板
@@ -19,6 +20,9 @@ data/               ← 日常维护基本只改这里
   demos.js          demo
   workshops.js      研讨会
   results.js        benchmark 数据表
+  traces/           证明轨迹（由 tools/extract_traces.py 生成，不要手改）
+tools/
+  extract_traces.py 把 proof-pipeline-observer 导出的原始轨迹压缩成网站用的小文件
 assets/css/site.css 样式（颜色都是变量，深色模式自动适配）
 assets/js/site.js   渲染逻辑（一般不用动）
 assets/img/         图片
@@ -39,6 +43,8 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 | 更新 benchmark 数字 | `data/results.js` |
 | 换首页展示视频 | mp4 放 `assets/video/`，封面图放 `assets/img/`，改 `index.html` 里 `SHOWCASE VIDEO` 段的 `src` / `poster` / 说明文字 |
 | 给某道 OpenAI 题加视频 | 该题对象里加 `video: { src, poster, caption }` |
+| 改首页三个标签里的内容 | `index.html` 里 `EXPLORE` 段，每个 `<section role="tabpanel">` 就是一个面板；第 2、3 个面板的卡片分别来自 `data/openai.js` 和 `data/traces/index.js` |
+| 加一条证明轨迹 | 见下面「证明轨迹」 |
 
 ### 写数学公式
 
@@ -51,6 +57,24 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 ### 单独链接到某道题
 
 `openai.html#<slug>` 或 `openai.html#<题号>`，例如 `openai.html#random-3sat`、`openai.html#186-01`。
+
+## 证明轨迹
+
+`traces.html` 读取 `data/traces/`。这些文件由脚本从 proof-pipeline-observer 的原始导出（`data/runs/<id>.json.gz`，单个可达上百 MB）提炼而来：
+只保留 DAG 节点（声明、Lean 语句、证明体、依赖）、时间线（探测 / 失败 / 证明 / 压缩 / 经验 / 计划被放弃）和统计数字，单条轨迹约 10–130 KB。
+
+加一条新轨迹：
+
+1. 在 `tools/extract_traces.py` 顶部 `RUNS` 里加一项（`id` 要和导出文件名一致，标题 / 简介写给访客看的英文）。
+2. 运行：
+
+```bash
+python3 tools/extract_traces.py /path/to/proof-pipeline-observer/data/runs
+```
+
+3. 提交 `data/traces/` 的改动。首页第三个标签、Demos 页和轨迹页都会自动出现这条轨迹。
+
+单独链接到某条轨迹：`traces.html#<id>`，例如 `traces.html#openai-math-186-ds`。
 
 ## 本地预览
 

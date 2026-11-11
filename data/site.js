@@ -14,8 +14,7 @@ TA.site = {
   // Leave a URL empty ("") to hide its button.
   links: {
     report: "",   // technical report PDF / arXiv link
-    code: "",     // public code repository
-    traces: "https://wangqy031216-cloud.github.io/proof-pipeline-observer/"
+    code: ""      // public code repository
   },
 
   // Top banner. `href` is the page file; the current page is highlighted automatically.
@@ -23,6 +22,7 @@ TA.site = {
     { label: "Home",            href: "index.html" },
     { label: "Harness",         href: "harness.html" },
     { label: "OpenAI Problems", href: "openai.html" },
+    { label: "Proof Traces",    href: "traces.html" },
     { label: "Demos",           href: "demos.html" },
     { label: "Workshops",       href: "workshops.html" }
   ],
