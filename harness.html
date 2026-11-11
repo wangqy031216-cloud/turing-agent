@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Harness — Turing Agent</title>
+  <meta name="description" content="How Turing Agent works: two-scale theorem/proof formalization agents, proof DAG, selective semantic review, experience pool, and benchmark results.">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <header class="banner" id="banner"></header>
+
+  <main>
+    <section class="page-head wrap-main">
+      <div class="eyebrow">The harness</div>
+      <h1>How Turing Agent works</h1>
+      <p class="lede">
+        Verifying a research result means more than proving a theorem whose formal statement is handed to you.
+        Papers bring their own definitions, conventions and intermediate results, and every one of them must be translated faithfully before proof search can even start.
+        Turing Agent is built around that whole process.
+      </p>
+    </section>
+
+    <!-- ============ CHALLENGES ============ -->
+    <section class="section">
+      <div class="wrap-main">
+        <h2>Three requirements</h2>
+        <p style="margin-top:1rem">Every formal development has to satisfy three requirements at once. Most automated provers address only the last one, starting from statements that are already formalized.</p>
+      </div>
+      <div class="wrap-xl" style="margin-top:1.5rem">
+        <div class="box pad-lg">
+          <figure class="figure">
+            <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/challenges.webp" alt="Pipeline from natural-language claim to kernel check, annotated with faithfulness, validity and completeness." width="2506" height="1025"></div>
+          </figure>
+          <div class="grid-3" style="margin-top:20px">
+            <div class="card tile"><span class="tag">Faithfulness</span><h3>Preserve the original claim</h3><p>The Lean statement must keep the domains, quantifiers, assumptions and conclusion of the natural-language claim. A statement can compile and still say something else.</p></div>
+            <div class="card tile"><span class="tag warm">Validity</span><h3>Pass Lean's checks</h3><p>Syntax, type and elaboration errors must be resolved through iterative debugging so Lean produces a valid proof term.</p></div>
+            <div class="card tile"><span class="tag green">Completeness</span><h3>Leave no gaps</h3><p>Every proof obligation is discharged — no <code>sorry</code> — across long developments with many dependent auxiliary results.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARCHITECTURE ============ -->
+    <section class="section" id="architecture">
+      <div class="wrap-main">
+        <div class="eyebrow">Design</div>
+        <h2>A two-scale architecture</h2>
+        <p style="margin-top:1rem">
+          Turing Agent separates <strong>theorem formalization</strong> from <strong>proof formalization</strong>. The main theorem is formalized and reviewed before proof construction begins, and stays fixed afterwards. Intermediate claims go through the same check selectively while the proof is being built. Agents are grounded in Mathlib and the domain library CSLib.
+        </p>
+      </div>
+      <div class="wrap-xl" style="margin-top:1.5rem">
+        <div class="box-linear pad-lg">
+          <figure class="figure">
+            <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/workflow.webp" alt="Turing Agent workflow: TF subagent, recursive DAG construction, PF subagents, experience pool and final verification." width="2470" height="1406"></div>
+            <figcaption><b>Workflow.</b> TF agents supply checked Lean statements and definitions; PF agents construct proofs and request semantic review when needed. The runtime coordinates recursive DAG construction, parallel proof formalization and selective review; experience from successful and failed attempts is extracted and reused, and checked branch proofs are assembled for final verification.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="wrap-large" style="margin-top:2rem">
+        <div class="box rows">
+          <div class="comp"><div class="idx">01</div><div><h3>Theorem formalization (TF) agent</h3><p>Searches Mathlib and CSLib for suitable definitions, introduces new ones where the libraries fall short, and writes the Lean statement. After Lean accepts it, the agent reviews whether domains, assumptions, quantifier dependencies and conclusion match the source — comparing the text against the statement, its elaborated type and the full bodies of new definitions — and revises until both checks pass.</p></div></div>
+          <div class="comp"><div class="idx">02</div><div><h3>Proof decomposition into a DAG</h3><p>Guided by the informal proof, a proof formalization (PF) agent splits a goal into intermediate claims and records their dependencies in a directed acyclic graph. A split is accepted only after Lean verifies that the child statements, taken as assumptions, imply the parent. The procedure recurses; goals that can be proved directly are not split.</p></div></div>
+          <div class="comp"><div class="idx">03</div><div><h3>Parallel construction</h3><p>Independent child goals are assigned to several PF agents at once. Each revises or further decomposes its claim from Lean feedback; completed branches are rechecked before the checked derivation closes the parent, continuing upward to the main theorem.</p></div></div>
+          <div class="comp"><div class="idx">04</div><div><h3>Selective semantic review</h3><p>The decomposition check proves that children imply the parent, not that they match the informal argument. Reviewing every claim would be costly, so PF agents request a TF review only when a new concept's meaning is uncertain, assumptions or quantifiers are unclear, or a reformulated claim may change scope.</p></div></div>
+          <div class="comp"><div class="idx">05</div><div><h3>Experience extraction &amp; reuse</h3><p>Compressing long interaction histories loses findings. PF agents extract evidence-backed records — useful library lemmas, required side conditions, causes and fixes of failures — merge them per claim, and receive the relevant records after each context compaction.</p></div></div>
+          <div class="comp"><div class="idx">06</div><div><h3>Final verification</h3><p>An independent Lean kernel rechecks the complete proof against the fixed statement (with an axiom audit). A review agent then compares the proof with the informal argument: regrouping steps is fine; omitted essential steps, unsupported assumptions or a substituted argument are flagged.</p></div></div>
+        </div>
+      </div>
+
+      <div class="wrap-xl" style="margin-top:2rem">
+        <div class="grid-2">
+          <figure class="figure box pad">
+            <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/semantic-review.webp" alt="Selective semantic review in the proof DAG." width="2667" height="1500"></div>
+            <figcaption><b>Selective semantic review.</b> PF agents call a TF agent when a concept is unclear or a new definition is introduced.</figcaption>
+          </figure>
+          <figure class="figure box pad">
+            <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/experience.webp" alt="Experience extraction and reuse during DAG evolution." width="2667" height="1500"></div>
+            <figcaption><b>Experience pool.</b> Retained records guide revisions; useful findings from later attempts update the pool.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RESULTS ============ -->
+    <section class="section" id="results">
+      <div class="wrap-main">
+        <div class="eyebrow">Evaluation</div>
+        <h2>Benchmark results</h2>
+        <p style="margin-top:1rem">
+          <strong>Theorem formalization</strong> is measured on the 143 problems of <strong>Formal TCS Bench</strong> (statements from recent TCS papers). A submission succeeds only if it compiles <em>and</em> passes independent semantic review. <strong>Proof formalization</strong> uses 248 theorems from the PFR and TestingLowerBounds (TLB) projects in <strong>RLMEval</strong>; success means a complete proof with no <code>sorry</code>.
+          Each model is run as direct generation, inside Codex CLI, inside Claude Code, and inside Turing Agent. All numbers are pass@1 with one final submission per problem.
+        </p>
+      </div>
+      <div class="wrap-large" style="margin-top:1.4rem">
+        <div class="pills" id="results-models" aria-label="Choose model"></div>
+        <div class="table-scroll" style="margin-top:12px" id="results-table"></div>
+        <p class="table-note"><b>Pass@1 (%).</b> Underlined: best in column. PFR covers additive combinatorics and entropy methods (Polynomial Freiman–Ruzsa); TLB covers information-theoretic lower bounds for hypothesis testing.</p>
+      </div>
+      <div class="wrap-xl" style="margin-top:1.6rem">
+        <div class="box pad-lg">
+          <figure class="figure">
+            <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/results.webp" alt="Bar charts of pass@1 results for GLM-5.3 and DeepSeek-V4-Pro." width="2512" height="1267"></div>
+            <figcaption><b>Pass@1 results</b> on Formal TCS Bench (compilation and success) and RLMEval (PFR, TLB, total) for both models.</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="wrap-main prose" style="margin-top:1.6rem">
+        <p>With GLM-5.3 and DeepSeek-V4-Pro, Turing Agent reaches <strong>58.99%</strong> and <strong>61.53%</strong> success on Formal TCS Bench — 18.43 and 32.16 points above Claude Code, the strongest baseline — with near-complete compilation (97.20% / 99.30%). The gap between compiling and being faithful is exactly why semantic review is evaluated separately.</p>
+        <p>On RLMEval it exceeds 82% overall with both models: 82.87% with GLM-5.3 (best of all methods) and 82.66% with DeepSeek-V4-Pro, 8.06 points above Codex CLI and within 4.03 points of Claude Code.</p>
+      </div>
+    </section>
+
+    <!-- ============ FINDINGS ============ -->
+    <section class="section">
+      <div class="wrap-main">
+        <div class="eyebrow">Observations</div>
+        <h2>Verification can reshape the mathematics</h2>
+        <p style="margin-top:1rem">Working through research-level proofs revealed two behaviours beyond certifying correctness.</p>
+      </div>
+      <div class="wrap-large" style="margin-top:1.2rem">
+        <div class="grid-2">
+          <div class="card tile"><span class="tag">Proof-friendly constructions</span><h3>Exploiting mathematical freedom</h3><p>Existential statements often admit many witnesses, some far easier to formalize than others. The agent picks constructions that turn case-heavy comparisons into uniform arithmetic — alternative mathematics optimized for machine reasoning.</p></div>
+          <div class="card tile"><span class="tag green">Reusable by-products</span><h3>More certified knowledge than needed</h3><p>Turing Agent often verifies auxiliary results that do not end up in the final dependency structure. Rather than being discarded, they remain as reusable, machine-checked artifacts.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <script src="data/site.js"></script>
+  <script src="data/results.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>

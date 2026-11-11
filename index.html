@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Turing Agent — Faithful Automated Formal Verification</title>
+  <meta name="description" content="Turing Agent: a unified agent harness for faithful, research-level formal verification in Lean. Harness design, OpenAI research problems, demos and workshops.">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+  <header class="banner" id="banner"></header>
+
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero wrap-large">
+      <img class="hero-logo" src="assets/img/logo.png" alt="Turing Agent logo" width="64" height="71">
+      <h1>Turing Agent<span>Faithful Automated Formal Verification in Theoretical Computer Science</span></h1>
+      <div class="affil">Shanghai Artificial Intelligence Laboratory</div>
+      <p class="lede">
+        A unified agent harness that turns AI-generated mathematical arguments into machine-checked Lean developments.
+        It goes beyond isolated theorem proving to orchestrate research-level verification end to end — from faithful statements to complete, kernel-checked proofs.
+      </p>
+      <div class="btn-row">
+        <a class="btn primary" href="harness.html">How the harness works</a>
+        <a class="btn" href="openai.html">OpenAI research problems</a>
+        <a class="btn" data-site-link="traces" hidden>Interactive proof traces</a>
+        <a class="btn" data-site-link="report" hidden>Technical report</a>
+        <a class="btn" data-site-link="code" hidden>Code</a>
+      </div>
+    </section>
+
+    <!-- ============ TEASER ============ -->
+    <section class="wrap-xl" style="margin-top:40px">
+      <div class="box-linear pad-lg">
+        <figure class="figure">
+          <div class="mat"><img class="zoomable" src="assets/img/openai4.webp" alt="Of OpenAI's 722 math problems, 121 are TCS-related; 22 were not yet fully formally verified; Turing Agent verified 4 highlighted problems." width="2489" height="1270"></div>
+          <figcaption><b>Beyond benchmarks.</b> Of the 121 TCS problems in OpenAI's collection of AI-generated mathematical research manuscripts, 22 had not been fully verified in Lean. Turing Agent with DeepSeek-V4-Pro formally verified the four highlighted here. Click any figure to enlarge.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============ AT A GLANCE ============ -->
+    <section class="section wrap-xl">
+      <div class="eyebrow">At a glance</div>
+      <div class="stats">
+        <div class="card stat"><div class="num">61.53<em>%</em></div><div class="label">Faithful theorem-formalization success on Formal TCS Bench</div><div class="sub">DeepSeek-V4-Pro · +32.16 pp over Claude Code</div></div>
+        <div class="card stat"><div class="num">82.87<em>%</em></div><div class="label">Overall pass@1 on the RLMEval TCS subset (248 theorems)</div><div class="sub">GLM-5.3 · best among evaluated harnesses</div></div>
+        <div class="card stat"><div class="num">4</div><div class="label">Previously unresolved OpenAI TCS problems formally verified</div><div class="sub">root theorems certified by Lean's kernel</div></div>
+        <div class="card stat"><div class="num">108</div><div class="label">Verified auxiliary nodes in the largest development</div><div class="sub">random 3-SAT hitting time</div></div>
+      </div>
+    </section>
+
+    <!-- ============ INTRO ============ -->
+    <section class="section wrap-main prose">
+      <h2>Why a dedicated harness?</h2>
+      <p style="margin-top:1rem">
+        LLMs and agents are moving from competition problems toward research-level mathematics. The open question is how to turn AI-generated reasoning into <strong>trustworthy, machine-verified knowledge</strong>. A Lean statement can compile while quietly changing the domain, quantifiers or assumptions of the original claim, so syntactic validity alone does not guarantee faithfulness — and long proofs need decomposition, dependency management and reuse to be completed at all.
+      </p>
+      <p>
+        Turing Agent treats verification as an <em>agent-harness</em> problem. Its two-scale architecture pairs a theorem-formalization agent with proof-formalization agents, coordinated through a proof DAG, parallel construction, an experience pool and selective semantic review. Against direct generation, Codex CLI and Claude Code on the same models, it delivers the strongest faithful formalization and completes formal proofs that earlier AI efforts left unfinished.
+      </p>
+    </section>
+
+    <!-- ============ EXPLORE ============ -->
+    <section class="section wrap-xl">
+      <div class="eyebrow">Explore</div>
+      <div class="grid-4">
+        <a class="card tile" href="harness.html">
+          <span class="tag">Harness</span>
+          <h3>Architecture &amp; results</h3>
+          <p>Faithfulness, validity, completeness; TF/PF agents, proof DAG, experience pool; benchmark results.</p>
+          <span class="go">Read →</span>
+        </a>
+        <a class="card tile" href="openai.html">
+          <span class="tag warm">OpenAI problems</span>
+          <h3><span data-count="openai">4</span> research problems</h3>
+          <p>Problem, target theorem, OpenAI's existing formalization, and how Turing Agent finished the proof.</p>
+          <span class="go">Browse →</span>
+        </a>
+        <a class="card tile" href="demos.html">
+          <span class="tag green">Demos</span>
+          <h3><span data-count="demos">6</span> demos &amp; traces</h3>
+          <p>Benchmark runs and interactive replays of full proof traces beyond the OpenAI collection.</p>
+          <span class="go">Open →</span>
+        </a>
+        <a class="card tile" href="workshops.html">
+          <span class="tag amber">Workshops</span>
+          <h3>Internal seminars</h3>
+          <p>Schedule, slides, recordings and code from our internal workshop series.</p>
+          <span class="go">See schedule →</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============ NEWS ============ -->
+    <section class="section wrap-main">
+      <h2>News</h2>
+      <div class="box pad" style="margin-top:1rem">
+        <ul class="news" id="news"></ul>
+      </div>
+    </section>
+
+    <!-- ============ CITATION ============ -->
+    <section class="section wrap-main">
+      <h2>Citation</h2>
+      <p class="ui muted" style="font-size:.9rem;margin-top:.6rem">If you use Turing Agent or the results on this page, please cite:</p>
+      <div class="bib">
+        <button type="button" class="pill copy" data-copy="bibtex">Copy</button>
+<pre class="code" id="bibtex">@techreport{turingagent2026,
+  title       = {Turing Agent: Faithful Automated Formal Verification
+                 in Theoretical Computer Science},
+  author      = {{Turing Agent Team}},
+  institution = {Shanghai Artificial Intelligence Laboratory},
+  year        = {2026}
+}</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer"></footer>
+
+  <script src="data/site.js"></script>
+  <script src="data/openai.js"></script>
+  <script src="data/demos.js"></script>
+  <script src="data/workshops.js"></script>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
