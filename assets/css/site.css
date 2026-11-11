@@ -394,3 +394,7 @@ a.tile .go { margin-top: auto; padding-top: 6px; font-size: 0.8rem; color: var(-
 @media (prefers-color-scheme: dark) {
   .brand img, .hero-logo { filter: invert(1) hue-rotate(180deg) brightness(1.05); }
 }
+
+/* showcase video: no white mat padding, cream background matches the animation */
+.figure .video-mat { padding: 0; overflow: hidden; background: #f4f1e8; }
+video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; }

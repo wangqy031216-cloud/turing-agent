@@ -10,6 +10,7 @@
      two characters  $ {  next to each other inside it.
    - status: "verified" | "in-progress" | "open"
    - The page URL openai.html#<slug> opens that problem directly.
+   - Optional `video: { src, poster, caption }` shows an animation above the figure.
    ===================================================================== */
 window.TA = window.TA || {};
 
@@ -92,6 +93,7 @@ No monotonicity assumption is needed; $I_p(f)$ carries no factor $p(1-p)$.`,
 \[ \sum_{|S|>L}\widehat f_p(S)^2 \leq \frac{p(1-p)}{L}\, I_p(f). \]`,
         String.raw`<strong>Closing.</strong> $m=\lfloor\sqrt n\rfloor$ satisfies all parameter conditions for large $n$; small cases follow from $\operatorname{Var}_p(f)\leq I_p(f)$. 27 auxiliary nodes were completed and the result passed export compilation and independent Lean kernel checking. Two extra verified lemmas produced during exploration were not needed by the final proof — reusable by-products.`
       ],
+      video: { src: "assets/video/186dag.mp4", poster: "assets/img/186dag-poster.webp", caption: "<b>A proof in motion.</b> The proof DAG for this problem being connected and verified." },
       figure: { src: "assets/img/dag-186.webp", caption: "Simplified proof DAG. Green leaves are used in the final proof, gray leaves are verified but unused; bold borders mark lemmas introduced by Turing Agent (not in the original paper); purple <b>S</b> marks nodes selected for semantic review." },
       links: [
         { label: "Replay the proof trace", href: "https://wangqy031216-cloud.github.io/proof-pipeline-observer/" }

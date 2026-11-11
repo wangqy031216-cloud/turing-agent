@@ -284,6 +284,12 @@
       (p.code || []).forEach(function (c) {
         html += (c.title ? "<h3>" + esc(c.title) + "</h3>" : "") + '<pre class="code"><code>' + esc(c.lean || c.text || "") + "</code></pre>";
       });
+      if (p.video && p.video.src) {
+        html += '<figure class="figure" style="margin-top:1.4rem"><div class="mat video-mat"><video class="showcase" src="' + esc(p.video.src) + '"' +
+          (p.video.poster ? ' poster="' + esc(p.video.poster) + '"' : "") +
+          ' muted loop playsinline controls preload="metadata"></video></div>' +
+          (p.video.caption ? "<figcaption>" + p.video.caption + "</figcaption>" : "") + "</figure>";
+      }
       if (p.figure && p.figure.src) {
         html += '<figure class="figure" style="margin-top:1.4rem"><div class="mat"><img class="zoomable" loading="lazy" src="' + esc(p.figure.src) + '" alt="' + esc(p.title) + ' proof DAG"></div>' +
           (p.figure.caption ? "<figcaption>" + p.figure.caption + "</figcaption>" : "") + "</figure>";
@@ -436,8 +442,16 @@
     });
   }
 
+  /* ---------- videos: no autoplay for visitors who ask for reduced motion ---------- */
+  function wireVideos() {
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduce) return;
+    $all("video[autoplay]").forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); });
+  }
+
   renderBanner();
   renderFooter();
+  wireVideos();
   wireLinkButtons();
   fillCounts();
   renderNews();

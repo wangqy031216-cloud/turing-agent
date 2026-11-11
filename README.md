@@ -22,6 +22,7 @@ data/               ← 日常维护基本只改这里
 assets/css/site.css 样式（颜色都是变量，深色模式自动适配）
 assets/js/site.js   渲染逻辑（一般不用动）
 assets/img/         图片
+assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 MB 以内）
 ```
 
 ## 常见操作
@@ -36,6 +37,8 @@ assets/img/         图片
 | 挂上报告 PDF / 代码链接 | `data/site.js` 的 `links.report` / `links.code`，填了 URL 按钮就会出现 |
 | 加一个新页面 | 复制 `page-template.html`，再在 `data/site.js` 的 `nav` 里加一行，顶部 banner 自动出现 |
 | 更新 benchmark 数字 | `data/results.js` |
+| 换首页展示视频 | mp4 放 `assets/video/`，封面图放 `assets/img/`，改 `index.html` 里 `SHOWCASE VIDEO` 段的 `src` / `poster` / 说明文字 |
+| 给某道 OpenAI 题加视频 | 该题对象里加 `video: { src, poster, caption }` |
 
 ### 写数学公式
 

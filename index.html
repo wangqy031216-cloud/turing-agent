@@ -33,12 +33,18 @@
       </div>
     </section>
 
-    <!-- ============ TEASER ============ -->
+    <!-- ============ SHOWCASE VIDEO ============
+         To swap the video: put the new .mp4 in assets/video/, a poster frame in
+         assets/img/, and change src / poster / caption below. -->
     <section class="wrap-xl" style="margin-top:40px">
       <div class="box-linear pad-lg">
         <figure class="figure">
-          <div class="mat"><img class="zoomable" src="assets/img/openai4.webp" alt="Of OpenAI's 722 math problems, 121 are TCS-related; 22 were not yet fully formally verified; Turing Agent verified 4 highlighted problems." width="2489" height="1270"></div>
-          <figcaption><b>Beyond benchmarks.</b> Of the 121 TCS problems in OpenAI's collection of AI-generated mathematical research manuscripts, 22 had not been fully verified in Lean. Turing Agent with DeepSeek-V4-Pro formally verified the four highlighted here. Click any figure to enlarge.</figcaption>
+          <div class="mat video-mat">
+            <video class="showcase" src="assets/video/186dag.mp4" poster="assets/img/186dag-poster.webp"
+                   width="1920" height="1080" autoplay muted loop playsinline controls preload="auto"
+                   aria-label="Animation: Turing Agent builds and verifies the proof DAG for the uniform influence bound for hypergraph properties."></video>
+          </div>
+          <figcaption><b>A proof in motion.</b> Turing Agent connecting the claims of the uniform influence bound for hypergraph properties (OpenAI problem 186-01) into a proof DAG, then verifying them one by one. <a href="openai.html#186-01">Read the full write-up →</a></figcaption>
         </figure>
       </div>
     </section>
@@ -51,6 +57,16 @@
         <div class="card stat"><div class="num">82.87<em>%</em></div><div class="label">Overall pass@1 on the RLMEval TCS subset (248 theorems)</div><div class="sub">GLM-5.3 · best among evaluated harnesses</div></div>
         <div class="card stat"><div class="num">4</div><div class="label">Previously unresolved OpenAI TCS problems formally verified</div><div class="sub">root theorems certified by Lean's kernel</div></div>
         <div class="card stat"><div class="num">108</div><div class="label">Verified auxiliary nodes in the largest development</div><div class="sub">random 3-SAT hitting time</div></div>
+      </div>
+    </section>
+
+    <!-- ============ OPENAI TEASER ============ -->
+    <section class="wrap-xl">
+      <div class="box pad-lg">
+        <figure class="figure">
+          <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/openai4.webp" alt="Of OpenAI's 722 math problems, 121 are TCS-related; 22 were not yet fully formally verified; Turing Agent verified 4 highlighted problems." width="2489" height="1270"></div>
+          <figcaption><b>Beyond benchmarks.</b> Of the 121 TCS problems in OpenAI's collection of AI-generated mathematical research manuscripts, 22 had not been fully verified in Lean. Turing Agent with DeepSeek-V4-Pro formally verified the four highlighted here. Click any figure to enlarge.</figcaption>
+        </figure>
       </div>
     </section>
 
