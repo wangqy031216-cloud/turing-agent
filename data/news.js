@@ -1,35 +1,37 @@
 /* =====================================================================
-   Internal workshops / seminars.
+   News — every update from the team: workshops, results, releases,
+   talks, papers... One list feeds both the News page (news.html) and the
+   "News" box on the home page (latest 3 items).
 
-   HOW TO ADD A SESSION: add an object to `sessions` (any order — the page
-   sorts by date and splits Upcoming / Archive automatically by today's date).
-   Only `date` and `title` are required; every other field is optional.
+   HOW TO ADD AN ITEM: add an object to `items` (any order; pages sort by
+   date). Items dated in the future are listed under "Upcoming".
+   Required: `date` (YYYY-MM-DD) and `title`. Everything else is optional.
 
-   Short entry (copy, edit):
+   Short item (copy, edit):
 
    {
-     no: 2,
-     date: "2026-12-04",                      // YYYY-MM-DD
-     time: "15:00–16:30",
-     place: "Room L1-505",
-     title: "Session title",
-     speakers: "Name A, Name B",
-     summary: "One or two sentences.",
-     links: [{ label: "Slides", href: "files/workshops/02-slides.pdf" }]
+     id: "turing-agent-report",               // anchor: news.html#turing-agent-report
+     type: "Release",                         // label: Workshop, Release, Result, Talk, Paper, ...
+     date: "2026-12-01",
+     title: "Turing Agent technical report released",
+     summary: "One or two sentences. HTML allowed, e.g. <a href=\"harness.html\">links</a>.",
+     links: [{ label: "PDF", href: "files/turing-agent.pdf" }]
    },
 
-   Full entry: also give `intro`, `poster`, `photo` and `program`
-   (see the AI4TCS workshop below). Sessions with a program get an
-   expandable "Program, abstracts & photos" panel; the most recent one
-   opens by default. Images go in assets/img/workshops/, files in files/workshops/.
+   Event with a full program: also give `time`, `series`, `title_zh`,
+   `subtitle`, `speakers`, `intro`, `poster`, `photo` and `program`
+   (see the AI4TCS workshop below). Such items get an expandable
+   "Program, abstracts & photos" panel; the latest one opens by default.
+   Images go in assets/img/workshops/ (or assets/img/news/), files in files/.
    ===================================================================== */
 window.TA = window.TA || {};
 
-TA.workshops = {
-  intro: "Internal workshops on AI for theoretical computer science, Lean formalization and agent-harness design. Programs, abstracts, slides and photos from each session are archived here.",
-  sessions: [
+TA.news = {
+  intro: "Updates from the Turing Agent team: workshops, results, releases and talks. Programs, abstracts, slides and photos are kept with each item.",
+  items: [
     {
-      no: 1,
+      id: "ai4tcs-workshop-2026",
+      type: "Workshop",
       date: "2026-10-30",
       time: "Fri 10:00–17:00",
       series: "Pujiang Science Community · Xinghe Workshop",

@@ -110,7 +110,7 @@
     var counts = {
       openai: ((TA.openai || {}).problems || []).length,
       demos: ((TA.demos || {}).items || []).length + (TA.traces || []).length,
-      workshops: ((TA.workshops || {}).sessions || []).length
+      news: ((TA.news || {}).items || []).length
     };
     $all("[data-count]").forEach(function (el) {
       var k = el.getAttribute("data-count");
@@ -122,10 +122,13 @@
   function renderNews() {
     var el = $("#news");
     if (!el) return;
-    var items = site.news || [];
+    var items = ((TA.news || {}).items || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 3);
     if (!items.length) { el.innerHTML = '<li><span></span><span class="muted">No news yet.</span></li>'; return; }
     el.innerHTML = items.map(function (n) {
-      return "<li><time>" + esc(n.date) + "</time><span>" + n.html + "</span></li>";
+      var href = "news.html" + (n.id ? "#" + encodeURIComponent(n.id) : "");
+      return "<li><time>" + esc(n.date) + "</time><span>" +
+        (n.type ? '<span class="tag warm news-type">' + esc(n.type) + "</span> " : "") +
+        '<a href="' + href + '">' + esc(n.title) + "</a></span></li>";
     }).join("");
   }
 
@@ -518,23 +521,28 @@
     draw();
   }
 
-  /* ---------- workshops ---------- */
-  function renderWorkshops() {
-    var up = $("#ws-upcoming"), past = $("#ws-past");
-    var W = TA.workshops;
-    if (!W || (!up && !past)) return;
-    var introEl = $("#ws-intro");
-    if (introEl && W.intro) introEl.textContent = W.intro;
+  /* ---------- news page (news.html) ---------- */
+  function todayStr() {
     var d = new Date();
-    var today = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
-    var all = (W.sessions || []).slice();
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+  function newsItems() { return ((TA.news || {}).items || []).slice(); }
+
+  function renderNewsPage() {
+    var up = $("#news-upcoming"), list = $("#news-list");
+    if (!TA.news || (!up && !list)) return;
+    var introEl = $("#news-intro");
+    if (introEl && TA.news.intro) introEl.textContent = TA.news.intro;
+    var today = todayStr();
+    var all = newsItems();
     var upcoming = all.filter(function (s) { return (s.date || "") >= today; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
     var done = all.filter(function (s) { return (s.date || "") < today; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
 
-    // the most recent session that has a full program opens by default
+    // open the item named in the URL (news.html#<id>), else the latest one with a full program
+    var hash = decodeURIComponent(location.hash.replace(/^#/, ""));
     var withProgram = all.filter(function (s) { return s.program || s.intro || s.photo; })
       .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
-    var openId = withProgram.length ? withProgram[0] : null;
+    var openId = all.filter(function (s) { return s.id && s.id === hash; })[0] || withProgram[0] || null;
 
     function speakerLine(list) {
       return (list || []).map(function (p) {
@@ -576,8 +584,8 @@
       return html;
     }
     function row(s) {
-      return '<div class="row">' +
-        '<div class="when">' + (s.no != null ? "<b>Workshop #" + esc(s.no) + "</b>" : "") + esc(s.date || "") +
+      return '<div class="row"' + (s.id ? ' id="' + esc(s.id) + '"' : "") + ">" +
+        '<div class="when">' + (s.type ? '<span class="tag warm news-type">' + esc(s.type) + "</span>" : "") + esc(s.date || "") +
           (s.time ? "<br>" + esc(s.time) : "") + (s.place ? "<br>" + esc(s.place) : "") + "</div>" +
         "<div>" +
           (s.series ? '<div class="ws-series">' + esc(s.series) + "</div>" : "") +
@@ -590,8 +598,14 @@
         detail(s) +
         "</div>";
     }
-    if (up) up.innerHTML = upcoming.length ? upcoming.map(row).join("") : '<div class="empty" style="border:0">No session scheduled yet. New sessions will be announced here.</div>';
-    if (past) past.innerHTML = done.length ? done.map(row).join("") : '<div class="empty" style="border:0">The archive fills up as sessions take place: slides, recordings and code.</div>';
+    var upSec = $("#news-upcoming-sec");
+    if (upSec) upSec.hidden = !upcoming.length;
+    if (up) up.innerHTML = upcoming.map(row).join("");
+    if (list) list.innerHTML = done.length ? done.map(row).join("") : '<div class="empty" style="border:0">No news yet.</div>';
+    if (hash && openId && openId.id === hash) {
+      var target = document.getElementById(hash);
+      if (target) setTimeout(function () { target.scrollIntoView({ block: "start" }); }, 0);
+    }
   }
 
   /* ---------- lightbox for figures ---------- */
@@ -642,7 +656,7 @@
   wireSliders();
   renderExplorer();
   renderDemos();
-  renderWorkshops();
+  renderNewsPage();
   wireLightbox();
   wireCopy();
 })();

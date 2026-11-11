@@ -597,3 +597,6 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .prog-bio strong { color: var(--text); }
 .ws-photo { margin: 24px 0 4px; }
 .ws-photo img { border-radius: 10px; width: 100%; }
+.news-type { display: inline-flex; margin-bottom: 4px; }
+.row .when .news-type { display: flex; width: max-content; }
+.news li .news-type { margin: 0 6px 0 0; vertical-align: 1px; }

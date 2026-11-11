@@ -1,12 +1,12 @@
 /* =====================================================================
    Site-wide config: top banner, footer, news.
    - Add a new page: copy page-template.html, then add one line to `nav`.
-   - Add a news item: put it at the TOP of `news` (newest first).
+   - News items (home page + news.html) live in data/news.js.
    ===================================================================== */
 window.TA = window.TA || {};
 
 TA.site = {
-  version: "202611110729",   // set by tools/bump_version.py
+  version: "202611110735",   // set by tools/bump_version.py
   name: "Turing Agent",
   tagline: "Formal Verification Portal",
   affiliation: "Shanghai Artificial Intelligence Laboratory",
@@ -24,14 +24,6 @@ TA.site = {
     { label: "Harness",         href: "harness.html" },
     { label: "OpenAI Problems", href: "openai.html" },
     { label: "Demos",           href: "demos.html" },
-    { label: "Workshops",       href: "workshops.html" }
-  ],
-
-  // Shown on the home page. Newest first. `html` may contain links.
-  news: [
-    {
-      date: "2026-10-30",
-      html: 'Held the <a href="workshops.html">AI4TCS Workshop — After AI Can Solve Problems: Toward TCS 2.0</a>, with invited talks on mathematical agents, AI-assisted combinatorial optimization and certificates between AI and formal verification.'
-    }
+    { label: "News",            href: "news.html" }
   ]
 };
