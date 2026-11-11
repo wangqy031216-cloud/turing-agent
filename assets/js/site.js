@@ -151,7 +151,11 @@
         var parts = String(name).split(" · ");
         return esc(parts[0]) + (parts[1] ? '<span class="gsub">' + esc(parts.slice(1).join(" · ")) + "</span>" : "");
       }
-      var html = '<table class="ac-table results"><thead>' +
+      // fixed layout: method column + equal-width number columns, so each benchmark's
+      // columns sit side by side directly under their (centred) group title
+      var numW = (68 / R.columns.length).toFixed(3) + "%";
+      var html = '<table class="ac-table results"><colgroup><col style="width:32%">' +
+        R.columns.map(function () { return '<col style="width:' + numW + '">'; }).join("") + "</colgroup><thead>" +
         '<tr><th rowspan="2" class="mcol">Method · ' + esc(m.name) + "</th>" +
         groups.map(function (g) { return '<th colspan="' + g.span + '" class="' + gcls(g.start, "grp") + '">' + glabel(g.name) + "</th>"; }).join("") +
         "</tr><tr>" +

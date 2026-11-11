@@ -561,3 +561,6 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .pitem .meta > span { white-space: nowrap; }
 .pitem .meta > span:nth-child(2) { overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
 .pitem .meta .demo-badge { flex: none; }
+.ac-table.results { table-layout: fixed; min-width: 640px; }
+.ac-table.results th, .ac-table.results td { padding-left: 10px; padding-right: 10px; }
+.ac-table.results th.mcol, .ac-table.results tbody td:first-child { white-space: normal; }

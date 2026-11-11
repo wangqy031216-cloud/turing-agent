@@ -72,7 +72,8 @@
     TA.traceData = TA.traceData || {};
     if (TA.traceData[id]) return cb(TA.traceData[id]);
     var s = document.createElement("script");
-    s.src = "data/traces/" + encodeURIComponent(id) + ".js";
+    var ver = (TA.site && TA.site.version) ? "?v=" + encodeURIComponent(TA.site.version) : "";
+    s.src = "data/traces/" + encodeURIComponent(id) + ".js" + ver;
     s.onload = function () { cb(TA.traceData[id]); };
     s.onerror = function () { cb(null); };
     document.body.appendChild(s);

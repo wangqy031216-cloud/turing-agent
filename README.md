@@ -23,6 +23,7 @@ data/               ← 日常维护基本只改这里
   traces/           证明轨迹（由 tools/extract_traces.py 生成，不要手改）
 tools/
   extract_traces.py 把 proof-pipeline-observer 导出的原始轨迹压缩成网站用的小文件
+  bump_version.py   发布前运行，给 CSS / JS 加版本号，避免访客看到缓存的旧版本
 assets/css/site.css 样式（颜色都是变量，深色模式自动适配）
 assets/js/site.js   渲染逻辑（一般不用动）
 assets/img/         图片
@@ -76,6 +77,16 @@ python3 tools/extract_traces.py /path/to/proof-pipeline-observer/data/runs
 3. 提交 `data/traces/` 的改动。首页第三个标签和 Demos 页的回放器都会自动出现这条轨迹。
 
 单独链接到某条轨迹：`demos.html#<id>`，例如 `demos.html#openai-math-186-ds`。
+
+## 发布前：刷新版本号（重要）
+
+浏览器会缓存 CSS / JS，改完 `assets/` 或 `data/` 后访客可能还看到旧版本。提交前运行一次：
+
+```bash
+python3 tools/bump_version.py
+```
+
+它会给所有页面里引用的本地 CSS / JS 加上新的 `?v=时间戳`，访客打开就是最新版。
 
 ## 本地预览
 
