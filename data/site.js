@@ -6,7 +6,7 @@
 window.TA = window.TA || {};
 
 TA.site = {
-  version: "202611110642",   // set by tools/bump_version.py
+  version: "202611110655",   // set by tools/bump_version.py
   name: "Turing Agent",
   tagline: "Formal Verification Portal",
   affiliation: "Shanghai Artificial Intelligence Laboratory",
