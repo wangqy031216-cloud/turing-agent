@@ -1,12 +1,10 @@
 /* =====================================================================
    News — every update from the team: workshops, results, releases,
-   talks, papers... One list feeds both the News page (news.html) and the
-   "News" box on the home page (latest 3 items).
+   talks, papers... This list feeds the News page (news.html).
 
    HOW TO ADD AN ITEM: add an object to `items` (any order; pages sort by
    date). Items dated after today are listed under "Upcoming" and move to
-   "Latest" on their date. Add `home: false` to keep an item off the home
-   page's News box (it still shows on news.html).
+   "Latest" on their date.
    Required: `date` (YYYY-MM-DD) and `title`. Everything else is optional.
 
    Short item (copy, edit):
@@ -37,8 +35,7 @@ TA.news = {
       date: "2026-11-16",
       title: "Introducing Turing Agent",
       summary: "We release Turing Agent, an agent harness that takes a paper's claim to a kernel-checked Lean proof.",
-      links: [{ label: "About the harness →", href: "harness.html" }],
-      home: false   // already the "What's new" card on the home page
+      links: [{ label: "About the harness →", href: "harness.html" }]
     },
     {
       id: "ai4tcs-workshop-2026",

@@ -19,7 +19,7 @@ data/               ← 日常维护基本只改这里
   site.js           顶部导航、各种外链（报告 PDF / 代码仓库）
   openai.js         OpenAI 题目
   demos.js          demo
-  news.js           所有新闻条目（首页 News 显示最新 3 条，News 页显示全部）
+  news.js           所有新闻条目（显示在 News 页）
   results.js        benchmark 数据表
   traces/           证明轨迹（由 tools/extract_traces.py 生成，不要手改）
 tools/
@@ -38,7 +38,7 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 | 加一道 OpenAI 题 | `data/openai.js`，复制一个对象改字段；只有 `slug / title / status / summary` 必填，其余字段没有就不显示 |
 | 更新顶部漏斗数字（722 / 121 / 99 / 22 / 4） | `data/openai.js` 里的 `funnel` |
 | 加一个非轨迹的 demo | `data/demos.js`，文件顶部有模板；会出现在 Demos 页下方的 More demos（列表为空时该区块自动隐藏）|
-| 加一条新闻 / 一期 workshop | `data/news.js`，文件顶部有模板；`type` 写类别（Workshop、Release、Result、Talk…）。首页 News 和 News 页自动更新；slides 等文件可放 `files/` |
+| 加一条新闻 / 一期 workshop | `data/news.js`，文件顶部有模板；`type` 写类别（Workshop、Release、Result、Talk…）。News 页自动更新；slides 等文件可放 `files/` |
 | 挂上报告 PDF / 代码链接 | `data/site.js` 的 `links.report` / `links.code`，填了 URL 按钮就会出现 |
 | 加一个新页面 | 复制 `page-template.html`，再在 `data/site.js` 的 `nav` 里加一行，顶部 banner 自动出现 |
 | 更新 benchmark 数字 | `data/results.js` |

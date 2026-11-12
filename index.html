@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Turing Agent — Faithful Automated Formal Verification</title>
   <meta name="description" content="Turing Agent: a unified agent harness for faithful, research-level formal verification in Lean. Harness design, OpenAI research problems, demos and news.">
-  <link rel="icon" href="assets/img/logo.png?v=202611121025">
+  <link rel="icon" href="assets/img/logo.png?v=202611121033">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=202611121025">
+  <link rel="stylesheet" href="assets/css/site.css?v=202611121033">
 </head>
 <body>
   <header class="banner" id="banner"></header>
@@ -17,28 +17,28 @@
   <main>
     <!-- ============ HERO ============ -->
     <section class="hero wrap-large">
-      <img class="hero-logo" src="assets/img/logo.png?v=202611121025" alt="Turing Agent logo" width="64" height="71">
+      <img class="hero-logo" src="assets/img/logo.png?v=202611121033" alt="Turing Agent logo" width="64" height="71">
       <h1>Turing Agent<span>Faithful Automated Formal Verification</span></h1>
       <div class="affil">Shanghai Artificial Intelligence Laboratory</div>
     </section>
 
-    <!-- ============ MISSION (left) + WHAT'S NEW (right) ============
-         Side by side, different designs: the mission is an open statement,
-         What's new is a card for the current release (replace its title,
-         sentence and stats when there is a new one). -->
+    <!-- ============ MISSION (focus, left) + WHAT'S NEW (right) ============
+         Mission is the wide framed panel; What's new is a lighter column for
+         the current release (replace its title, sentence and stats when there
+         is a new one). -->
     <section class="wrap-xl intro-duo">
-      <div class="mission-col">
-        <div class="ms-label">Our mission</div>
-        <p class="ms-statement">Turn AI-generated mathematics into <em>trustworthy, machine-verified</em> knowledge.</p>
+      <div class="mission-card">
+        <div class="duo-label">Our mission</div>
+        <p class="ms-statement">Turn AI-generated mathematics into <em>trustworthy, <span class="nw">machine-verified</span></em> knowledge.</p>
         <ul class="ms-pillars">
-          <li><b>Fast</b><span>Verify proofs as quickly as AI produces them.</span></li>
-          <li><b>Faithful</b><span>Prove what was actually claimed, not a look-alike statement.</span></li>
-          <li><b>For TCS</b><span>Build formal foundations for theoretical computer science.</span></li>
+          <li><b>Fast</b>Verify proofs as quickly as AI produces them.</li>
+          <li><b>Faithful</b>Prove what was actually claimed, not a <span class="nw">look-alike</span> statement.</li>
+          <li><b>For TCS</b>Build formal foundations for theoretical computer science.</li>
         </ul>
       </div>
 
-      <div class="release-card">
-        <span class="badge-new">What's new</span>
+      <div class="news-col">
+        <div class="duo-label">What's new</div>
         <h2>Introducing Turing Agent</h2>
         <p class="rc-sub">An agent harness that takes a paper's claim to a kernel-checked Lean proof.</p>
         <div class="rc-stats">
@@ -78,7 +78,7 @@
                 <!-- To swap the video: new .mp4 in assets/video/, poster in assets/img/, edit src/poster/caption. -->
                 <figure class="figure">
                   <div class="mat video-mat">
-                    <video class="showcase" src="assets/video/186dag.mp4?v=202611121025" poster="assets/img/186dag-poster.webp"
+                    <video class="showcase" src="assets/video/186dag.mp4?v=202611121033" poster="assets/img/186dag-poster.webp"
                            width="1920" height="1080" autoplay muted loop playsinline controls preload="auto"
                            aria-label="Animation: Turing Agent builds and verifies the proof DAG for the uniform influence bound for hypergraph properties."></video>
                   </div>
@@ -142,20 +142,9 @@
       </div>
       <div class="box pad-lg">
         <figure class="figure">
-          <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/results.webp?v=202611121025" alt="Bar charts of pass@1 on Formal TCS Bench (compilation and success) and RLMEval (PFR, TLB, total) for LLM only, Codex, Claude Code and Turing Agent, with GLM-5.3 and DeepSeek-V4-Pro." width="2000" height="1009"></div>
+          <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/results.webp?v=202611121033" alt="Bar charts of pass@1 on Formal TCS Bench (compilation and success) and RLMEval (PFR, TLB, total) for LLM only, Codex, Claude Code and Turing Agent, with GLM-5.3 and DeepSeek-V4-Pro." width="2000" height="1009"></div>
           <figcaption><b>Pass@1 (%)</b> with GLM-5.3 (top) and DeepSeek-V4-Pro (bottom): the same model run as direct generation, inside Codex CLI, inside Claude Code, and inside Turing Agent. Formal TCS Bench success requires the statement to compile <em>and</em> pass independent semantic review. Click to enlarge.</figcaption>
         </figure>
-      </div>
-    </section>
-
-    <!-- ============ NEWS (latest 3 items from data/news.js) ============ -->
-    <section class="section wrap-main">
-      <div class="section-head" style="margin-bottom:0">
-        <h2>News</h2>
-        <a class="more" href="news.html">All news →</a>
-      </div>
-      <div class="box pad" style="margin-top:1rem">
-        <ul class="news" id="news"></ul>
       </div>
     </section>
 
@@ -178,11 +167,10 @@
 
   <footer class="footer" id="footer"></footer>
 
-  <script src="data/site.js?v=202611121025"></script>
-  <script src="data/openai.js?v=202611121025"></script>
-  <script src="data/demos.js?v=202611121025"></script>
-  <script src="data/traces/index.js?v=202611121025"></script>
-  <script src="data/news.js?v=202611121025"></script>
-  <script src="assets/js/site.js?v=202611121025"></script>
+  <script src="data/site.js?v=202611121033"></script>
+  <script src="data/openai.js?v=202611121033"></script>
+  <script src="data/demos.js?v=202611121033"></script>
+  <script src="data/traces/index.js?v=202611121033"></script>
+  <script src="assets/js/site.js?v=202611121033"></script>
 </body>
 </html>

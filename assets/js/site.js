@@ -119,19 +119,6 @@
   }
 
   /* ---------- home: news ---------- */
-  function renderNews() {
-    var el = $("#news");
-    if (!el) return;
-    var items = ((TA.news || {}).items || []).filter(function (n) { return n.home !== false; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 3);
-    if (!items.length) { el.innerHTML = '<li><span></span><span class="muted">No news yet.</span></li>'; return; }
-    el.innerHTML = items.map(function (n) {
-      var href = "news.html" + (n.id ? "#" + encodeURIComponent(n.id) : "");
-      return "<li><time>" + esc(n.date) + "</time><span>" +
-        (n.type ? '<span class="tag warm news-type">' + esc(n.type) + "</span> " : "") +
-        '<a href="' + href + '">' + esc(n.title) + "</a></span></li>";
-    }).join("");
-  }
-
   /* ---------- harness: results table ---------- */
   function renderResults() {
     var mount = $("#results-table");
@@ -649,7 +636,6 @@
   wireVideos();
   wireLinkButtons();
   fillCounts();
-  renderNews();
   renderResults();
   renderFunnel();
   renderHomePanels();
