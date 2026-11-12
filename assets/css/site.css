@@ -679,3 +679,5 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   .sr-num { font-size: 1.3rem; }
   .duo-list li { grid-template-columns: 70px minmax(0, 1fr); gap: 10px; }
 }
+.duo-foot .more { font-size: 0.9rem; }
+.duo-foot { gap: 18px; }
