@@ -5,86 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Turing Agent — Faithful Automated Formal Verification</title>
   <meta name="description" content="Turing Agent: a unified agent harness for faithful, research-level formal verification in Lean. Harness design, OpenAI research problems, demos and news.">
-  <link rel="icon" href="assets/img/logo.png?v=202611120833">
+  <link rel="icon" href="assets/img/logo.png?v=202611120845">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/site.css?v=202611120833">
+  <link rel="stylesheet" href="assets/css/site.css?v=202611120845">
 </head>
 <body>
   <header class="banner" id="banner"></header>
 
   <main>
-    <!-- ============ HERO: brand line + mission ============ -->
-    <section class="hero hero-mission wrap-xl">
-      <div class="brand-line">
-        <img src="assets/img/logo.png?v=202611120833" alt="Turing Agent logo" width="40" height="44">
-        <div>
-          <div class="bl-name">Turing Agent</div>
-          <div class="bl-sub">Faithful Automated Formal Verification · Shanghai Artificial Intelligence Laboratory</div>
-        </div>
-      </div>
-      <div class="eyebrow">Our mission</div>
-      <h1 class="mission-title">Turn AI-generated mathematics into <em>trustworthy, machine-verified</em> knowledge.</h1>
-      <p class="mission-lede">
-        AI systems are moving from benchmark problems to research-level mathematics. Their arguments are only as valuable as our ability to trust them.
-        We build agents that check those arguments in Lean, quickly and faithfully, so that each new result comes with a guarantee from a small trusted kernel,
-        starting with theoretical computer science.
-      </p>
-      <div class="grid-3 pillars">
-        <div class="pillar">
-          <span class="pn">01 · Fast</span>
-          <h3>Verify at the pace of discovery</h3>
-          <p>As AI produces research arguments at growing scale, checking them has to keep up. We decompose long proofs, build independent pieces in parallel and reuse what earlier attempts learned, so correctness is settled by a proof assistant rather than left open.</p>
-        </div>
-        <div class="pillar">
-          <span class="pn">02 · Faithful</span>
-          <h3>Prove what was actually claimed</h3>
-          <p>A Lean statement can compile and still say something else. Statements and definitions are reviewed against the original claim (domains, quantifiers, assumptions) before a proof counts, and the finished proof is checked against the informal argument.</p>
-        </div>
-        <div class="pillar">
-          <span class="pn">03 · For TCS</span>
-          <h3>Formal foundations for theoretical computer science</h3>
-          <p>TCS results rest on intricate quantifiers, parameter dependencies and infinite families of instances, with few formal libraries to build on. We want to give the field more verified theorems, definitions and reusable lemmas, built on Mathlib and CSLib.</p>
-        </div>
-      </div>
+    <!-- ============ HERO ============ -->
+    <section class="hero wrap-large">
+      <img class="hero-logo" src="assets/img/logo.png?v=202611120845" alt="Turing Agent logo" width="64" height="71">
+      <h1>Turing Agent<span>Faithful Automated Formal Verification</span></h1>
+      <div class="affil">Shanghai Artificial Intelligence Laboratory</div>
+      <p class="mission-line"><span class="eyebrow">Our mission</span>Turn AI-generated mathematics into <em>trustworthy, machine-verified</em> knowledge.</p>
+      <ul class="pillar-row">
+        <li><b>Fast</b> verify as quickly as AI proves</li>
+        <li><b>Faithful</b> prove what was actually claimed</li>
+        <li><b>For TCS</b> formal foundations for the field</li>
+      </ul>
     </section>
 
     <!-- ============ RELEASE: what we have published ============ -->
     <section class="section wrap-xl release">
-      <div class="release-head">
-        <span class="badge-new">New</span>
-        <div>
-          <h2>Introducing Turing Agent</h2>
-          <p>A unified agent harness for research-level formal verification. Theorem-formalization and proof-formalization agents work together through a proof DAG, parallel construction, an experience pool and selective semantic review, from a paper's claim to a kernel-checked Lean proof.</p>
+      <div class="release-box">
+        <div class="release-head">
+          <span class="badge-new">New</span>
+          <div>
+            <h2>Introducing Turing Agent</h2>
+            <p>An agent harness that takes a paper's claim to a kernel-checked Lean proof.</p>
+          </div>
         </div>
-      </div>
-      <div class="grid-3">
-        <a class="card contrib-card" href="openai.html">
-          <div class="contrib-num">4</div>
-          <h3>Previously unresolved OpenAI research problems, now formally verified</h3>
-          <p>Of the 121 TCS problems in OpenAI's collection of 722 AI-generated manuscripts, 22 lacked complete Lean proofs. Turing Agent with DeepSeek-V4-Pro finished four of them, one with more than a hundred verified auxiliary claims.</p>
-          <span class="go">See the problems →</span>
-        </a>
-        <a class="card contrib-card" href="harness.html#results">
-          <div class="contrib-num">61.53<em>%</em></div>
-          <h3>Faithful theorem formalization on Formal TCS Bench</h3>
-          <p>Statements that compile <em>and</em> pass semantic review: 32.16 points above Claude Code with the same model (DeepSeek-V4-Pro), with 99.30% of statements compiling.</p>
-          <span class="go">Full results →</span>
-        </a>
-        <a class="card contrib-card" href="harness.html#results">
-          <div class="contrib-num">82.87<em>%</em></div>
-          <h3>Proof formalization pass@1 on the RLMEval TCS subset</h3>
-          <p>Complete, <code>sorry</code>-free proofs for 248 theorems from the PFR and TestingLowerBounds projects with GLM-5.3, the best of all evaluated methods.</p>
-          <span class="go">Full results →</span>
-        </a>
-      </div>
-      <div class="release-foot">
-        <a class="btn primary" href="harness.html">How Turing Agent works</a>
-        <a class="btn" href="demos.html">Watch a proof get built</a>
-        <!-- external resources: each button appears only when its URL is set in data/site.js -->
-        <a class="btn" data-site-link="report" hidden>Technical report</a>
-        <a class="btn" data-site-link="code" hidden>Code</a>
+        <div class="grid-3">
+          <a class="card contrib-card" href="openai.html">
+            <div class="contrib-num">4</div>
+            <h3>Unresolved OpenAI research problems, now formally verified</h3>
+            <p>Out of 22 TCS problems left without complete Lean proofs.</p>
+            <span class="go">See the problems →</span>
+          </a>
+          <a class="card contrib-card" href="harness.html#results">
+            <div class="contrib-num">61.53<em>%</em></div>
+            <h3>Faithful theorem formalization, Formal TCS Bench</h3>
+            <p>+32.16 points over Claude Code · 99.30% compile.</p>
+            <span class="go">Full results →</span>
+          </a>
+          <a class="card contrib-card" href="harness.html#results">
+            <div class="contrib-num">82.87<em>%</em></div>
+            <h3>Proof formalization pass@1, RLMEval TCS subset</h3>
+            <p>Best of all evaluated methods.</p>
+            <span class="go">Full results →</span>
+          </a>
+        </div>
+        <div class="release-foot">
+          <a class="btn primary" href="harness.html">How Turing Agent works</a>
+          <a class="btn" href="demos.html">Watch a proof get built</a>
+          <!-- external resources: each button appears only when its URL is set in data/site.js -->
+          <a class="btn" data-site-link="report" hidden>Technical report</a>
+          <a class="btn" data-site-link="code" hidden>Code</a>
+        </div>
       </div>
     </section>
 
@@ -111,7 +91,7 @@
                 <!-- To swap the video: new .mp4 in assets/video/, poster in assets/img/, edit src/poster/caption. -->
                 <figure class="figure">
                   <div class="mat video-mat">
-                    <video class="showcase" src="assets/video/186dag.mp4?v=202611120833" poster="assets/img/186dag-poster.webp"
+                    <video class="showcase" src="assets/video/186dag.mp4?v=202611120845" poster="assets/img/186dag-poster.webp"
                            width="1920" height="1080" autoplay muted loop playsinline controls preload="auto"
                            aria-label="Animation: Turing Agent builds and verifies the proof DAG for the uniform influence bound for hypergraph properties."></video>
                   </div>
@@ -175,7 +155,7 @@
       </div>
       <div class="box pad-lg">
         <figure class="figure">
-          <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/results.webp?v=202611120833" alt="Bar charts of pass@1 on Formal TCS Bench (compilation and success) and RLMEval (PFR, TLB, total) for LLM only, Codex, Claude Code and Turing Agent, with GLM-5.3 and DeepSeek-V4-Pro." width="2000" height="1009"></div>
+          <div class="mat"><img class="zoomable" loading="lazy" src="assets/img/results.webp?v=202611120845" alt="Bar charts of pass@1 on Formal TCS Bench (compilation and success) and RLMEval (PFR, TLB, total) for LLM only, Codex, Claude Code and Turing Agent, with GLM-5.3 and DeepSeek-V4-Pro." width="2000" height="1009"></div>
           <figcaption><b>Pass@1 (%)</b> with GLM-5.3 (top) and DeepSeek-V4-Pro (bottom): the same model run as direct generation, inside Codex CLI, inside Claude Code, and inside Turing Agent. Formal TCS Bench success requires the statement to compile <em>and</em> pass independent semantic review. Click to enlarge.</figcaption>
         </figure>
       </div>
@@ -211,11 +191,11 @@
 
   <footer class="footer" id="footer"></footer>
 
-  <script src="data/site.js?v=202611120833"></script>
-  <script src="data/openai.js?v=202611120833"></script>
-  <script src="data/demos.js?v=202611120833"></script>
-  <script src="data/traces/index.js?v=202611120833"></script>
-  <script src="data/news.js?v=202611120833"></script>
-  <script src="assets/js/site.js?v=202611120833"></script>
+  <script src="data/site.js?v=202611120845"></script>
+  <script src="data/openai.js?v=202611120845"></script>
+  <script src="data/demos.js?v=202611120845"></script>
+  <script src="data/traces/index.js?v=202611120845"></script>
+  <script src="data/news.js?v=202611120845"></script>
+  <script src="assets/js/site.js?v=202611120845"></script>
 </body>
 </html>

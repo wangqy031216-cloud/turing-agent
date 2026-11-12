@@ -640,3 +640,14 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .hero-mission .pillar { background: var(--bg-soft); }
 @media (prefers-color-scheme: dark) { .brand-line img { filter: invert(1) hue-rotate(180deg) brightness(1.05); } }
 @media (max-width: 560px) { .brand-line { border-radius: 14px; } }
+
+/* hero: one-line mission + three short pillars */
+.mission-line { font-family: var(--font-serif); font-size: clamp(1.15rem, 0.95rem + 0.8vw, 1.45rem); line-height: 1.45; color: var(--text); max-width: 40rem; margin: 2rem auto 0; }
+.mission-line .eyebrow { display: block; margin-bottom: 0.4rem; }
+.mission-line em { font-style: normal; color: var(--blue); }
+.pillar-row { list-style: none; padding: 0; margin: 1.3rem auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-family: var(--font-sans); font-size: 0.82rem; color: var(--muted); }
+.pillar-row li { border: 1px solid var(--border); background: var(--bg-soft); border-radius: 999px; padding: 5px 14px; }
+.pillar-row b { color: var(--warm); font-weight: 600; margin-right: 6px; }
+.release-box { background: var(--bg-linear); border: 1px solid var(--border); border-radius: 18px; padding: clamp(22px, 3.5vw, 40px); }
+.release-box .contrib-card { background: var(--bg); }
+.release { padding-top: 40px; }
