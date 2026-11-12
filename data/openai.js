@@ -23,7 +23,7 @@ TA.openai = {
     { num: 121, label: "TCS-related problems" },
     { num: 99,  label: "Already formally verified", sub: "by the original system" },
     { num: 22,  label: "Not yet fully formally verified" },
-    { num: 4,   label: "Verified by Turing Agent", sub: "DeepSeek-V4-Pro", highlight: true }
+    { num: 4,   label: "Highlighted problems verified by Turing Agent", sub: "DeepSeek-V4-Pro", highlight: true }
   ],
 
   problems: [
