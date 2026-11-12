@@ -602,43 +602,38 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .news li .news-type { margin: 0 6px 0 0; vertical-align: 1px; }
 
 /* =====================================================================
-   Home: mission (part of the hero) + What's new (release card)
-   The mission is a statement under the title; the release is a feature
-   card below it. Update the card when there is a new release.
+   Home: Mission (left, open statement) + What's new (right, release card)
+   Same row, different roles: the mission is long-term; the card is the
+   current release. Update the card when there is a new release.
    ===================================================================== */
-.mission-strip { margin: 40px auto 0; max-width: 900px; }
-.ms-label { display: flex; align-items: center; gap: 14px; max-width: 26rem; margin: 0 auto; font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm); }
-.ms-label::before, .ms-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
-.ms-statement { font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.2rem, 0.95rem + 0.95vw, 1.55rem); line-height: 1.4; letter-spacing: -0.01em; color: var(--text); max-width: 36rem; margin: 14px auto 0; }
+.intro-duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: clamp(28px, 4.5vw, 64px); align-items: center; margin-top: 44px; }
+@media (max-width: 900px) { .intro-duo { grid-template-columns: minmax(0, 1fr); gap: 36px; } }
+
+.ms-label { display: flex; align-items: center; gap: 12px; font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--warm); }
+.ms-label::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.ms-statement { font-family: var(--font-serif); font-weight: 600; font-size: clamp(1.5rem, 1.1rem + 1.3vw, 2.05rem); line-height: 1.26; letter-spacing: -0.015em; color: var(--text); margin: 16px 0 0; }
 .ms-statement em { font-style: normal; color: var(--blue); }
-.ms-pillars { list-style: none; padding: 0; margin: 22px 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); font-family: var(--font-sans); font-size: 0.86rem; line-height: 1.5; color: var(--muted); }
-.ms-pillars li { padding: 2px 22px; }
-.ms-pillars li + li { border-left: 1px solid var(--border); }
-.ms-pillars b { display: block; margin-bottom: 3px; font-size: 0.92rem; font-weight: 600; color: var(--text); }
-@media (max-width: 720px) {
-  .ms-pillars { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .ms-pillars li { padding: 0; }
-  .ms-pillars li + li { border-left: 0; }
-}
+.ms-pillars { list-style: none; padding: 0; margin: 24px 0 0; font-family: var(--font-sans); }
+.ms-pillars li { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 11px 0; border-top: 1px solid var(--border); font-size: 0.9rem; line-height: 1.5; color: var(--body); }
+.ms-pillars li:last-child { border-bottom: 1px solid var(--border); }
+.ms-pillars b { font-weight: 600; color: var(--warm); }
 
 .badge-new { display: inline-block; font-family: var(--font-sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.4; color: var(--bg); background: var(--warm); border-radius: 999px; padding: 4px 10px; }
 
-.release-wrap { margin-top: 52px; }
-.release-card { background: var(--bg-linear); border: 1px solid var(--border); border-radius: 18px; padding: clamp(22px, 3.2vw, 36px); }
-.rc-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 14px 32px; }
-.rc-head h2 { font-size: clamp(1.5rem, 1.1rem + 1.1vw, 2rem); line-height: 1.2; margin-top: 14px; }
-.rc-head p { margin: 8px 0 0; font-size: 1rem; }
-.rc-links { display: flex; flex-wrap: wrap; gap: 18px; }
-.rc-links .more { font-size: 0.9rem; }
-.rc-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
-.rc-stat { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "num go" "text text"; row-gap: 10px; column-gap: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; color: inherit; font-family: var(--font-sans); transition: border-color 0.15s ease; }
+.release-card { background: var(--bg-linear); border: 1px solid var(--border); border-radius: 18px; padding: clamp(22px, 3vw, 32px); box-shadow: var(--shadow); }
+.release-card h2 { font-size: clamp(1.4rem, 1.1rem + 0.9vw, 1.8rem); line-height: 1.2; margin-top: 14px; }
+.rc-sub { margin: 8px 0 0; font-size: 0.98rem; }
+.rc-stats { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.rc-stat { display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 12px; align-items: center; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; font-family: var(--font-sans); color: inherit; transition: border-color 0.15s ease; }
 .rc-stat:hover { text-decoration: none; border-color: var(--navy); }
-.rc-num { grid-area: num; font-size: 2.1rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
-.rc-num em { font-style: normal; font-size: 0.5em; color: var(--muted); font-weight: 500; margin-left: 2px; }
-.rc-text { grid-area: text; font-size: 0.86rem; line-height: 1.5; color: var(--body); }
-.rc-go { grid-area: go; font-size: 0.95rem; font-weight: 600; color: var(--warm); }
-@media (max-width: 760px) {
-  .rc-stats { grid-template-columns: minmax(0, 1fr); gap: 8px; margin-top: 18px; }
-  .rc-stat { grid-template-columns: 78px minmax(0, 1fr) auto; grid-template-areas: "num text go"; align-items: center; padding: 12px 14px; }
-  .rc-num { font-size: 1.4rem; }
+.rc-num { font-size: 1.55rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
+.rc-num em { font-style: normal; font-size: 0.55em; color: var(--muted); font-weight: 500; margin-left: 1px; }
+.rc-text { font-size: 0.86rem; line-height: 1.4; color: var(--body); }
+.rc-go { font-weight: 600; color: var(--warm); }
+.rc-links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; }
+.rc-links .more { font-size: 0.9rem; }
+@media (max-width: 560px) {
+  .rc-stat { grid-template-columns: 72px minmax(0, 1fr) auto; gap: 10px; padding: 10px 12px; }
+  .rc-num { font-size: 1.3rem; }
+  .ms-pillars li { grid-template-columns: 72px minmax(0, 1fr); gap: 10px; }
 }

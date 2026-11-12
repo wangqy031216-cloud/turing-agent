@@ -4,7 +4,9 @@
    "News" box on the home page (latest 3 items).
 
    HOW TO ADD AN ITEM: add an object to `items` (any order; pages sort by
-   date). Items dated in the future are listed under "Upcoming".
+   date). Items dated after today are listed under "Upcoming" and move to
+   "Latest" on their date. Add `home: false` to keep an item off the home
+   page's News box (it still shows on news.html).
    Required: `date` (YYYY-MM-DD) and `title`. Everything else is optional.
 
    Short item (copy, edit):
@@ -29,6 +31,15 @@ window.TA = window.TA || {};
 TA.news = {
   intro: "Updates from the Turing Agent team: workshops, results, releases and talks. Programs, abstracts, slides and photos are kept with each item.",
   items: [
+    {
+      id: "turing-agent-release",
+      type: "Release",
+      date: "2026-11-16",
+      title: "Introducing Turing Agent",
+      summary: "We release Turing Agent, an agent harness that takes a paper's claim to a kernel-checked Lean proof.",
+      links: [{ label: "About the harness →", href: "harness.html" }],
+      home: false   // already the "What's new" card on the home page
+    },
     {
       id: "ai4tcs-workshop-2026",
       type: "Workshop",

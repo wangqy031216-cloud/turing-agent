@@ -122,7 +122,7 @@
   function renderNews() {
     var el = $("#news");
     if (!el) return;
-    var items = ((TA.news || {}).items || []).slice().sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 3);
+    var items = ((TA.news || {}).items || []).filter(function (n) { return n.home !== false; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; }).slice(0, 3);
     if (!items.length) { el.innerHTML = '<li><span></span><span class="muted">No news yet.</span></li>'; return; }
     el.innerHTML = items.map(function (n) {
       var href = "news.html" + (n.id ? "#" + encodeURIComponent(n.id) : "");
@@ -535,8 +535,8 @@
     if (introEl && TA.news.intro) introEl.textContent = TA.news.intro;
     var today = todayStr();
     var all = newsItems();
-    var upcoming = all.filter(function (s) { return (s.date || "") >= today; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-    var done = all.filter(function (s) { return (s.date || "") < today; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+    var upcoming = all.filter(function (s) { return (s.date || "") > today; }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+    var done = all.filter(function (s) { return (s.date || "") <= today; }).sort(function (a, b) { return a.date < b.date ? 1 : -1; });
 
     // open the item named in the URL (news.html#<id>), else the latest one with a full program
     var hash = decodeURIComponent(location.hash.replace(/^#/, ""));
