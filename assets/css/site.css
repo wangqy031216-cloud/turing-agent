@@ -629,3 +629,14 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .contrib-card .go { margin-top: auto; padding-top: 6px; font-size: 0.8rem; font-weight: 500; color: var(--warm); }
 .release-foot { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 @media (max-width: 560px) { .release-head { flex-direction: column; gap: 6px; } .badge-new { margin-top: 0; } }
+
+/* merged hero: brand line on top, mission statement as the page headline */
+.hero-mission { padding-top: 52px; padding-bottom: 0; }
+.brand-line { display: inline-flex; align-items: center; gap: 12px; text-align: left; margin-bottom: 30px; padding: 8px 16px 8px 10px; border: 1px solid var(--border); border-radius: 999px; background: var(--bg-soft); }
+.brand-line img { width: 36px; height: auto; }
+.bl-name { font-family: var(--font-sans); font-weight: 600; font-size: 1rem; color: var(--text); line-height: 1.2; }
+.bl-sub { font-family: var(--font-sans); font-size: 0.76rem; color: var(--muted); line-height: 1.35; }
+.hero-mission .mission-title { margin-top: 8px; font-size: clamp(2rem, 1.15rem + 3vw, 3.2rem); max-width: 52rem; margin-left: auto; margin-right: auto; }
+.hero-mission .pillar { background: var(--bg-soft); }
+@media (prefers-color-scheme: dark) { .brand-line img { filter: invert(1) hue-rotate(180deg) brightness(1.05); } }
+@media (max-width: 560px) { .brand-line { border-radius: 14px; } }
