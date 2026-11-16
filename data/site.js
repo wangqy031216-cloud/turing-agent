@@ -6,7 +6,7 @@
 window.TA = window.TA || {};
 
 TA.site = {
-  version: "202611160417",   // set by tools/bump_version.py
+  version: "202611160425",   // set by tools/bump_version.py
   name: "Turing Agent",
   tagline: "Formal Verification Portal",
   affiliation: "Shanghai Artificial Intelligence Laboratory",
@@ -24,6 +24,7 @@ TA.site = {
     { label: "Harness",         href: "harness.html" },
     { label: "OpenAI Problems", href: "openai.html" },
     { label: "Demos",           href: "demos.html" },
-    { label: "News",            href: "news.html" }
+    { label: "News",            href: "news.html" },
+    { label: "People",          href: "people.html" }
   ]
 };

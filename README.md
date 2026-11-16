@@ -13,6 +13,7 @@ demos.html          Demos：上方是证明轨迹回放（DAG 生长、Lean 探�
 traces.html         旧地址，自动跳转到 demos.html（保留是为了让以前分享出去的链接不失效）
 news.html           News：所有动态（workshop、结果、发布、报告…），按日期排序；未来日期的条目显示在 Upcoming
 workshops.html      旧地址，自动跳转到 news.html
+people.html         People：核心贡献者（头像、中英文名、个人介绍）
 page-template.html  新页面模板
 
 data/               ← 日常维护基本只改这里
@@ -20,6 +21,7 @@ data/               ← 日常维护基本只改这里
   openai.js         OpenAI 题目
   demos.js          demo
   news.js           所有新闻条目（显示在 News 页）
+  people.js         People 页成员（头像、中英文名、职位 / 教育 / 兴趣）
   results.js        benchmark 数据表
   traces/           证明轨迹（由 tools/extract_traces.py 生成，不要手改）
 tools/
@@ -39,6 +41,7 @@ assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 
 | 更新顶部漏斗数字（722 / 121 / 99 / 22 / 4） | `data/openai.js` 里的 `funnel` |
 | 加一个非轨迹的 demo | `data/demos.js`，文件顶部有模板；会出现在 Demos 页下方的 More demos（列表为空时该区块自动隐藏）|
 | 加一条新闻 / 一期 workshop | `data/news.js`，文件顶部有模板；`type` 写类别（Workshop、Release、Result、Talk…）。News 页自动更新；slides 等文件可放 `files/` |
+| 加成员 / 填个人介绍 | `data/people.js`，文件顶部有模板；头像（正方形）放 `assets/img/people/`，`position` / `education` / `interests` 留空时显示为空行 |
 | 挂上报告 PDF / 代码链接 | `data/site.js` 的 `links.report` / `links.code`，填了 URL 按钮就会出现 |
 | 加一个新页面 | 复制 `page-template.html`，再在 `data/site.js` 的 `nav` 里加一行，顶部 banner 自动出现 |
 | 更新 benchmark 数字 | `data/results.js` |

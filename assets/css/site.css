@@ -635,3 +635,28 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .rc-links .more { font-size: 0.9rem; }
 @media (max-width: 960px) { .news-col { padding-top: 0; } }
 @media (max-width: 560px) { .rc-stat { grid-template-columns: 76px minmax(0, 1fr) auto; gap: 10px; } .rc-num { font-size: 1.25rem; } }
+
+/* =====================================================================
+   People page (members come from data/people.js)
+   ===================================================================== */
+.people-group + .people-group { margin-top: 48px; }
+.people-title { font-size: 1.3rem; margin-bottom: 16px; }
+.people-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .people-grid { grid-template-columns: minmax(0, 1fr); } }
+.person { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 22px; align-items: start; padding: 24px; }
+.person-photo { display: block; width: 112px; height: 112px; border-radius: 50%; object-fit: cover; background: var(--bg-soft); box-shadow: 0 0 0 3px var(--bg), 0 0 0 5px var(--blue); margin: 5px; }
+.person-body { min-width: 0; padding-top: 6px; }
+.person-name { font-size: 1.12rem; line-height: 1.3; }
+.person-name .zh { margin-left: 8px; font-weight: 500; color: var(--muted); }
+.person-info { margin: 14px 0 0; display: flex; flex-direction: column; gap: 9px; font-family: var(--font-sans); }
+.person-info > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 10px; align-items: baseline; }
+.person-info dt { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.person-info dd { margin: 0; font-size: 0.88rem; line-height: 1.5; color: var(--body); overflow-wrap: anywhere; }
+.person-info dd.blank { border-bottom: 1px dashed var(--border); }
+.person-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-family: var(--font-sans); }
+.person-links a { font-size: 0.8rem; font-weight: 500; color: var(--warm); }
+@media (max-width: 480px) {
+  .person { grid-template-columns: 76px minmax(0, 1fr); gap: 16px; padding: 18px; }
+  .person-photo { width: 76px; height: 76px; }
+  .person-body { padding-top: 2px; }
+}
