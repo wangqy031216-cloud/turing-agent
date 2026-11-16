@@ -34,6 +34,7 @@ TA.news = {
       type: "Release",
       date: "2026-11-16",
       title: "Introducing Turing Agent",
+      homeTitle: "Turing Agent released",
       summary: "We release Turing Agent, an agent harness that takes a paper's claim to a kernel-checked Lean proof.",
       links: [{ label: "About the harness →", href: "harness.html" }]
     },
@@ -44,6 +45,7 @@ TA.news = {
       time: "Fri 10:00–17:00",
       series: "Pujiang Science Community · Xinghe Workshop",
       title: "AI4TCS Workshop — After AI Can Solve Problems: Toward TCS 2.0",
+      homeTitle: "AI4TCS Workshop held",
       title_zh: "当 AI 会解题之后：走向 TCS 2.0",
       subtitle: "AI for Theoretical Computer Science: From Problem Solving to New Frontiers · Algorithms, Complexity, Verification and Beyond",
       speakers: "Chao Xu · Yi Zhou · Yiping Liu · Toru Takisaka · Shen Jiachen · Hao Yan",

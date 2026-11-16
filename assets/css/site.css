@@ -621,20 +621,8 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 }
 
 /* What's new */
-.home-news h3 { font-size: 1.2rem; line-height: 1.35; margin-top: 20px; }
-.rc-sub { margin: 6px 0 0; font-size: 0.94rem; line-height: 1.6; }
-.rc-stats { margin-top: 18px; border-top: 1px solid var(--border); }
-.rc-stat { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 13px 2px; border-bottom: 1px solid var(--border); font-family: var(--font-sans); color: inherit; }
-.rc-stat:hover { text-decoration: none; }
-.rc-num { font-size: 1.4rem; font-weight: 600; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
-.rc-num em { font-style: normal; font-size: 0.55em; color: var(--muted); font-weight: 500; margin-left: 1px; }
-.rc-text { font-size: 0.84rem; line-height: 1.45; color: var(--body); transition: color 0.15s ease; }
-.rc-go { font-weight: 600; color: var(--warm); transition: transform 0.15s ease; }
-.rc-stat:hover .rc-text { color: var(--text); }
-.rc-stat:hover .rc-go { transform: translateX(3px); }
-.rc-links { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 16px; }
-.rc-links .more { font-size: 0.9rem; }
-@media (max-width: 560px) { .rc-stat { grid-template-columns: 76px minmax(0, 1fr) auto; gap: 10px; } .rc-num { font-size: 1.25rem; } }
+.home-news .news { margin-top: 12px; }
+.home-news h3 { font-size: 0.95rem; font-weight: 500; line-height: 1.55; }
 
 /* =====================================================================
    People page (members come from data/people.js)
