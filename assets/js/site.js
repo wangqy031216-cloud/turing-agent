@@ -630,19 +630,13 @@
     if (!mount || !P) return;
     var introEl = $("#people-intro");
     if (introEl && P.intro) introEl.textContent = P.intro;
-    var fields = [["position", "Position"], ["education", "Education"], ["interests", "Interests"]];
     function person(m) {
-      return '<article class="person card">' +
+      return '<article class="person">' +
         (m.photo ? '<img class="person-photo" loading="lazy" src="' + esc(ver(m.photo)) + '" alt="' + esc(m.name) + '" width="112" height="112">'
                  : '<div class="person-photo"></div>') +
-        '<div class="person-body">' +
-          '<h3 class="person-name">' + esc(m.name) + (m.name_zh ? '<span class="zh" lang="zh">' + esc(m.name_zh) + "</span>" : "") + "</h3>" +
-          '<dl class="person-info">' + fields.map(function (f) {
-            var v = m[f[0]] || "";
-            return "<div><dt>" + f[1] + "</dt>" + (v ? "<dd>" + v + "</dd>" : '<dd class="blank">&nbsp;</dd>') + "</div>";
-          }).join("") + "</dl>" +
-          (m.links && m.links.length ? '<div class="person-links">' + m.links.map(function (l) { return "<a " + linkAttrs(l.href) + ">" + esc(l.label) + "</a>"; }).join("") + "</div>" : "") +
-        "</div></article>";
+        '<h3 class="person-name">' + esc(m.name) + "</h3>" +
+        (m.name_zh ? '<div class="person-zh" lang="zh">' + esc(m.name_zh) + "</div>" : "") +
+      "</article>";
     }
     mount.innerHTML = (P.groups || []).map(function (g) {
       return '<div class="people-group">' +
