@@ -600,15 +600,22 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 /* =====================================================================
    Home: compact hero vision + What's new before the citation
    ===================================================================== */
-.hero-vision { max-width: 49rem; margin: 24px auto 0; }
-.hero-vision .eyebrow { margin-bottom: 12px; }
-.vision-points { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.vision-points li { padding: 18px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-soft); }
-.vision-points h3 { font-size: 1rem; }
+.hero-vision { max-width: 52rem; margin: 16px auto 0; }
+.hero-vision > h2 {
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--body);
+}
+.vision-points { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.vision-points li { padding: 14px 12px; border: 1px solid var(--border); border-radius: 6px; }
+.vision-points h3 { font-size: 1rem; color: var(--blue); }
 .vision-points p { margin: 6px 0 0; font-family: var(--font-sans); font-size: 0.8rem; line-height: 1.5; color: var(--body); }
 @media (max-width: 620px) {
-  .vision-points { gap: 8px; }
-  .vision-points li { padding: 14px 8px; }
+  .vision-points { gap: 6px; }
+  .vision-points li { padding: 12px 6px; }
   .vision-points h3 { font-size: 0.86rem; }
   .vision-points p { font-size: 0.75rem; }
 }
