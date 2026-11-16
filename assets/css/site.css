@@ -292,9 +292,14 @@ a.tile .go { margin-top: auto; padding-top: 6px; font-size: 0.8rem; color: var(-
 /* ---------- OpenAI explorer ---------- */
 .funnel { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 @media (max-width: 860px) { .funnel { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.funnel .stat { position: relative; }
-.funnel .stat.hl { border-color: var(--warm); }
-.funnel .stat.hl .num { color: var(--warm); }
+.funnel .stat { position: relative; transition: transform 0.18s ease, box-shadow 0.18s ease; }
+.funnel .stat:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); }
+.funnel .stat.hl {
+  border-color: var(--warm);
+  background: linear-gradient(180deg, var(--warm-soft) 0%, var(--bg) 100%);
+  box-shadow: 0 2px 8px rgba(180, 81, 63, 0.12);
+}
+.funnel .stat.hl .num { color: var(--warm); font-weight: 700; }
 
 .explorer { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 20px; align-items: start; }
 @media (max-width: 960px) { .explorer { grid-template-columns: minmax(0, 1fr); } }
@@ -430,9 +435,161 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 /* =====================================================================
    Home: OpenAI Verified Problems Spotlight Carousel
    ===================================================================== */
-.home-spotlight { padding-top: 28px; padding-bottom: 24px; }
+.home-spotlight { padding-top: 32px; padding-bottom: 28px; }
 .home-spotlight .section-head { margin-bottom: 12px; }
 .home-spotlight .lede { max-width: 54rem; margin: 0 0 24px; font-size: 1.05rem; }
+
+/* Spotlight Header Redesign */
+.spotlight-header-wrap {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.spotlight-headline-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 840px;
+}
+.spotlight-eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 14px 5px 10px;
+  border-radius: 9999px;
+  background: var(--warm-soft);
+  border: 1px solid rgba(180, 81, 63, 0.28);
+  box-shadow: 0 1px 4px rgba(180, 81, 63, 0.08);
+  width: fit-content;
+}
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--warm);
+  position: relative;
+  display: inline-block;
+  box-shadow: 0 0 0 0 rgba(180, 81, 63, 0.7);
+  animation: ta-pulse-dot 2.2s infinite cubic-bezier(0.66, 0, 0, 1);
+}
+@keyframes ta-pulse-dot {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(180, 81, 63, 0.75); }
+  70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(180, 81, 63, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(180, 81, 63, 0); }
+}
+.spotlight-eyebrow-pill .pill-label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--warm);
+}
+.spotlight-eyebrow-pill .pill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  background: rgba(180, 81, 63, 0.14);
+  color: var(--warm);
+  letter-spacing: 0.04em;
+}
+
+.spotlight-main-title {
+  font-family: var(--font-sans);
+  font-size: clamp(1.85rem, 1.35rem + 1.8vw, 2.65rem);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.028em;
+  color: var(--text);
+  margin: 0;
+}
+.title-gradient {
+  background: linear-gradient(135deg, #c93b2b 0%, #ab2374 48%, #1f62d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+@media (prefers-color-scheme: dark) {
+  .title-gradient {
+    background: linear-gradient(135deg, #ff6b57 0%, #f472b6 48%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.spotlight-explore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--warm);
+  background: var(--bg);
+  border: 1px solid rgba(180, 81, 63, 0.32);
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+.spotlight-explore-link:hover {
+  background: var(--warm-soft);
+  border-color: var(--warm);
+  transform: translateX(2px);
+  color: var(--warm);
+  box-shadow: 0 2px 8px rgba(180, 81, 63, 0.16);
+}
+.spotlight-explore-link .arr-icon {
+  transition: transform 0.2s ease;
+}
+.spotlight-explore-link:hover .arr-icon {
+  transform: translateX(3px);
+}
+
+.spotlight-lede-box {
+  margin: 0 0 22px;
+  padding: 12px 18px;
+  border-left: 3px solid var(--warm);
+  background: linear-gradient(90deg, var(--warm-soft) 0%, transparent 100%);
+  border-radius: 0 8px 8px 0;
+}
+.spotlight-lede {
+  max-width: 62rem;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--body);
+}
+
+/* Highlighting styles in lede */
+.text-hl {
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(31, 98, 208, 0.08);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.text-hl-warn {
+  font-weight: 600;
+  color: var(--warm);
+  background: var(--warm-soft);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.text-hl-success {
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-soft);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
 
 .spotlight-carousel { margin-top: 24px; }
 
