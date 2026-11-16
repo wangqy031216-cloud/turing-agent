@@ -58,7 +58,7 @@
     return '<button type="button" class="run-btn" role="tab" aria-selected="false" data-id="' + esc(r.id) + '">' +
       '<span class="k">' + esc(r.kind.split(" · ")[0]) + "</span>" +
       '<span class="t">' + esc(r.short || r.title) + "</span>" +
-      '<span class="m">' + num(r.stats.nodes) + " nodes · " + num(r.stats.probes) + " probes · " + fmtDur(r.active) + " active</span>" +
+      '<span class="m">' + num(r.stats.nodes) + " nodes · " + num(r.stats.probes) + " probes</span>" +
       "</button>";
   }).join("");
   picker.addEventListener("click", function (e) {
@@ -145,7 +145,6 @@
           kv("Failed attempts", num(s.failures)) +
           kv("Context compactions", num(s.compactions)) +
           (hasLessons ? kv("Lessons saved", num(s.lessons)) : "") +
-          kv("Active time", fmtDur(m.active)) +
         "</dl>" +
         '<div class="box replay">' +
           '<button type="button" class="play-btn" id="play" aria-label="Play replay"></button>' +

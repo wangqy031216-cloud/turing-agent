@@ -210,7 +210,7 @@
         category: "Proof trace",
         tags: [r.kind.split(" · ")[0]].concat(r.model ? [r.model] : []),
         summary: esc(r.summary || ""),
-        metrics: [["DAG nodes", s.nodes], ["Lean probes", s.probes.toLocaleString("en-US")], ["Active", fmtDur(r.active)]]
+        metrics: [["DAG nodes", s.nodes], ["Lean probes", s.probes.toLocaleString("en-US")]]
           .concat(s.dropped ? [["Dropped plans", s.dropped]] : []),
         links: [{ label: "Replay the trace →", href: "demos.html#" + r.id }]
       };
@@ -392,7 +392,7 @@
             if (!t) return "";
             return '<div class="replay-cta"><a class="btn primary" href="demos.html#' + esc(t.id) + '">▶ Replay this proof in Demos</a>' +
               '<span class="mono">' + t.stats.nodes + " DAG nodes · " + t.stats.probes.toLocaleString("en-US") + " Lean probes" +
-              (t.stats.dropped ? " · " + t.stats.dropped + " dropped plans" : "") + " · " + fmtDur(t.active) + " active</span></div>";
+              (t.stats.dropped ? " · " + t.stats.dropped + " dropped plans" : "") + "</span></div>";
           })() +
         "</header>";
       if (p.stats && p.stats.length) {
