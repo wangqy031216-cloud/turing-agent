@@ -837,9 +837,199 @@
     go(0);
   }
 
+  /* ---------- Render Demo DAGs in Spotlight Cards ---------- */
+  function renderSpotlightDags() {
+    var NS = "http://www.w3.org/2000/svg";
+    var W = 168, H = 34, GX = 14, ROWGAP = 12, LAYERGAP = 42;
+
+    function clipLabel(s, max) { return s.length > max ? s.slice(0, max - 1) + "…" : s; }
+    function pretty(n) {
+      if (n.label) return n.label;
+      return n.id.replace(/^ProofSteps\./, "").replace(/_/g, " ");
+    }
+    function svg(tag, attrs) {
+      var e = document.createElementNS(NS, tag);
+      for (var k in attrs) e.setAttribute(k, attrs[k]);
+      return e;
+    }
+
+    function layout(nodes, width) {
+      var ids = nodes.map(function (n) { return n.id; }), has = {};
+      ids.forEach(function (i) { has[i] = 1; });
+      var kids = {}, parents = {};
+      ids.forEach(function (i) { kids[i] = []; parents[i] = []; });
+      nodes.forEach(function (n) {
+        (n._deps || n.deps || []).forEach(function (c) {
+          if (has[c] && c !== n.id) { kids[n.id].push(c); parents[c].push(n.id); }
+        });
+      });
+      // Kahn's longest path layering
+      var layer = {}, indeg = {}, q = [];
+      ids.forEach(function (i) { layer[i] = 0; indeg[i] = parents[i].length; if (!indeg[i]) q.push(i); });
+      while (q.length) {
+        var x = q.shift();
+        kids[x].forEach(function (c) { layer[c] = Math.max(layer[c], layer[x] + 1); if (--indeg[c] === 0) q.push(c); });
+      }
+      var L = [];
+      ids.forEach(function (i) { (L[layer[i]] = L[layer[i]] || []).push(i); });
+      L = L.filter(Boolean);
+      // barycentre sweeps
+      var pos = {};
+      function index() { L.forEach(function (row) { row.forEach(function (i, k) { pos[i] = k / Math.max(1, row.length - 1); }); }); }
+      function bary(i, nb) { var a = nb[i]; if (!a.length) return pos[i]; return a.reduce(function (t, j) { return t + pos[j]; }, 0) / a.length; }
+      index();
+      for (var it = 0; it < 6; it++) {
+        for (var a = 1; a < L.length; a++) { L[a].sort(function (u, v) { return bary(u, parents) - bary(v, parents); }); index(); }
+        for (var b = L.length - 2; b >= 0; b--) { L[b].sort(function (u, v) { return bary(u, kids) - bary(v, kids); }); index(); }
+      }
+      var perRow = Math.max(2, Math.floor((width + GX) / (W + GX)));
+      var maxCols = Math.min(perRow, Math.max.apply(null, L.map(function (r) { return r.length; })));
+      var fullW = maxCols * (W + GX) - GX;
+      var xy = {}, y = 0;
+      L.forEach(function (row, li) {
+        for (var start = 0; start < row.length; start += perRow) {
+          var chunk = row.slice(start, start + perRow);
+          var rowW = chunk.length * (W + GX) - GX, x0 = (fullW - rowW) / 2;
+          chunk.forEach(function (i, k) { xy[i] = { x: x0 + k * (W + GX), y: y }; });
+          y += H + (start + perRow < row.length ? ROWGAP : LAYERGAP);
+        }
+        if (li === L.length - 1) y -= LAYERGAP;
+      });
+      return { xy: xy, w: fullW, h: y + H };
+    }
+
+    var targets = [
+      { id: "openai-math-116", hostId: "#spotlight-dag-0", wrapId: "#spotlight-dag-wrap-0" },
+      { id: "openai-math-186-ds", hostId: "#spotlight-dag-1", wrapId: "#spotlight-dag-wrap-1" },
+      { id: "openai-math-235", hostId: "#spotlight-dag-2", wrapId: "#spotlight-dag-wrap-2" }
+    ];
+
+    targets.forEach(function (item) {
+      var host = $(item.hostId);
+      if (!host) return;
+      var wrap = $(item.wrapId);
+      var data = TA.traceData && TA.traceData[item.id];
+      if (!data || !data.nodes || !data.nodes.length) return;
+
+      var nodes = data.nodes;
+      var byId = {};
+      nodes.forEach(function (n) { byId[n.id] = n; });
+      var usedBy = {};
+      nodes.forEach(function (n) { (n.deps || []).forEach(function (c) { (usedBy[c] = usedBy[c] || []).push(n.id); }); });
+      nodes.forEach(function (n) { n._deps = (n.deps || []).slice(); });
+      if (byId.root) {
+        nodes.forEach(function (n) { if (n.dropped && !usedBy[n.id]) byId.root._deps.push(n.id); });
+      }
+
+      var avail = Math.max(340, (wrap ? wrap.clientWidth : 460) - 28);
+      var lay = layout(nodes, avail);
+      var root = svg("svg", {
+        width: lay.w + 16,
+        height: lay.h + 16,
+        viewBox: "-8 -8 " + (lay.w + 16) + " " + (lay.h + 16),
+        role: "img",
+        "aria-label": "Proof dependency graph for " + esc(data.meta ? data.meta.title : "")
+      });
+
+      var gE = svg("g", { class: "edges" }), gN = svg("g", { class: "nodes" });
+      root.appendChild(gE);
+      root.appendChild(gN);
+
+      var edges = [];
+      nodes.forEach(function (n) {
+        (n._deps || n.deps || []).forEach(function (c) {
+          var a = lay.xy[n.id], b = lay.xy[c];
+          if (!a || !b) return;
+          var x1 = a.x + W / 2, y1 = a.y + H, x2 = b.x + W / 2, y2 = b.y, my = (y1 + y2) / 2;
+          var cls = "edge" + (n.dropped || (byId[c] && byId[c].dropped) ? " dropped" : "");
+          var p = svg("path", { d: "M" + x1 + "," + y1 + " C" + x1 + "," + my + " " + x2 + "," + my + " " + x2 + "," + y2, class: cls });
+          gE.appendChild(p);
+          edges.push({ el: p, from: n.id, to: c });
+        });
+      });
+
+      var maxChars = Math.floor((W - 32) / 6.2);
+      nodes.forEach(function (n) {
+        var at = lay.xy[n.id];
+        if (!at) return;
+        var isRoot = n.id === "root" || n.id === nodes[0].id;
+        var cls = "node" + (n.status === "proved" ? " proved" : "") +
+                  (isRoot ? " root" : "") +
+                  (n.dropped ? " dropped" : "") +
+                  (!n.dropped && n.used === false ? " unused" : "");
+        var g = svg("g", { class: cls, transform: "translate(" + at.x + "," + at.y + ")", tabindex: "0", role: "button" });
+        g.appendChild(svg("rect", { width: W, height: H, rx: 8 }));
+        var t = svg("text", { x: 10, y: H / 2 + 4 });
+        t.textContent = clipLabel(pretty(n), maxChars);
+        g.appendChild(t);
+
+        if (n.status === "proved") {
+          var tick = svg("text", { x: W - 14, y: H / 2 + 4, class: "tick" });
+          tick.textContent = "✓";
+          g.appendChild(tick);
+        }
+        if (n.risk || n.reviewed) {
+          var bd = svg("g", { class: "badge", transform: "translate(" + (W - 2) + ",2)" });
+          bd.appendChild(svg("circle", { r: 6 }));
+          var bt = svg("text", { x: -3, y: 3 }); bt.textContent = "S"; bd.appendChild(bt);
+          g.appendChild(bd);
+        }
+        var titleEl = svg("title", {});
+        titleEl.textContent = (n.label || n.id) + (n.claim ? "\n" + n.claim : "");
+        g.appendChild(titleEl);
+
+        // Hover effect: highlight connected edges
+        g.addEventListener("mouseenter", function () {
+          g.classList.add("sel");
+          edges.forEach(function (e) {
+            if (e.from === n.id || e.to === n.id) e.el.classList.add("hl");
+          });
+        });
+        g.addEventListener("mouseleave", function () {
+          g.classList.remove("sel");
+          edges.forEach(function (e) { e.el.classList.remove("hl"); });
+        });
+
+        gN.appendChild(g);
+      });
+
+      host.innerHTML = "";
+      host.appendChild(root);
+
+      // Scroll to center root node horizontally
+      if (wrap && lay.xy.root) {
+        wrap.scrollLeft = Math.max(0, lay.xy.root.x + W / 2 - wrap.clientWidth / 2);
+      }
+    });
+
+    // Wire drag-to-scroll on DAG wraps
+    $all(".spotlight-dag-wrap").forEach(function (wrap) {
+      var isDown = false, startX, startY, sLeft, sTop;
+      wrap.addEventListener("mousedown", function (e) {
+        if (e.target.closest(".node")) return;
+        isDown = true;
+        startX = e.pageX - wrap.offsetLeft;
+        startY = e.pageY - wrap.offsetTop;
+        sLeft = wrap.scrollLeft;
+        sTop = wrap.scrollTop;
+      });
+      wrap.addEventListener("mouseleave", function () { isDown = false; });
+      wrap.addEventListener("mouseup", function () { isDown = false; });
+      wrap.addEventListener("mousemove", function (e) {
+        if (!isDown) return;
+        e.preventDefault();
+        var x = e.pageX - wrap.offsetLeft;
+        var y = e.pageY - wrap.offsetTop;
+        wrap.scrollLeft = sLeft - (x - startX) * 1.4;
+        wrap.scrollTop = sTop - (y - startY) * 1.4;
+      });
+    });
+  }
+
   renderBanner();
   renderFooter();
   wireVideos();
+  renderSpotlightDags();
   wireSpotlightCarousel();
   wireLinkButtons();
   fillCounts();

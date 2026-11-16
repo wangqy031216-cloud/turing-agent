@@ -609,7 +609,88 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   align-items: center;
 }
 
-/* Media on right */
+/* Media & DAG Trace Card on right */
+.spotlight-dag-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.spotlight-dag-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+}
+.dag-head-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dag-badge {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.dag-info {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.dag-replay-btn {
+  font-size: 0.76rem !important;
+  padding: 4px 12px !important;
+  white-space: nowrap;
+}
+.spotlight-dag-wrap {
+  position: relative;
+  overflow: auto;
+  background: var(--bg);
+  height: 380px;
+  max-height: 400px;
+  padding: 18px 14px;
+  border: none !important;
+  border-radius: 0 !important;
+  cursor: grab;
+  user-select: none;
+}
+.spotlight-dag-wrap:active {
+  cursor: grabbing;
+}
+.spotlight-dag-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-soft);
+  border-top: 1px solid var(--border);
+}
+.spotlight-dag-foot .mini-legend {
+  margin: 0;
+  font-size: 0.72rem;
+  gap: 12px;
+}
+.dag-hint {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
 .spotlight-media {
   margin: 0;
 }
