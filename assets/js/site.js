@@ -118,7 +118,7 @@
     });
   }
 
-  /* ---------- harness: results table ---------- */
+  /* ---------- results: benchmark table ---------- */
   function renderResults() {
     var mount = $("#results-table");
     var pillsEl = $("#results-models");
@@ -232,7 +232,7 @@
     var pe = $("#home-problems");
     if (pe && TA.openai) {
       pe.innerHTML = (TA.openai.problems || []).map(function (p) {
-        return '<a class="card tile" href="openai.html#' + esc(p.slug) + '">' +
+        return '<a class="card tile" href="results.html#' + esc(p.slug) + '">' +
           '<span class="tags" style="display:flex;gap:6px;flex-wrap:wrap">' +
             (p.num ? '<span class="tag warm">#' + esc(p.num) + "</span>" : "") +
             (p.area ? '<span class="tag">' + esc(p.area) + "</span>" : "") + "</span>" +
@@ -462,7 +462,14 @@
       var hit = problems.filter(function (p) { return p.slug === h || p.num === h; })[0];
       return hit ? hit.slug : null;
     }
-    window.addEventListener("hashchange", function () { var s = fromHash(); if (s) { select(s); drawList(); } });
+    window.addEventListener("hashchange", function () {
+      var s = fromHash();
+      if (s) {
+        select(s);
+        drawList();
+        root.scrollIntoView({ block: "start" });
+      }
+    });
 
     state.slug = fromHash() || (problems[0] && problems[0].slug);
     drawList();
@@ -647,10 +654,19 @@
     var introEl = $("#people-intro");
     if (introEl && P.intro) introEl.textContent = P.intro;
     function person(m) {
+      var refs = (m.affiliations || []).concat(m.marks || []);
+      var links = refs.map(function (ref) {
+        var target = typeof ref === "number" ? "#affiliation-" + ref : "#author-notes";
+        return '<a href="' + esc(target) + '" aria-label="Author reference ' + esc(ref) + '">' + esc(ref) + '</a>';
+      }).join(", ");
       return '<article class="person">' +
-        (m.photo ? '<img class="person-photo" loading="lazy" src="' + esc(ver(m.photo)) + '" alt="' + esc(m.name) + '" width="112" height="112">'
-                 : '<div class="person-photo"></div>') +
-        '<h3 class="person-name">' + esc(m.name) + "</h3>" +
+        '<div class="person-portrait">' +
+          (m.photo ? '<img class="person-photo" loading="lazy" src="' + esc(ver(m.photo)) + '" alt="' + esc(m.name) + '" width="112" height="112">'
+                   : '<div class="person-photo" aria-hidden="true"></div>') +
+          (refs.length ? '<span class="portrait-refs" aria-hidden="true">' + esc(refs.join(", ")) + '</span>' : "") +
+        '</div>' +
+        '<h3 class="person-name">' + esc(m.name) +
+          (refs.length ? '<sup class="person-refs">' + links + '</sup>' : "") + '</h3>' +
         (m.name_zh ? '<div class="person-zh" lang="zh">' + esc(m.name_zh) + "</div>" : "") +
       "</article>";
     }
@@ -658,6 +674,18 @@
       return '<div class="people-group">' +
         (g.title ? '<h2 class="people-title">' + esc(g.title) + "</h2>" : "") +
         '<div class="people-grid">' + (g.members || []).map(person).join("") + "</div></div>";
+    }).join("");
+    var notes = $("#author-notes");
+    if (notes) notes.innerHTML = (P.roles || []).map(function (role) {
+      return '<span><sup>' + esc(role.mark) + '</sup> ' + esc(role.label) + '</span>';
+    }).join("");
+    var affiliations = $("#people-affiliations");
+    if (affiliations) affiliations.innerHTML = (P.affiliations || []).map(function (affiliation) {
+      return '<li id="affiliation-' + esc(affiliation.id) + '">' +
+        '<span class="affiliation-number">' + esc(affiliation.id) + '</span>' +
+        '<div><h3 class="affiliation-institution">' + esc(affiliation.institution) + '</h3>' +
+          '<p>' + esc(affiliation.unit) + '</p></div>' +
+      '</li>';
     }).join("");
   }
 

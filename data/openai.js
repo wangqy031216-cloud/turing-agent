@@ -9,7 +9,7 @@
    - Use String.raw`...` for text with backslashes, and never write the
      two characters  $ {  next to each other inside it.
    - status: "verified" | "in-progress" | "open"
-   - The page URL openai.html#<slug> opens that problem directly.
+   - The page URL results.html#<slug> opens that problem directly.
    - Optional `video: { src, poster, caption }` shows an animation above the figure.
    - Optional `trace: "<run-id>"` (an id from data/traces/index.js) adds a
      "Replay in Demos" button and a Demo badge in the list.
