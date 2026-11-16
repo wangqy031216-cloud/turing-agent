@@ -27,7 +27,7 @@ TA.results = {
         llm:    { ftcsCompile: 10.49, ftcsSuccess: 8.39,  rlmPFR: 12.50, rlmTLB: 23.08, rlmTotal: 16.94 },
         codex:  { ftcsCompile: 69.23, ftcsSuccess: 29.37, rlmPFR: 38.19, rlmTLB: 47.12, rlmTotal: 41.93 },
         claude: { ftcsCompile: 83.22, ftcsSuccess: 40.56, rlmPFR: 75.00, rlmTLB: 87.50, rlmTotal: 81.45 },
-        ours:   { ftcsCompile: 97.20, ftcsSuccess: 58.99, rlmPFR: 78.84, rlmTLB: 88.46, rlmTotal: 82.87 }
+        ours:   { ftcsCompile: 97.20, ftcsSuccess: 57.34, rlmPFR: 78.47, rlmTLB: 88.46, rlmTotal: 82.66 }
       }
     },
     {
