@@ -600,7 +600,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 /* =====================================================================
    Home: compact hero vision + What's new before the citation
    ===================================================================== */
-.hero-vision { max-width: 52rem; margin: 16px auto 0; }
+.hero-vision { max-width: 52rem; margin: 12px auto 0; }
 .hero-vision > h2 {
   margin-bottom: 8px;
   font-size: 0.8rem;
