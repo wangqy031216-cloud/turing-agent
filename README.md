@@ -26,6 +26,7 @@ data/               ← 日常维护基本只改这里
   traces/           证明轨迹（由 tools/extract_traces.py 生成，不要手改）
 tools/
   extract_traces.py 把 proof-pipeline-observer 导出的原始轨迹压缩成网站用的小文件
+  import_proof_run.py 从 235 的本地 proof/ 和 lean/ 记录导入同样格式的 DAG 回放
   bump_version.py   发布前运行，给 CSS / JS 加版本号，避免访客看到缓存的旧版本
 assets/css/site.css 样式（颜色都是变量，深色模式自动适配）
 assets/js/site.js   渲染逻辑（一般不用动）
@@ -80,6 +81,14 @@ python3 tools/extract_traces.py /path/to/proof-pipeline-observer/data/runs
 3. 提交 `data/traces/` 的改动。首页第三个标签和 Demos 页的回放器都会自动出现这条轨迹。
 
 单独链接到某条轨迹：`demos.html#<id>`，例如 `demos.html#openai-math-186-ds`。
+
+235 的本地运行目录（包含 `proof/state.json`、`proof/tools.jsonl` 和 `lean/proof-target.json`）可直接导入：
+
+```bash
+python3 tools/import_proof_run.py /path/to/local-proof-run
+```
+
+脚本只提取数学证明、节点和验收信息，并合并索引以保留已有回放。对应地址为 `demos.html#openai-math-235`。
 
 ## 发布前：刷新版本号（重要）
 

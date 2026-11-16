@@ -36,6 +36,17 @@ RUNS = [
         "root_label": "Uniform influence bound",
     },
     {
+        "id": "openai-math-235",
+        "title": "Linear variance upper bound for random 3-SAT hitting times",
+        "short": "OpenAI 235-02 · Random 3-SAT",
+        "kind": "Proof formalization · given statement",
+        "model": "DeepSeek-V4.1-Flash",
+        "problem": "openai.html#235-02",
+        "summary": "Starting with the supplied random 3-SAT formalization, Turing Agent builds 108 verified auxiliary lemmas for potential drift, collision cases and delay moments, proves a linear variance bound for the capped process, and transfers it to the original hitting time.",
+        "root_label": "Linear variance bound",
+        "root_claim": "For independent uniform proper 3-SAT clauses on n ≥ 3 variables, prove the clause-counting, survival-probability, tail and moment facts in the supplied target, and an absolute constant C such that Var(Hₙ) ≤ Cn.",
+    },
+    {
         "id": "openai-math-116",
         "title": "Algorithmic uniform matrix hitting",
         "short": "OpenAI 116-01 · Matrix hitting",
