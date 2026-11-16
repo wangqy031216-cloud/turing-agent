@@ -25,8 +25,8 @@ TA.results = {
       name: "GLM-5.3",
       rows: {
         llm:    { ftcsCompile: 10.49, ftcsSuccess: 8.39,  rlmPFR: 12.50, rlmTLB: 23.08, rlmTotal: 16.94 },
-        codex:  { ftcsCompile: 69.23, ftcsSuccess: 29.37, rlmPFR: 38.19, rlmTLB: 47.12, rlmTotal: 41.93 },
-        claude: { ftcsCompile: 83.22, ftcsSuccess: 40.56, rlmPFR: 75.00, rlmTLB: 87.50, rlmTotal: 81.45 },
+        codex:  { ftcsCompile: 69.23, ftcsSuccess: 29.37, rlmPFR: 38.19, rlmTLB: 47.12, rlmTotal: 41.94 },
+        claude: { ftcsCompile: 83.22, ftcsSuccess: 40.56, rlmPFR: 75.00, rlmTLB: 87.50, rlmTotal: 80.24 },
         ours:   { ftcsCompile: 97.20, ftcsSuccess: 57.34, rlmPFR: 78.47, rlmTLB: 88.46, rlmTotal: 82.66 }
       }
     },
@@ -34,9 +34,9 @@ TA.results = {
       name: "DeepSeek-V4-Pro",
       rows: {
         llm:    { ftcsCompile: 13.29, ftcsSuccess: 7.69,  rlmPFR: 13.89, rlmTLB: 25.96, rlmTotal: 18.95 },
-        codex:  { ftcsCompile: 40.56, ftcsSuccess: 27.97, rlmPFR: 63.88, rlmTLB: 89.42, rlmTotal: 74.60 },
-        claude: { ftcsCompile: 76.22, ftcsSuccess: 29.37, rlmPFR: 82.63, rlmTLB: 92.30, rlmTotal: 86.69 },
-        ours:   { ftcsCompile: 99.30, ftcsSuccess: 61.53, rlmPFR: 79.86, rlmTLB: 86.54, rlmTotal: 82.66 }
+        codex:  { ftcsCompile: 40.56, ftcsSuccess: 27.97, rlmPFR: 63.89, rlmTLB: 89.42, rlmTotal: 74.60 },
+        claude: { ftcsCompile: 76.22, ftcsSuccess: 29.37, rlmPFR: 82.64, rlmTLB: 92.31, rlmTotal: 86.69 },
+        ours:   { ftcsCompile: 99.30, ftcsSuccess: 61.54, rlmPFR: 79.86, rlmTLB: 86.54, rlmTotal: 82.66 }
       }
     }
   ]
