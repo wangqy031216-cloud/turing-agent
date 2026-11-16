@@ -591,10 +591,10 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   border-radius: 4px;
 }
 .text-hl-success .proof-count {
-  font-family: var(--font-sans);
-  font-size: 1.45em;
-  font-weight: 800;
-  line-height: 1;
+  font-family: inherit;
+  font-size: 1.12em;
+  font-weight: 700;
+  line-height: inherit;
   color: inherit;
 }
 
