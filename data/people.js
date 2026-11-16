@@ -105,6 +105,7 @@ TA.people = {
         },
         {
           name: "Xiao Wang",
+          name_zh: "王皛",
           photo: "",
           affiliations: [4],
           marks: []
