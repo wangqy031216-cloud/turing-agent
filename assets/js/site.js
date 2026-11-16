@@ -653,11 +653,14 @@
     if (!mount || !P) return;
     var introEl = $("#people-intro");
     if (introEl && P.intro) introEl.textContent = P.intro;
+    var roleLabels = {};
+    (P.roles || []).forEach(function (role) { roleLabels[role.mark] = role.label; });
     function person(m) {
       var refs = (m.affiliations || []).concat(m.marks || []);
       var links = refs.map(function (ref) {
         var target = typeof ref === "number" ? "#affiliation-" + ref : "#author-notes";
-        return '<a href="' + esc(target) + '" aria-label="Author reference ' + esc(ref) + '">' + esc(ref) + '</a>';
+        var label = roleLabels[ref] || "Author reference " + ref;
+        return '<a href="' + esc(target) + '" aria-label="' + esc(label) + '" title="' + esc(label) + '">' + esc(ref) + '</a>';
       }).join(", ");
       return '<article class="person">' +
         '<div class="person-portrait">' +
@@ -678,7 +681,7 @@
     var notes = $("#author-notes");
     if (notes) notes.innerHTML = (P.roles || []).map(function (role) {
       return '<span><sup>' + esc(role.mark) + '</sup> ' + esc(role.label) + '</span>';
-    }).join("");
+    }).join(", ");
     var affiliations = $("#people-affiliations");
     if (affiliations) affiliations.innerHTML = (P.affiliations || []).map(function (affiliation) {
       return '<li id="affiliation-' + esc(affiliation.id) + '">' +

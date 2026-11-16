@@ -50,18 +50,21 @@ TA.people = {
         },
         {
           name: "Chen Zhang",
+          name_zh: "张晨",
           photo: "",
           affiliations: [1],
           marks: []
         },
         {
           name: "Hangfan Zhang",
+          name_zh: "张航帆",
           photo: "",
           affiliations: [1],
           marks: []
         },
         {
           name: "Shao Zhang",
+          name_zh: "张劭",
           photo: "",
           affiliations: [1],
           marks: []
@@ -108,6 +111,7 @@ TA.people = {
         },
         {
           name: "Bo Zhang",
+          name_zh: "张铂",
           photo: "",
           affiliations: [1],
           marks: ["†"]
@@ -135,7 +139,7 @@ TA.people = {
     },
     {
       id: 3,
-      institution: "Hong Kong University",
+      institution: "The University of Hong Kong",
       unit: "School of Computing and Data Science"
     },
     {
