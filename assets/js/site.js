@@ -76,7 +76,7 @@
     }).join("");
     el.innerHTML =
       '<div class="banner-inner">' +
-        '<a class="brand" href="index.html"><img src="assets/img/logo.png" alt="" width="26" height="29">' +
+        '<a class="brand" href="index.html"><img src="' + ver("assets/img/logo.png") + '" alt="" width="45" height="20">' +
           esc(site.name || "Turing Agent") +
           (site.tagline ? "<small>· " + esc(site.tagline) + "</small>" : "") +
         "</a>" +
