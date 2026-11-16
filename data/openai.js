@@ -23,7 +23,7 @@ TA.openai = {
     { num: 121, label: "TCS-related problems" },
     { num: 99,  label: "Already formally verified", sub: "by the original system" },
     { num: 22,  label: "Not yet fully formally verified" },
-    { num: 4,   label: "Highlighted problems verified by Turing Agent", sub: "DeepSeek-V4-Pro", highlight: true }
+    { num: 3,   label: "Highlighted problems verified by Turing Agent", sub: "DeepSeek-V4-Pro & V4.1-Flash", highlight: true }
   ],
 
   problems: [
@@ -131,17 +131,6 @@ Previous work gave $\operatorname{Var}(H_n)=O(n\log n)$; the goal is $O(n)$.`,
       ],
       figure: { src: "assets/img/dag-235.webp", caption: "Simplified proof DAG for the random 3-SAT hitting-time problem." },
       links: []
-    },
-
-    /* ------------------------------------------------------------------ */
-    {
-      slug: "sdp-lift",
-      title: "An Exact Semidefinite Lift of a Nonspectrahedral Hyperbolicity Cone",
-      area: "Convex algebraic geometry",
-      status: "verified",
-      model: "DeepSeek-V4-Pro",
-      summary: "Construct an exact semidefinite lift of a non-spectrahedral hyperbolicity cone, demonstrating the power of auxiliary variables in exact cone representation.",
-      intro: String.raw`One of the four highlighted problems verified by Turing Agent. A detailed write-up of the formal development will be added here.`
     }
   ]
 };
