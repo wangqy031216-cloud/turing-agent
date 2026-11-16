@@ -37,9 +37,9 @@ TA.openai = {
       model: "DeepSeek-V4-Pro",
       summary: "Construct a uniform deterministic matrix hitting set for noncommutative polynomial identity testing over fields of every positive characteristic.",
       stats: [
-        { k: "Formal status", v: "export_verified" },
-        { k: "Fidelity review", v: "accepted" },
-        { k: "Lean target", v: "ProofTarget_116" },
+        { k: "Proof DAG", v: "9 nodes" },
+        { k: "Lean probes", v: "60" },
+        { k: "Tool events", v: "544" },
         { k: "Kernel check", v: "passed" }
       ],
       intro: String.raw`Polynomial identity testing asks whether an arithmetic formula computes the zero polynomial. For noncommutative formulas the order of multiplication matters, which makes identity testing harder. The central question is whether explicitly constructed matrices can detect <em>all</em> nonzero formulas within a size bound through one fixed matrix substitution.`,
@@ -73,10 +73,10 @@ and with $f(T_1,\ldots,T_n)e_0=\pi_d(h_f)$ this yields nonzero evaluation. Turin
       model: "DeepSeek-V4-Pro",
       summary: "Resolve the Friedgut–Kalai hypergraph threshold-width conjecture, extending the theory to general uniform hypergraphs and linking symmetry to Boolean influence.",
       stats: [
-        { k: "Auxiliary nodes", v: "27 proved" },
+        { k: "Proof DAG", v: "28 proved" },
         { k: "Lean probes", v: "1,143" },
         { k: "Tool events", v: "9,827" },
-        { k: "Formal status", v: "export_verified" }
+        { k: "Kernel check", v: "passed" }
       ],
       intro: String.raw`When does a random graph develop a property, and how fast does the probability of that property change as edges become more likely? This problem extends the study of threshold phenomena from graphs to hypergraphs through the relationship between variance and total influence.`,
       definition: String.raw`An $r$-uniform hypergraph has exactly $r$ vertices in each hyperedge. Consider a random $r$-uniform hypergraph on $n$ vertices in which each possible hyperedge is present independently with probability $p$. The objects of interest are Boolean hypergraph properties $f$ invariant under vertex permutations. Write $\operatorname{Var}_p(f)$ for the variance of $f$ and $I_p(f)$ for its total influence — the sum over hyperedges of the probability that flipping that hyperedge changes $f$.`,
@@ -111,9 +111,9 @@ No monotonicity assumption is needed; $I_p(f)$ carries no factor $p(1-p)$.`,
       trace: "openai-math-235",
       summary: "Establish the linear variance of random 3-SAT hitting times, sharpening the characterization of satisfiability threshold fluctuations.",
       stats: [
-        { k: "Auxiliary nodes", v: "108 verified" },
-        { k: "Result", v: "Var(Hₙ) = O(n)" },
-        { k: "Formal status", v: "export_verified" },
+        { k: "Proof DAG", v: "108 verified" },
+        { k: "Lean probes", v: "625" },
+        { k: "Tool events", v: "2,302" },
         { k: "Kernel check", v: "passed" }
       ],
       intro: String.raw`In random satisfiability, adding clauses can turn a satisfiable formula into an unsatisfiable one. How much does the timing of this transition vary across random instances? Bounding these fluctuations tells us how tightly the transition is concentrated.`,
