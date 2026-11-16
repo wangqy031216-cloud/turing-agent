@@ -690,7 +690,35 @@
     var animFrame = null;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    function syncCardHeights() {
+      slides.forEach(function (slide) {
+        var content = slide.querySelector(".spotlight-content");
+        var dagCard = slide.querySelector(".spotlight-dag-card");
+        var dagWrap = slide.querySelector(".spotlight-dag-wrap");
+        var head = slide.querySelector(".spotlight-dag-head");
+        var foot = slide.querySelector(".spotlight-dag-foot");
+        if (!content || !dagCard || !dagWrap) return;
+        if (window.matchMedia("(min-width: 861px)").matches) {
+          var targetH = content.offsetHeight;
+          if (targetH > 0) {
+            var chromeH = (head ? head.offsetHeight : 42) + (foot ? foot.offsetHeight : 38);
+            var wrapH = Math.max(340, targetH - chromeH);
+            dagWrap.style.height = wrapH + "px";
+            dagWrap.style.maxHeight = wrapH + "px";
+            dagCard.style.height = targetH + "px";
+            dagCard.style.maxHeight = targetH + "px";
+          }
+        } else {
+          dagWrap.style.height = "380px";
+          dagWrap.style.maxHeight = "420px";
+          dagCard.style.height = "auto";
+          dagCard.style.maxHeight = "none";
+        }
+      });
+    }
+
     function fitHeight() {
+      syncCardHeights();
       if (vp && slides[cur]) {
         vp.style.height = slides[cur].offsetHeight + "px";
       }
