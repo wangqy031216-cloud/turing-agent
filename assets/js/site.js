@@ -668,9 +668,179 @@
     $all("video[autoplay]").forEach(function (v) { v.removeAttribute("autoplay"); v.pause(); });
   }
 
+  /* ---------- OpenAI spotlight carousel on home ---------- */
+  function wireSpotlightCarousel() {
+    var root = $("#spotlight-carousel");
+    if (!root) return;
+    var tabs = $all(".spotlight-tab", root);
+    var track = $(".spotlight-track", root);
+    var slides = $all(".spotlight-slide", root);
+    var vp = $(".spotlight-viewport", root);
+    var prevBtn = $(".spotlight-prev", root);
+    var nextBtn = $(".spotlight-next", root);
+    var pauseBtn = $(".spotlight-pause", root);
+    var tip = $(".spotlight-status-text", root);
+    if (!tabs.length || !track || !slides.length) return;
+
+    var cur = 0;
+    var duration = 7000;
+    var isManualPaused = false;
+    var isHovered = false;
+    var progressStart = 0;
+    var animFrame = null;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function fitHeight() {
+      if (vp && slides[cur]) {
+        vp.style.height = slides[cur].offsetHeight + "px";
+      }
+    }
+
+    function updateProgress(now) {
+      if (isManualPaused || isHovered || reduce) return;
+      var elapsed = now - progressStart;
+      var pct = Math.min(100, (elapsed / duration) * 100);
+      var activeTab = tabs[cur];
+      if (activeTab) {
+        var fill = activeTab.querySelector(".tab-progress-fill");
+        if (fill) fill.style.width = pct + "%";
+      }
+      if (elapsed >= duration) {
+        go(cur + 1);
+      } else {
+        animFrame = requestAnimationFrame(updateProgress);
+      }
+    }
+
+    function resetTimer() {
+      if (animFrame) cancelAnimationFrame(animFrame);
+      tabs.forEach(function (t) {
+        var fill = t.querySelector(".tab-progress-fill");
+        if (fill) fill.style.width = "0%";
+      });
+      if (isManualPaused || isHovered || reduce) return;
+      progressStart = performance.now();
+      animFrame = requestAnimationFrame(updateProgress);
+    }
+
+    function go(i, opts) {
+      cur = (i + tabs.length) % tabs.length;
+      track.style.transform = "translateX(" + (-100 * cur) + "%)";
+      tabs.forEach(function (t, j) {
+        var sel = j === cur;
+        t.setAttribute("aria-selected", sel ? "true" : "false");
+        t.tabIndex = sel ? 0 : -1;
+        var fill = t.querySelector(".tab-progress-fill");
+        if (fill && !sel) fill.style.width = "0%";
+      });
+      slides.forEach(function (s, j) {
+        if (j === cur) {
+          s.removeAttribute("inert");
+          s.removeAttribute("aria-hidden");
+        } else {
+          s.setAttribute("inert", "");
+          s.setAttribute("aria-hidden", "true");
+        }
+        $all("video", s).forEach(function (v) {
+          if (j !== cur) {
+            v.pause();
+          } else if (v.hasAttribute("autoplay") && !reduce) {
+            var p = v.play();
+            if (p && p.catch) p.catch(function () {});
+          }
+        });
+      });
+      fitHeight();
+      if (opts && opts.focus && tabs[cur]) tabs[cur].focus();
+      resetTimer();
+    }
+
+    tabs.forEach(function (t, j) {
+      t.addEventListener("click", function () {
+        go(j);
+      });
+    });
+
+    if (prevBtn) prevBtn.addEventListener("click", function () { go(cur - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { go(cur + 1); });
+
+    function setPauseState(paused, manual) {
+      if (manual) isManualPaused = paused;
+      if (pauseBtn) {
+        pauseBtn.innerHTML = isManualPaused ? "▶ Resume" : "❚❚ Pause";
+        pauseBtn.setAttribute("aria-label", isManualPaused ? "Resume auto-slide" : "Pause auto-slide");
+      }
+      if (tip) {
+        tip.textContent = isManualPaused ? "Auto-slide paused" : (isHovered ? "Paused (hovering)" : "Auto-advances · Hover to pause");
+      }
+      if (isManualPaused || isHovered) {
+        if (animFrame) cancelAnimationFrame(animFrame);
+      } else {
+        resetTimer();
+      }
+    }
+
+    if (pauseBtn) {
+      pauseBtn.addEventListener("click", function () {
+        setPauseState(!isManualPaused, true);
+      });
+    }
+
+    root.addEventListener("mouseenter", function () {
+      isHovered = true;
+      setPauseState(isManualPaused, false);
+    });
+    root.addEventListener("mouseleave", function () {
+      isHovered = false;
+      setPauseState(isManualPaused, false);
+    });
+
+    // Keyboard navigation
+    var tablist = root.querySelector('[role="tablist"]');
+    if (tablist) {
+      tablist.addEventListener("keydown", function (e) {
+        var k = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (k) { e.preventDefault(); go(cur + k, { focus: true }); }
+        else if (e.key === "Home") { e.preventDefault(); go(0, { focus: true }); }
+        else if (e.key === "End") { e.preventDefault(); go(tabs.length - 1, { focus: true }); }
+      });
+    }
+
+    // Touch swipe support
+    if (vp) {
+      var sx = null, sy = null;
+      vp.addEventListener("touchstart", function (e) {
+        sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      }, { passive: true });
+      vp.addEventListener("touchend", function (e) {
+        if (sx == null) return;
+        var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+        if (Math.abs(dx) > 50 && Math.abs(dx) > 1.4 * Math.abs(dy)) {
+          go(cur + (dx < 0 ? 1 : -1));
+        }
+        sx = sy = null;
+      });
+    }
+
+    if (window.ResizeObserver && vp) {
+      var ro = new ResizeObserver(function () { fitHeight(); });
+      slides.forEach(function (s) { ro.observe(s); });
+    } else {
+      window.addEventListener("resize", fitHeight);
+      window.addEventListener("load", fitHeight);
+    }
+
+    // Render math formulas on all slides
+    slides.forEach(function (s) { renderMath(s); });
+
+    // Initial position
+    go(0);
+  }
+
   renderBanner();
   renderFooter();
   wireVideos();
+  wireSpotlightCarousel();
   wireLinkButtons();
   fillCounts();
   renderResults();
