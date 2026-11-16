@@ -660,13 +660,17 @@
       var links = refs.map(function (ref) {
         var target = typeof ref === "number" ? "#affiliation-" + ref : "#author-notes";
         var label = roleLabels[ref] || "Author reference " + ref;
-        return '<a href="' + esc(target) + '" aria-label="' + esc(label) + '" title="' + esc(label) + '">' + esc(ref) + '</a>';
+        var roleClass = typeof ref === "number" ? "" : ' class="author-role-mark"';
+        return '<a' + roleClass + ' href="' + esc(target) + '" aria-label="' + esc(label) + '" title="' + esc(label) + '">' + esc(ref) + '</a>';
+      }).join(", ");
+      var portraitRefs = refs.map(function (ref) {
+        return typeof ref === "number" ? esc(ref) : '<span class="author-role-mark">' + esc(ref) + '</span>';
       }).join(", ");
       return '<article class="person">' +
         '<div class="person-portrait">' +
           (m.photo ? '<img class="person-photo" loading="lazy" src="' + esc(ver(m.photo)) + '" alt="' + esc(m.name) + '" width="112" height="112">'
                    : '<div class="person-photo" aria-hidden="true"></div>') +
-          (refs.length ? '<span class="portrait-refs" aria-hidden="true">' + esc(refs.join(", ")) + '</span>' : "") +
+          (refs.length ? '<span class="portrait-refs" aria-hidden="true">' + portraitRefs + '</span>' : "") +
         '</div>' +
         '<h3 class="person-name">' + esc(m.name) +
           (refs.length ? '<sup class="person-refs">' + links + '</sup>' : "") + '</h3>' +
@@ -680,7 +684,7 @@
     }).join("");
     var notes = $("#author-notes");
     if (notes) notes.innerHTML = (P.roles || []).map(function (role) {
-      return '<span><sup>' + esc(role.mark) + '</sup> ' + esc(role.label) + '</span>';
+      return '<span><sup class="author-role-mark">' + esc(role.mark) + '</sup> ' + esc(role.label) + '</span>';
     }).join(", ");
     var affiliations = $("#people-affiliations");
     if (affiliations) affiliations.innerHTML = (P.affiliations || []).map(function (affiliation) {
