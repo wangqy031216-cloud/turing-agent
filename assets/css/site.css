@@ -445,13 +445,13 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 18px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 .spotlight-headline-block {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   max-width: 840px;
 }
 .spotlight-eyebrow-pill {
@@ -503,7 +503,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   font-family: var(--font-sans);
   font-size: clamp(1.85rem, 1.35rem + 1.8vw, 2.65rem);
   font-weight: 800;
-  line-height: 1.18;
+  line-height: 1.25;
   letter-spacing: -0.028em;
   color: var(--text);
   margin: 0;
@@ -513,6 +513,8 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   display: inline-block;
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
 }
 @media (prefers-color-scheme: dark) {
   .title-gradient {
@@ -554,8 +556,8 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 }
 
 .spotlight-lede-box {
-  margin: 0 0 22px;
-  padding: 12px 18px;
+  margin: 0 0 24px;
+  padding: 14px 18px;
   border-left: 3px solid var(--warm);
   background: linear-gradient(90deg, var(--warm-soft) 0%, transparent 100%);
   border-radius: 0 8px 8px 0;
