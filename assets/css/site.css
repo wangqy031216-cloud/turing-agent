@@ -686,11 +686,12 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
 }
 .spotlight-content {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 .spotlight-content .tags {
   display: flex;
@@ -737,7 +738,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 .spotlight-stat {
   background: var(--bg);
@@ -764,12 +765,15 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  margin-top: auto;
+  padding-top: 14px;
 }
 
 /* Media & DAG Trace Card on right */
 .spotlight-dag-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -816,13 +820,21 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   position: relative;
   overflow: auto;
   background: var(--bg);
-  height: 380px;
-  max-height: 400px;
+  flex: 1 1 auto;
+  min-height: 420px;
+  height: auto;
   padding: 18px 14px;
   border: none !important;
   border-radius: 0 !important;
   cursor: grab;
   user-select: none;
+}
+.spotlight-dag-wrap .dag {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .spotlight-dag-wrap:active {
   cursor: grabbing;
@@ -832,9 +844,10 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   justify-content: space-between;
   align-items: center;
   gap: 8px;
-  padding: 8px 14px;
+  padding: 10px 14px;
   background: var(--bg-soft);
   border-top: 1px solid var(--border);
+  margin-top: auto;
 }
 .spotlight-dag-foot .mini-legend {
   margin: 0;
