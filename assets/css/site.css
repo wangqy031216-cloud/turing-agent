@@ -623,6 +623,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 /* What's new */
 .home-news .news { margin-top: 12px; }
 .home-news h3 { font-size: 0.95rem; font-weight: 500; line-height: 1.55; }
+.home-news p { margin: 4px 0 0; font-size: 0.84rem; line-height: 1.5; color: var(--body); }
 
 /* =====================================================================
    People page (members come from data/people.js)

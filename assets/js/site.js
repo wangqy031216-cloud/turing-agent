@@ -526,7 +526,8 @@
 
     mount.innerHTML = latest.map(function (item) {
       return '<li><time datetime="' + esc(item.date) + '">' + esc(item.date) + '</time>' +
-        '<h3><a href="news.html#' + esc(item.id) + '">' + esc(item.homeTitle || item.title) + '</a></h3></li>';
+        '<div><h3><a href="news.html#' + esc(item.id) + '">' + esc(item.homeTitle || item.title) + '</a></h3>' +
+        (item.homeSummary ? '<p>' + esc(item.homeSummary) + '</p>' : "") + '</div></li>';
     }).join("");
   }
 
