@@ -32,7 +32,7 @@ RUNS = [
         "kind": "Proof formalization · continues OpenAI's Lean library",
         "model": "DeepSeek-V4-Pro",
         "problem": "results.html#186-01",
-        "summary": "Starting from OpenAI's graph-version Lean library, Turing Agent completes the hypergraph extension: Fourier variance identities, the low-degree restriction argument, a general high-degree tail inequality, and the parameter choice that ties them together.",
+        "summary": "We highlight Turing Agent's hypergraph extension of OpenAI's graph-version Lean library, covering Fourier variance identities, the low-degree restriction argument, a general high-degree tail inequality, and the parameter choice that ties them together.",
         "root_label": "Uniform influence bound",
     },
     {
@@ -55,7 +55,7 @@ RUNS = [
         "problem": "results.html#116-01",
         "summary": "An eight-subgoal plan is proposed and then abandoned once the agent finds that OpenAI's existing universal_hitting theorem already encapsulates the argument; the final proof is a single root node bridging formula representations and dependent matrix types.",
         "root_label": "Matrix hitting (root)",
-        "root_claim": "Uniform matrix hitting for noncommutative formulas: the explicit rational matrix tuple is nonzero on every nonzero division-free noncommutative formula of bounded size, completing the algorithmic construction on top of OpenAI's existing formalization.",
+        "root_claim": "Uniform matrix hitting for noncommutative formulas: the explicit rational matrix tuple is nonzero on every nonzero division-free noncommutative formula of bounded size. This highlighted construction builds on OpenAI's existing formalization.",
     },
     {
         "id": "fcs76-unified",
