@@ -75,15 +75,6 @@ RUNS = [
         "summary": "A theorem from the TestingLowerBounds project (information-theoretic lower bounds for hypothesis testing). The benchmark supplies the formal statement; Turing Agent decomposes it into six lemmas and proves them.",
         "root_label": "Target theorem",
     },
-    {
-        "id": "rlm77",
-        "title": "weak_PFR_asymm",
-        "short": "RLMEval 77 · Polynomial Freiman–Ruzsa",
-        "kind": "Proof formalization · given statement",
-        "problem": "",
-        "summary": "The asymmetric weak PFR theorem from the Polynomial Freiman–Ruzsa project, proved by strong induction through a not-in-coset step, a shift lemma and a subgroup transfer.",
-        "root_label": "weak_PFR_asymm",
-    },
 ]
 
 PIPELINE_LABELS = {
