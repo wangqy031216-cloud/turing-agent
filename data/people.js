@@ -58,7 +58,7 @@ TA.people = {
         {
           name: "Hangfan Zhang",
           name_zh: "张航帆",
-          photo: "",
+          photo: "assets/img/people/hangfan-zhang.webp",
           affiliations: [1],
           marks: []
         },
