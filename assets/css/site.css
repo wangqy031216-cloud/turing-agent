@@ -90,11 +90,11 @@ strong { color: var(--text); font-weight: 600; }
 [hidden] { display: none !important; }
 
 /* ---------- containers (Clarity widths) ---------- */
-.wrap-main, .wrap-large, .wrap-xl { margin-inline: auto; padding-inline: 24px; }
+.wrap-main, .wrap-large, .wrap-xl, .wrap-trace { margin-inline: auto; padding-inline: 24px; }
 .wrap-main { max-width: 800px; }
 .wrap-large { max-width: 980px; }
 .wrap-xl { max-width: 1160px; }
-@media (max-width: 480px) { .wrap-main, .wrap-large, .wrap-xl { padding-inline: 16px; } }
+@media (max-width: 480px) { .wrap-main, .wrap-large, .wrap-xl, .wrap-trace { padding-inline: 16px; } }
 
 .section { padding-block: 44px; }
 .section + .section { padding-top: 12px; }
