@@ -663,14 +663,10 @@
         var roleClass = typeof ref === "number" ? "" : ' class="author-role-mark"';
         return '<a' + roleClass + ' href="' + esc(target) + '" aria-label="' + esc(label) + '" title="' + esc(label) + '">' + esc(ref) + '</a>';
       }).join(", ");
-      var portraitRefs = refs.map(function (ref) {
-        return typeof ref === "number" ? esc(ref) : '<span class="author-role-mark">' + esc(ref) + '</span>';
-      }).join(", ");
       return '<article class="person">' +
         '<div class="person-portrait">' +
           (m.photo ? '<img class="person-photo" loading="lazy" src="' + esc(ver(m.photo)) + '" alt="' + esc(m.name) + '" width="112" height="112">'
                    : '<div class="person-photo" aria-hidden="true"></div>') +
-          (refs.length ? '<span class="portrait-refs" aria-hidden="true">' + portraitRefs + '</span>' : "") +
         '</div>' +
         '<h3 class="person-name">' + esc(m.name) +
           (refs.length ? '<sup class="person-refs">' + links + '</sup>' : "") + '</h3>' +

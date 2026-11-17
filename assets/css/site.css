@@ -1259,9 +1259,8 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .people-title { font-size: 1.3rem; margin-bottom: 20px; }
 .people-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px 16px; }
 .person { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 16px 8px; }
-.person-portrait { position: relative; width: 112px; height: 112px; }
+.person-portrait { width: 112px; height: 112px; }
 .person-photo { display: block; width: 112px; height: 112px; border: 1px solid var(--border); border-radius: 50%; object-fit: cover; background: var(--bg-soft); }
-.portrait-refs { position: absolute; top: 0; left: calc(100% - 5px); padding: 2px 3px; font-family: var(--font-sans); font-size: 0.72rem; line-height: 1.2; white-space: nowrap; color: var(--blue); background: var(--bg); border-radius: 4px; }
 .person-name { font-size: 1.02rem; line-height: 1.35; }
 .person-refs { margin-left: 4px; font-size: 0.68rem; font-weight: 500; white-space: nowrap; }
 .author-role-mark { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 600; line-height: 0; }
