@@ -65,7 +65,7 @@ TA.people = {
         {
           name: "Shao Zhang",
           name_zh: "张劭",
-          photo: "",
+          photo: "assets/img/people/shao-zhang.webp",
           affiliations: [1],
           marks: []
         },
@@ -113,7 +113,7 @@ TA.people = {
         {
           name: "Bo Zhang",
           name_zh: "张铂",
-          photo: "",
+          photo: "assets/img/people/bo-zhang.webp",
           affiliations: [1],
           marks: ["†"]
         },
