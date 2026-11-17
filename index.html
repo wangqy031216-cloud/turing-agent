@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Turing Agent — Agentic Formal Verification for Mathematical Research</title>
   <meta name="description" content="Turing Agent: a unified agent harness for faithful, research-level formal verification in Lean. Harness design, OpenAI research problems, demos and news.">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png?v=202611170256">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png?v=202611170326">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Poppins:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <link rel="stylesheet" href="assets/css/site.css?v=202611170256">
+  <link rel="stylesheet" href="assets/css/site.css?v=202611170326">
 </head>
 <body>
   <header class="banner" id="banner"></header>
 
   <main>
     <!-- ============ HERO ============ -->
-    <section class="hero wrap-large">
-      <img class="hero-logo" src="assets/img/logo.png?v=202611170256" alt="Turing Agent logo" width="126" height="56">
+    <section class="hero wrap-xl">
+      <img class="hero-logo" src="assets/img/logo.png?v=202611170326" alt="Turing Agent logo" width="126" height="56">
       <h1>Turing Agent<span>Agentic Formal Verification for Mathematical Research</span></h1>
       <div class="hero-vision" aria-labelledby="vision-title">
         <h2 id="vision-title">Our vision</h2>
@@ -333,18 +333,30 @@
       </div>
     </section>
 
-    <!-- ============ WHAT'S NEW ============ -->
-    <section class="section wrap-main home-news" aria-labelledby="news-title">
-      <h2 id="news-title">What's new</h2>
-      <ul class="news" id="home-news"></ul>
-    </section>
+    <!-- ============ UPDATES & CITATION ============ -->
+    <section class="section wrap-xl home-bottom-sec" aria-label="Updates and Citation">
+      <div class="home-bottom-grid">
+        <div class="home-bottom-col">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Updates</div>
+              <h2 id="news-title">What's new</h2>
+            </div>
+            <a class="more" href="news.html">All news →</a>
+          </div>
+          <ul class="news" id="home-news"></ul>
+        </div>
 
-    <!-- ============ CITATION ============ -->
-    <section class="section wrap-main">
-      <h2>Citation</h2>
-      <p class="ui muted" style="font-size:.9rem;margin-top:.6rem">If you use Turing Agent or the results on this page, please cite:</p>
-      <div class="bib">
-        <button type="button" class="pill copy" data-copy="bibtex">Copy</button>
+        <div class="home-bottom-col">
+          <div class="section-head">
+            <div>
+              <div class="eyebrow">Reference</div>
+              <h2>Citation</h2>
+            </div>
+          </div>
+          <p class="ui muted citation-intro">If you use Turing Agent or the results on this page, please cite:</p>
+          <div class="bib">
+            <button type="button" class="pill copy" data-copy="bibtex">Copy</button>
 <pre class="code" id="bibtex">@techreport{turingagent2026,
   title       = {Turing Agent: Agentic Formal Verification
                  for Mathematical Research},
@@ -352,6 +364,8 @@
   institution = {Shanghai Artificial Intelligence Laboratory},
   year        = {2026}
 }</pre>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -360,14 +374,14 @@
 
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-  <script src="data/site.js?v=202611170256"></script>
-  <script src="data/news.js?v=202611170256"></script>
-  <script src="data/openai.js?v=202611170256"></script>
-  <script src="data/demos.js?v=202611170256"></script>
-  <script src="data/traces/index.js?v=202611170256"></script>
-  <script src="data/traces/openai-math-116.js?v=202611170256"></script>
-  <script src="data/traces/openai-math-186-ds.js?v=202611170256"></script>
-  <script src="data/traces/openai-math-235.js?v=202611170256"></script>
-  <script src="assets/js/site.js?v=202611170256"></script>
+  <script src="data/site.js?v=202611170326"></script>
+  <script src="data/news.js?v=202611170326"></script>
+  <script src="data/openai.js?v=202611170326"></script>
+  <script src="data/demos.js?v=202611170326"></script>
+  <script src="data/traces/index.js?v=202611170326"></script>
+  <script src="data/traces/openai-math-116.js?v=202611170326"></script>
+  <script src="data/traces/openai-math-186-ds.js?v=202611170326"></script>
+  <script src="data/traces/openai-math-235.js?v=202611170326"></script>
+  <script src="assets/js/site.js?v=202611170326"></script>
 </body>
 </html>

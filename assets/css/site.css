@@ -226,7 +226,7 @@ strong { color: var(--text); font-weight: 600; }
 @media (max-width: 620px) { .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; } }
 
 .tile { padding: 20px; font-family: var(--font-sans); display: flex; flex-direction: column; gap: 8px; }
-.tile h3 { font-size: 1rem; }
+.tile h3 { font-size: 1rem; min-height: 1.4em; }
 .tile p { font-size: 0.86rem; line-height: 1.6; color: var(--body); margin: 0; }
 .tile .tag { align-self: flex-start; }
 a.tile { color: inherit; transition: border-color 0.15s ease, transform 0.15s ease; }
@@ -432,6 +432,15 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 @media (max-width: 860px) { .home-split { grid-template-columns: minmax(0, 1fr); } }
 .more-tiles { display: grid; gap: 12px; margin-top: 1rem; }
 
+/* Home: Bottom grid for News and Citation */
+.home-bottom-sec { padding-top: 24px; }
+.home-bottom-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; align-items: start; }
+.home-bottom-col { display: flex; flex-direction: column; min-width: 0; }
+.citation-intro { font-size: 0.9rem; margin: 0 0 12px; line-height: 1.5; }
+@media (max-width: 860px) {
+  .home-bottom-grid { grid-template-columns: 1fr; gap: 36px; }
+}
+
 /* =====================================================================
    Home: OpenAI Verified Problems Spotlight Carousel
    ===================================================================== */
@@ -606,7 +615,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
 .spotlight-nav {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 16px;
   margin-bottom: 20px;
 }
 .spotlight-tab {
@@ -649,6 +658,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: 2.7em;
 }
 .spotlight-tab .tab-progress {
   position: absolute;
@@ -754,6 +764,10 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 8px 12px;
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .spotlight-stat .k {
   display: block;
@@ -907,7 +921,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   align-items: center;
   gap: 14px;
   margin-top: 18px;
-  padding-inline: 4px;
+  padding-inline: 0;
 }
 .spotlight-btn-group {
   display: flex;
@@ -1102,8 +1116,9 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
    Home: Hero vision + What's new before the citation
    ===================================================================== */
 .hero-vision {
-  max-width: 58rem;
-  margin: 28px auto 0;
+  width: 100%;
+  max-width: 100%;
+  margin: 32px auto 0;
 }
 .hero-vision > h2 {
   margin-bottom: 16px;
@@ -1145,6 +1160,10 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
 }
 .vision-points li:hover {
   transform: translateY(-2px);
@@ -1159,6 +1178,7 @@ video.showcase { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9
   display: flex;
   align-items: center;
   gap: 8px;
+  min-height: 1.4em;
 }
 .vision-points li:nth-child(1) h3 { color: var(--warm); }
 .vision-points li:nth-child(2) h3 { color: var(--green); }
