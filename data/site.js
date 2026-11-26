@@ -6,11 +6,11 @@
 window.TA = window.TA || {};
 
 TA.site = {
-  version: "202611170543",   // set by tools/bump_version.py
+  version: "202611261603",   // set by tools/bump_version.py
   name: "Turing Agent",
   tagline: "Formal Verification Portal",
   affiliation: "Shanghai Artificial Intelligence Laboratory",
-  lastUpdated: "2026-11-16",
+  lastUpdated: "2026-11-26",
 
   // Leave a URL empty ("") to hide its button.
   links: {
