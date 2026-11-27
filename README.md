@@ -14,11 +14,7 @@
 
   <p>
     <a href="https://wangqy031216-cloud.github.io/turing-agent/"><img src="https://img.shields.io/badge/🌐_Project_Page-Website-1e3a8a?style=for-the-badge" alt="Project Page"></a>
-    <a href="https://wangqy031216-cloud.github.io/turing-agent/results.html"><img src="https://img.shields.io/badge/📊_Results-Benchmarks_%26_Proofs-1f6f54?style=for-the-badge" alt="Results"></a>
-    <a href="https://wangqy031216-cloud.github.io/turing-agent/demos.html"><img src="https://img.shields.io/badge/▶️_Demos-Proof_Replays-2563eb?style=for-the-badge" alt="Demos"></a>
-    <a href="https://wangqy031216-cloud.github.io/turing-agent/news.html"><img src="https://img.shields.io/badge/📰_News-Updates-64748b?style=for-the-badge" alt="News"></a>
-    <a href="https://wangqy031216-cloud.github.io/turing-agent/people.html"><img src="https://img.shields.io/badge/👥_Team-People-334155?style=for-the-badge" alt="People"></a>
-    <a href="https://wangqy031216-cloud.github.io/turing-agent/"><img src="https://img.shields.io/badge/📄_Paper-Coming_Soon-b4513f?style=for-the-badge" alt="Paper"></a>
+    <a href="https://arxiv.org/pdf/2608.03283"><img src="https://img.shields.io/badge/📄_Paper-arXiv_2608.03283-b4513f?style=for-the-badge" alt="Paper"></a>
   </p>
 
   <p>
@@ -33,7 +29,7 @@
 
 ## 🔥 News / 最新动态
 
-- **`[2026-11]`** 🎉 **Turing Agent Released / 正式发布** — Official project portal launched with benchmark evaluations, verified frontier proofs, and interactive proof replays. 上线项目主页、评测结果与交互式证明回放。 [[Website](https://wangqy031216-cloud.github.io/turing-agent/)] [[Interactive Demos](https://wangqy031216-cloud.github.io/turing-agent/demos.html)]
+- **`[2026-11]`** 🎉 **Turing Agent Released / 正式发布** — Technical report, official project portal, benchmark evaluations, and interactive proof replays are live. 发布技术报告、项目主页、评测结果与交互式证明回放。 [[Paper](https://arxiv.org/pdf/2608.03283)] [[Website](https://wangqy031216-cloud.github.io/turing-agent/)] [[Interactive Demos](https://wangqy031216-cloud.github.io/turing-agent/demos.html)]
 - **`[2026-10]`** 🏆 **OpenAI Frontier Math Proofs Completed / 完成 OpenAI 前沿数学手稿证明** — Completed Lean-kernel-checked proofs for unfinished theoretical computer science problems from OpenAI's 722 frontier manuscripts (`#116-01`, `#186-01`, `#235-02`). [[Explore Proofs](https://wangqy031216-cloud.github.io/turing-agent/results.html#openai-problems)]
 - **`[2026-10-30]`** 🎤 **AI4TCS Workshop Held / 举办 AI4TCS 研讨会** — *After AI Can Solve Problems: Toward TCS 2.0*（*当 AI 会解题之后：走向 TCS 2.0*）. [[Program & Photos](https://wangqy031216-cloud.github.io/turing-agent/news.html#ai4tcs-workshop-2026)]
 
@@ -74,10 +70,12 @@
 ## 📖 Citation
 
 ```bibtex
-@techreport{turingagent2026,
-  title       = {Turing Agent: Agentic Formal Verification for Mathematical Research},
-  author      = {{Turing Agent Team}},
-  institution = {Shanghai Artificial Intelligence Laboratory},
-  year        = {2026}
+@article{turingagent2026,
+  title         = {Turing Agent: Agentic Formal Verification for Mathematical Research},
+  author        = {{Turing Agent Team}},
+  year          = {2026},
+  eprint        = {2608.03283},
+  archivePrefix = {arXiv},
+  url           = {https://arxiv.org/pdf/2608.03283}
 }
 ```
