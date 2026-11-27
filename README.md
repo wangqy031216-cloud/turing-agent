@@ -1,121 +1,50 @@
-# Turing Agent 主页
+<div align="center">
+  <img src="assets/img/logo.png" alt="Turing Agent Logo" width="150">
 
-Turing Agent 的长期维护主页：Harness 介绍、OpenAI 722 题中我们完成的题目、其他 demo、内部 workshop。
-纯静态网站，没有构建步骤，push 到 `main` 后 GitHub Pages 自动更新（约 1 分钟）。
+  <h1>Turing Agent</h1>
+  <p>
+    <strong>Agentic Formal Verification for Mathematical Research</strong><br>
+    面向数学研究的智能体形式化验证系统
+  </p>
 
-## 目录
+  <p>
+    🌐 <a href="https://wangqy031216-cloud.github.io/turing-agent/"><strong>Project Webpage / 项目主页</strong></a>
+  </p>
+</div>
 
-```
-index.html          首页（三个标签按钮，点击后内容在下方横向滑入）
-harness.html        Harness 原理与架构介绍
-results.html        Results：Benchmark 结果与 OpenAI 题目（支持搜索 / 按领域筛选）
-openai.html         旧地址，保留查询参数和题目锚点并跳转到 results.html
-demos.html          Demos：上方是证明轨迹回放（DAG 生长、Lean 探测、失败、压缩、经验，逐步播放），下方是其他 demo
-traces.html         旧地址，自动跳转到 demos.html（保留是为了让以前分享出去的链接不失效）
-news.html           News：所有动态（workshop、结果、发布、报告…），按日期排序；未来日期的条目显示在 Upcoming
-workshops.html      旧地址，自动跳转到 news.html
-people.html         People：核心贡献者（头像、中英文名、个人介绍）
-page-template.html  新页面模板
+---
 
-data/               ← 日常维护基本只改这里
-  site.js           顶部导航、各种外链（报告 PDF / 代码仓库）
-  openai.js         OpenAI 题目
-  demos.js          demo
-  news.js           所有新闻条目（显示在 News 页）
-  people.js         People 页成员（头像、中英文名、职位 / 教育 / 兴趣）
-  results.js        benchmark 数据表
-  traces/           证明轨迹（由 tools/extract_traces.py 生成，不要手改）
-tools/
-  extract_traces.py 把 proof-pipeline-observer 导出的原始轨迹压缩成网站用的小文件
-  import_proof_run.py 从 235 的本地 proof/ 和 lean/ 记录导入同样格式的 DAG 回放
-  bump_version.py   发布前运行，给 CSS / JS 加版本号，避免访客看到缓存的旧版本
-assets/css/site.css 样式（颜色都是变量，深色模式自动适配）
-assets/js/site.js   渲染逻辑（一般不用动）
-assets/img/         图片
-assets/video/       视频（GitHub 单文件上限 100 MB，建议控制在 20 MB 以内）
-```
+## Overview
 
-## 常见操作
+**Turing Agent** is an agentic formal verification system in Lean for research-level mathematics and theoretical computer science (TCS), developed by the Turing Agent Team at Shanghai Artificial Intelligence Laboratory.
 
-| 想做的事 | 改哪里 |
-|---|---|
-| 加一道 OpenAI 题 | `data/openai.js`，复制一个对象改字段；只有 `slug / title / status / summary` 必填，其余字段没有就不显示 |
-| 更新顶部漏斗数字（722 / 121 / 99 / 22 / 4） | `data/openai.js` 里的 `funnel` |
-| 加一个非轨迹的 demo | `data/demos.js`，文件顶部有模板；会出现在 Demos 页下方的 More demos（列表为空时该区块自动隐藏）|
-| 加一条新闻 / 一期 workshop | `data/news.js`，文件顶部有模板；`type` 写类别（Workshop、Release、Result、Talk…）。News 页自动更新；slides 等文件可放 `files/` |
-| 更新作者、头像与机构 | `data/people.js` 的 `groups[].members` 按论文作者顺序排列；`affiliations` 和 `marks` 对应下方机构编号与角色说明；头像放 `assets/img/people/`，`photo` 留空时保留空白头像位置 |
-| 挂上报告 PDF / 代码链接 | `data/site.js` 的 `links.report` / `links.code`，填了 URL 按钮就会出现 |
-| 加一个新页面 | 复制 `page-template.html`，再在 `data/site.js` 的 `nav` 里加一行，顶部 banner 自动出现 |
-| 更新 benchmark 数字 | `data/results.js` |
-| 换首页展示视频 | mp4 放 `assets/video/`，封面图放 `assets/img/`，改 `index.html` 里 `SHOWCASE VIDEO` 段的 `src` / `poster` / 说明文字 |
-| 给某道 OpenAI 题加视频 | 该题对象里加 `video: { src, poster, caption }` |
-| 让某道 OpenAI 题链接到它的 demo 回放 | 该题对象里加 `trace: "<轨迹 id>"`（id 见 `data/traces/index.js`），详情页会出现「Replay this proof in Demos」按钮，列表里出现 Demo 标记 |
-| 改首页三个标签里的内容 | `index.html` 里 `EXPLORE` 段，每个 `<section role="tabpanel">` 就是一个面板；第 2、3 个面板的卡片分别来自 `data/openai.js` 和 `data/traces/index.js` |
-| 加一条证明轨迹 | 见下面「证明轨迹」 |
+- **Fast** — Verify research mathematics at AI speed.
+- **Faithful** — Prove the mathematical claim faithfully as stated.
+- **For TCS** — Build machine-checked formal foundations for theoretical computer science.
 
-### 写数学公式
+Visit our **[Project Webpage](https://wangqy031216-cloud.github.io/turing-agent/)** for benchmark evaluations, verified frontier research problems, and interactive proof replays.
 
-`data/openai.js` 的文字字段支持 HTML 和 KaTeX：行内 `$...$`，独立公式 `\[...\]`。
+---
 
-- 带反斜杠的文字用 `` String.raw`...` `` 包起来（现有条目都是这么写的）。
-- 公式里的小于号写成 `&lt;`（例如 `$j&lt;d$`），否则浏览器会把 `<d` 当成 HTML 标签。
-- `String.raw` 里不要出现 `$` 紧跟 `{` 这两个字符。
+## 简介
 
-### 单独链接到某道题
+**Turing Agent** 是由上海人工智能实验室 Turing Agent 团队研发、面向前沿数学研究与理论计算机科学（TCS）的 Lean 形式化验证智能体系统。
 
-`results.html#<slug>` 或 `results.html#<题号>`，例如 `results.html#random-3sat`、`results.html#186-01`。
+- **快速（Fast）** — 以 AI 速度推进科研级数学形式化验证。
+- **忠实（Faithful）** — 严格保持原始数学命题的语义与假设。
+- **面向 TCS（For TCS）** — 构建经 Lean 内核检验的理论计算机科学形式化基础。
 
-Results 页的两个入口为 `results.html#benchmarks` 和 `results.html#openai-problems`。旧的 `openai.html#<slug>` 与 `harness.html#results` 链接会跳转到对应的新位置。
+欢迎访问我们的 **[项目主页](https://wangqy031216-cloud.github.io/turing-agent/)** 查看完整评测结果、前沿问题形式化证明与交互式证明回放。
 
-## 证明轨迹
+---
 
-`demos.html` 顶部的轨迹回放读取 `data/traces/`。这些文件由脚本从 proof-pipeline-observer 的原始导出（`data/runs/<id>.json.gz`，单个可达上百 MB）提炼而来：
-只保留 DAG 节点（声明、Lean 语句、证明体、依赖）、时间线（探测 / 失败 / 证明 / 压缩 / 经验 / 计划被放弃）和统计数字，单条轨迹约 10–130 KB。
+## Citation
 
-加一条新轨迹：
-
-1. 在 `tools/extract_traces.py` 顶部 `RUNS` 里加一项（`id` 要和导出文件名一致，标题 / 简介写给访客看的英文）。
-2. 运行：
-
-```bash
-python3 tools/extract_traces.py /path/to/proof-pipeline-observer/data/runs
-```
-
-3. 提交 `data/traces/` 的改动。首页第三个标签和 Demos 页的回放器都会自动出现这条轨迹。
-
-单独链接到某条轨迹：`demos.html#<id>`，例如 `demos.html#openai-math-186-ds`。
-
-235 的本地运行目录（包含 `proof/state.json`、`proof/tools.jsonl` 和 `lean/proof-target.json`）可直接导入：
-
-```bash
-python3 tools/import_proof_run.py /path/to/local-proof-run
-```
-
-脚本只提取数学证明、节点和验收信息，并合并索引以保留已有回放。对应地址为 `demos.html#openai-math-235`。
-
-## 发布前：刷新版本号（重要）
-
-浏览器会缓存 CSS / JS，改完 `assets/` 或 `data/` 后访客可能还看到旧版本。提交前运行一次：
-
-```bash
-python3 tools/bump_version.py
-```
-
-它会给所有页面里引用的本地 CSS / JS 加上新的 `?v=时间戳`，访客打开就是最新版。
-
-## 本地预览
-
-```bash
-python3 -m http.server 8000
-```
-
-然后打开 http://localhost:8000 。（直接双击 html 也能看，但部分浏览器会限制本地文件。）
-
-## 图片
-
-报告里的 PDF 图用 poppler 转成 PNG 再转 WebP（体积约为 PNG 的 1/4）：
-
-```bash
-pdftocairo -png -r 200 -singlefile figs/xxx.pdf xxx
-python3 -c "from PIL import Image; Image.open('xxx.png').convert('RGB').save('assets/img/xxx.webp', 'WEBP', quality=88, method=6)"
+```bibtex
+@techreport{turingagent2026,
+  title       = {Turing Agent: Agentic Formal Verification for Mathematical Research},
+  author      = {{Turing Agent Team}},
+  institution = {Shanghai Artificial Intelligence Laboratory},
+  year        = {2026}
+}
 ```
